@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #404040;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-caveat: var(--font-caveat);
+  --font-inter: var(--font-inter);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter);
+}
+
+@media screen and (max-width:767px) {
+  .mobile-menu {
+    @apply text-center bg-white w-full absolute top-[84px] gap-10 flex-col pt-10 z-40 opacity-0 invisible left-0 transform -translate-y-4 pointer-events-none border-t border-gray-100 overflow-auto pb-10 bg-contain bg-bottom bg-no-repeat;
+    background-image: url("../../public/images/menu-bg.png");
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    height: 0px;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    height: calc(100vh - 68px);
+  }
+
+  .mobile-menu button {
+    display: none;
+  }
+
+  .mobile-menu>div {
+    @apply w-full;
+  }
+
+  .mobile-menu>div a {
+    @apply inline-flex;
+  }
+
+  .mobile-dropdown {
+    position: initial;
+    box-shadow: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    width: 100%;
+    background-color: transparent;
+  }
+
+  .mobile-dropdown>div {
+    @apply gap-10;
+  }
+
+  .mobile-dropdown>div a {
+    @apply capitalize inline-flex lg:px-4 px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 bg-neutral-100 hover:bg-orange-50 hover:text-orange-600 transition-colors;
+  }
+
+  .mobile-dropdown>div>div>div {
+    display: none;
+  }
+
+  .platform-swiper .swiper-wrapper {
+    @apply flex-col gap-10 !transform-none;
+  }
+
+  .platform-swiper .swiper-wrapper>div {
+    @apply !m-0;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.platform-swiper .swiper-wrapper>div:nth-child(even) {
+  @apply mt-18;
+}
+
+@keyframes fillProgress {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-fill-progress {
+  animation: fillProgress linear forwards;
+}
+
+@media (max-width: 1022px) {
+  .gripcrm-content {
+    max-width: 48rem;
+    margin: 0 auto !important;
+  }
+}
