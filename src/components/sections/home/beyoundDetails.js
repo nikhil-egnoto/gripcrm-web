@@ -1,6 +1,15 @@
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { useRef } from "react";
 
 export default function BeyoundDetails() {
+    const prevRef = useRef(null);
+    const nextRef = useRef(null);
 
     const icons = [
         {
@@ -79,7 +88,7 @@ export default function BeyoundDetails() {
 
 
     return (
-        <section className="bg-black text-white py-16 md:py-24 relative overflow-hidden">
+        <section className="bg-black text-white py-16 md:py-24 relative overflow-hidden px-4">
             {/* Background Glow Overlays */}
             <Image
                 src={"/images/home/section.png"}
@@ -88,34 +97,85 @@ export default function BeyoundDetails() {
                 width={1000}
                 height={1000}
             />
+            <div className="container mx-auto relative z-10 lg:border border-white/25 px-0 lg:px-15 lg:py-20">
+                <div className="flex flex-col gap-15 lg:gap-0 lg:flex-row items-center justify-between mb-15">
+                    <div className="max-w-3xl">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+                            Creative power that
+                            <span className="block relative font-caveat italic text-4xl sm:text-5xl md:text-6xl font-bold ml-1 text-white">
+                                <spna className="relative z-10 font-caveat font-bold text-5xl md:text-6xl lg:text-7xl">goes beyond</spna>
+                                <svg className="absolute md:top-0 -top-2 left-5 md:w-auto w-50" width="250" height="70" viewBox="0 0 250 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M225.064 51.0838C229.639 49.8773 231.08 44.3697 230.022 39.7534C232.32 38.1014 233.447 35.1901 233.492 32.2264C236.534 31.728 239.598 31.2558 242.64 30.7314C242.663 30.7314 242.708 30.7314 242.731 30.7314C243.385 30.6266 244.039 30.5216 244.714 30.4168C252.24 29.079 251.295 14.0771 244.625 12.5296C246.381 6.99569 244.241 -0.426686 238.089 0.019177C161.111 5.63182 84.1327 11.2444 7.15462 16.8833C-0.394453 17.434 -2.01694 28.6332 2.51251 33.2491C0.259055 38.6257 3.79697 46.6513 9.25033 46.8611C20.8331 47.3068 32.4159 47.5169 43.9987 47.5692C43.6832 48.0414 43.3902 48.566 43.1423 49.0904C41.3847 49.5888 39.627 50.0871 37.8468 50.5856C29.3513 52.9722 31.7623 68.0267 39.8299 68.6036C102.025 72.9836 164.13 67.0299 225.086 51.1624L225.064 51.0838Z" fill="#0073E6" fillOpacity="0.5" />
+                                </svg>
+                            </span>
+                        </h2>
+                        <p className="mt-10 text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed font-medium text-white/70">
+                            Ready to take your metal building projects to the next level? Discover how GripCRM can transform your business operations and drive growth
+                        </p>
+                    </div>
 
-            <div className="mx-auto relative z-10">
-                {/* Top Section Header */}
-                <div className="container mx-auto mb-15 lg:mb-20 px-4">
-                    <div className="flex flex-wrap items-center justify-between gap-15">
-                        <div className="max-w-3xl">
-                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
-                                Creative power that
-                                <span className="block relative font-caveat italic text-4xl sm:text-5xl md:text-6xl font-bold ml-1 text-white">
-                                    <spna className="relative z-10 font-caveat font-bold text-5xl md:text-6xl lg:text-7xl">goes beyond</spna>
-                                    <svg className="absolute md:top-0 -top-2 left-5 md:w-auto w-50" width="250" height="70" viewBox="0 0 250 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M225.064 51.0838C229.639 49.8773 231.08 44.3697 230.022 39.7534C232.32 38.1014 233.447 35.1901 233.492 32.2264C236.534 31.728 239.598 31.2558 242.64 30.7314C242.663 30.7314 242.708 30.7314 242.731 30.7314C243.385 30.6266 244.039 30.5216 244.714 30.4168C252.24 29.079 251.295 14.0771 244.625 12.5296C246.381 6.99569 244.241 -0.426686 238.089 0.019177C161.111 5.63182 84.1327 11.2444 7.15462 16.8833C-0.394453 17.434 -2.01694 28.6332 2.51251 33.2491C0.259055 38.6257 3.79697 46.6513 9.25033 46.8611C20.8331 47.3068 32.4159 47.5169 43.9987 47.5692C43.6832 48.0414 43.3902 48.566 43.1423 49.0904C41.3847 49.5888 39.627 50.0871 37.8468 50.5856C29.3513 52.9722 31.7623 68.0267 39.8299 68.6036C102.025 72.9836 164.13 67.0299 225.086 51.1624L225.064 51.0838Z" fill="#0073E6" fillOpacity="0.5" />
-                                    </svg>
-                                </span>
-                            </h2>
-                            <p className="mt-10 text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed font-medium text-white/70">
-                                Ready to take your metal building projects to the next level? Discover how GripCRM can transform your business operations and drive growth
-                            </p>
-                        </div>
-                        <div className="max-w-xl flex flex-wrap justify-center gap-6">
-                            {icons.map((item) => (
-                                <div key={item.id} className="flex flex-row items-center gap-3 border border-white/50 rounded-sm p-5">
-                                    {item.svg} <span className="text-lg font-semibold">{item.title}</span>
-                                </div>
-                            ))}
-                        </div>
+                    <div className="max-w-auto lg:max-w-xl flex flex-wrap justify-center gap-5">
+                        {icons.map((item) => (
+                            <div key={item.id} className="flex flex-row items-center gap-2 lg:gap-3 border border-white/50 rounded-sm p-4 lg:p-5">
+                                {item.svg} <span className="text-sm md:text-base lg:text-lg font-medium lg:font-semibold">{item.title}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
+
+                <div className="beyond-swiper">
+                    <Swiper
+                        modules={[Navigation, Pagination, Autoplay]}
+                        slidesPerView={1}
+                        spaceBetween={30}
+                        navigation={{
+                            prevEl: prevRef.current,
+                            nextEl: nextRef.current,
+                        }}
+                        onBeforeInit={(swiper) => {
+                            swiper.params.navigation.prevEl = prevRef.current;
+                            swiper.params.navigation.nextEl = nextRef.current;
+                        }}
+                        pagination={{
+                            dynamicBullets: true,
+                        }}
+                        autoplay={false}
+                        breakpoints={{
+                            767: {
+                                slidesPerView: 1,
+                            },
+                            1024: {
+                                slidesPerView: 2,
+                            }
+                        }}
+                    >
+                        <SwiperSlide
+                            className={`rounded-2xl`}>
+                            <div>
+                                <Image src={'/images/home/screen-1.png'} alt={'screen'} className="w-full" width={684} height={473} />
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide
+                            className={`rounded-2xl`}>
+                            <div>
+                                <Image src={'/images/home/screen-1.png'} alt={'screen'} className="w-full" width={684} height={473} />
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide
+                            className={`rounded-2xl`}>
+                            <div>
+                                <Image src={'/images/home/screen-1.png'} alt={'screen'} className="w-full" width={684} height={473} />
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide
+                            className={`rounded-2xl`}>
+                            <div>
+                                <Image src={'/images/home/screen-1.png'} alt={'screen'} className="w-full" width={684} height={473} />
+                            </div>
+                        </SwiperSlide>
+                    </Swiper>
+                </div>
+
             </div>
         </section>
     );

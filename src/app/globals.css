@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #404040;
+  --primary: #395394;
 }
 
 @theme inline {
@@ -10,6 +11,7 @@
   --color-foreground: var(--foreground);
   --font-caveat: var(--font-caveat);
   --font-inter: var(--font-inter);
+  --color-primary: var(--primary);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -133,4 +135,20 @@ body {
     max-width: 48rem;
     margin: 0 auto !important;
   }
+}
+
+.beyond-swiper .swiper-pagination {
+  @apply sticky mt-10 mb-0;
+}
+
+.beyond-swiper .swiper-pagination span {
+  @apply bg-white/50 scale-none !size-3 rounded-xs;
+}
+
+.beyond-swiper .swiper-pagination span.swiper-pagination-bullet-active-main {
+  @apply bg-[#ffd039] w-8;
+}
+
+.price-swiper .swiper-wrapper {
+  justify-content: center;
 }

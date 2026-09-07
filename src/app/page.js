@@ -10,6 +10,7 @@ import Platform from "@/components/sections/home/platform";
 import GripCRM from "@/components/sections/home/gripcrm";
 import GoesBeyond from "@/components/sections/home/goesbeyond";
 import BeyoundDetails from "@/components/sections/home/beyoundDetails";
+import Pricing from "@/components/sections/home/pricing";
 
 export default function Home() {
 
@@ -23,6 +24,7 @@ export default function Home() {
       <GripCRM />
       <GoesBeyond />
       <BeyoundDetails />
+      <Pricing />
     </main>
   );
 }
