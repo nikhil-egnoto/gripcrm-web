@@ -21,6 +21,7 @@ export default function Pricing() {
             name: "Standard",
             badgeBg: "bg-[#f2e5dd]",
             headerBg: "bg-[#fff1e9]",
+            borderColor: "border-[#ffb184]",
             monthlyPrice: 99,
             yearlyPrice: 99,
             description: "Best for large businesses with multiple projects and complex workflows.",
@@ -41,6 +42,7 @@ export default function Pricing() {
             name: "Professional",
             badgeBg: "bg-[#D8EFE2]",
             headerBg: "bg-[#EAF7F0]",
+            borderColor: "border-[#87d1aa]",
             monthlyPrice: 149,
             yearlyPrice: 149,
             description: "Best for large businesses with multiple projects and complex workflows.",
@@ -61,6 +63,7 @@ export default function Pricing() {
             name: "Enterprise",
             badgeBg: "bg-[#EFE5DD]",
             headerBg: "bg-[#FFF2EB]",
+            borderColor: "border-[#ffb184]",
             monthlyPrice: 299,
             yearlyPrice: 299,
             description: "Best for large businesses with multiple projects and complex workflows.",
@@ -127,7 +130,7 @@ export default function Pricing() {
                     </div>
 
                     {/* Arrow & "SAVE UPTO 30%" annotation */}
-                    <div className="absolute top-full left-1/2 mt-3 ml-8 translate-x-4 sm:translate-x-8 flex items-center gap-1 text-white">
+                    <div className="absolute top-full left-1/2 mt-3 sm:ml-8 translate-x-4 sm:translate-x-8 flex items-center gap-1 text-white">
                         <svg width="40" height="14" viewBox="0 0 40 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M39.244 5.58135L38.812 5.90105C36.544 8.03235 33.9521 9.63083 31.0361 10.6965C28.1201 11.7621 25.0962 12.1884 22.0722 12.0818C19.0483 11.9753 16.0243 11.1227 13.3243 9.84396C13.2163 9.73739 13.1083 9.73739 12.8923 9.63083C12.6763 9.52426 12.4603 9.4177 12.2443 9.31113L11.2724 8.67174C10.7324 8.45861 10.3004 8.03235 9.76038 7.71265L9.32838 7.39296C8.78839 7.07326 8.3564 6.647 7.9244 6.32731L7.6004 6.00761C7.49241 5.90105 7.38441 5.90105 7.38441 5.79448L9.32838 3.87631C9.65238 3.55661 9.76038 3.13035 9.65238 2.81066C9.54438 2.3844 9.22039 2.0647 8.78839 1.95814L1.44448 0.0399619C1.01249 -0.0666032 0.580493 0.0399619 0.364495 0.359657C0.0404995 0.679353 -0.0674992 1.10561 0.0404995 1.42531L1.98448 8.67174C2.09247 9.098 2.41647 9.4177 2.84846 9.52426C3.28046 9.63083 3.71245 9.52426 3.92845 9.20457L5.87243 7.28639C5.98042 7.39296 6.08842 7.49952 6.19642 7.60609L6.62842 8.03235C7.06041 8.45861 7.49241 8.88487 8.0324 9.20457L8.35639 9.4177C8.89639 9.84396 9.43638 10.2702 10.0844 10.5899L11.1644 11.2293C11.3804 11.3359 11.7044 11.4424 11.9204 11.6556C12.0283 11.7621 12.1363 11.7621 12.3523 11.8687C15.3763 13.1475 18.6163 13.8934 21.9642 14H22.3962C25.6362 14 28.7681 13.3606 31.5761 12.1884C34.6001 10.9096 37.408 9.098 39.568 6.75357L40 6.32731L39.244 5.58135Z" fill="white" />
                         </svg>
@@ -139,7 +142,7 @@ export default function Pricing() {
 
                 {/* Pricing Cards Grid inside pricing-container */}
                 <Swiper
-                    className="price-swiper lg:mx-20 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 items-stretch"
+                    className="price-swiper lg:mx-20 gap-10 !flex flex-col items-stretch"
                     modules={[Navigation, Pagination, Autoplay]}
                     slidesPerView={1}
                     spaceBetween={20}
@@ -177,7 +180,7 @@ export default function Pricing() {
                                     className="bg-white flex flex-col rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300 hover:-translate-y-1"
                                 >
                                     {/* Top Header Section */}
-                                    <div className={`${plan.headerBg} p-7 sm:p-8 flex flex-col justify-between min-h-[310px]`}>
+                                    <div className={`${plan.headerBg} ${plan.borderColor} border-b p-7 sm:p-8 flex flex-col justify-between min-h-[310px]`}>
                                         <div>
                                             {/* Badges */}
                                             <div className="flex items-center gap-2">
@@ -255,22 +258,22 @@ export default function Pricing() {
                         );
                     })}
 
-                    <div className="md:flex items-center justify-center gap-5 mt-10 sm:mt-20 hidden">
+                    <div className="lg:hidden flex items-center justify-center gap-5">
                         <button
                             ref={prevRef}
                             aria-label="Previous slide"
-                            className="group bg-black/5 px-6 py-3 rounded-4xl cursor-pointer"
+                            className="group bg-black/25 px-6 py-3 rounded-4xl cursor-pointer"
                         >
-                            <span className="size-8 rounded-full bg-transparent border-2 border-black text-black group-hover:bg-black group-hover:text-white flex items-center justify-center transition-all duration-200 group-active:scale-95 shadow-2xs">
+                            <span className="size-8 rounded-full bg-transparent border-2 border-white text-white group-hover:bg-white group-hover:text-black flex items-center justify-center transition-all duration-200 group-active:scale-95 shadow-2xs">
                                 <ArrowLeft className="size-5" />
                             </span>
                         </button>
                         <button
                             ref={nextRef}
                             aria-label="Next slide"
-                            className="group bg-black/5 px-6 py-3 rounded-4xl cursor-pointer"
+                            className="group bg-black/25 px-6 py-3 rounded-4xl cursor-pointer"
                         >
-                            <span className="size-8 rounded-full bg-transparent border-2 border-black text-black group-hover:bg-black group-hover:text-white flex items-center justify-center transition-all duration-200 group-active:scale-95 shadow-2xs">
+                            <span className="size-8 rounded-full bg-transparent border-2 border-white text-white group-hover:bg-white group-hover:text-black flex items-center justify-center transition-all duration-200 group-active:scale-95 shadow-2xs">
                                 <ArrowRight className="size-5" />
                             </span>
                         </button>
@@ -281,14 +284,14 @@ export default function Pricing() {
             <Image
                 src={"/images/home/pricing-pattern-1.png"}
                 alt={"pricing bg"}
-                className="absolute bottom-0 right-0"
+                className="hidden lg:block absolute bottom-0 right-0"
                 width={700}
                 height={700}
             />
             <Image
                 src={"/images/home/pricing-pattern-2.png"}
                 alt={"pricing bg"}
-                className="absolute bottom-0 left-0"
+                className="hidden lg:block absolute bottom-0 left-0"
                 width={640}
                 height={400}
             />

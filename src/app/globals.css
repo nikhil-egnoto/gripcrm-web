@@ -4,6 +4,9 @@
   --background: #ffffff;
   --foreground: #404040;
   --primary: #395394;
+  --purple: #5C51E0;
+  --yellow: #FFD00F;
+  --green: #27AE60;
 }
 
 @theme inline {
@@ -12,6 +15,9 @@
   --font-caveat: var(--font-caveat);
   --font-inter: var(--font-inter);
   --color-primary: var(--primary);
+  --color-purple: var(--purple);
+  --color-yellow: var(--yellow);
+  --color-green: var(--green);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -137,6 +143,7 @@ body {
   }
 }
 
+.feedback-swiper .swiper-pagination,
 .beyond-swiper .swiper-pagination {
   @apply sticky mt-10 mb-0;
 }
@@ -145,10 +152,22 @@ body {
   @apply bg-white/50 scale-none !size-3 rounded-xs;
 }
 
+.feedback-swiper .swiper-pagination span {
+  @apply bg-black/50 opacity-100 scale-none !size-3 rounded-xs;
+}
+
+.feedback-swiper .swiper-pagination span.swiper-pagination-bullet-active-main,
 .beyond-swiper .swiper-pagination span.swiper-pagination-bullet-active-main {
   @apply bg-[#ffd039] w-8;
 }
 
 .price-swiper .swiper-wrapper {
-  justify-content: center;
+  padding: 5px 0px;
+}
+
+@media (min-width: 1280px) {
+  .price-swiper .swiper-wrapper {
+    justify-content: center;
+    padding: 5px 0px;
+  }
 }
