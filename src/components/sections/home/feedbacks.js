@@ -83,18 +83,17 @@ export default function FeedBacks() {
 
             <div className="feedback-section relative overflow-hidden py-2">
                 {/* Left and Right Gradient Overlay Masks */}
-                <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-r from-blue-50 to-transparent z-10" />
-                <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-l from-blue-50 to-transparent z-10" />
+                <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-36 bg-linear-to-r from-blue-50 to-transparent z-10" />
+                <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-36 bg-linear-to-l from-blue-50 to-transparent z-10" />
 
                 <div className="flex flex-col gap-6 sm:gap-8">
                     {feedbackColumns.map((column, colIdx) => (
                         <div key={colIdx} className="overflow-hidden w-full">
                             <div
-                                className={`flex gap-6 ${
-                                    colIdx % 2 === 1
-                                        ? "animate-marquee-reverse"
-                                        : "animate-marquee"
-                                }`}
+                                className={`flex gap-6 ${colIdx % 2 === 1
+                                    ? "animate-marquee-reverse"
+                                    : "animate-marquee"
+                                    }`}
                                 style={{
                                     animationDuration: colIdx === 1 ? "45s" : colIdx === 2 ? "38s" : "40s"
                                 }}
@@ -102,7 +101,7 @@ export default function FeedBacks() {
                                 {[...column, ...column, ...column].map((item, itemIdx) => (
                                     <div
                                         key={itemIdx}
-                                        className="w-[320px] sm:w-[380px] md:w-[420px] shrink-0 bg-white rounded-2xl p-6 lg:p-8 border border-black/25 flex flex-col justify-between hover:shadow-md transition-shadow duration-300"
+                                        className="w-80 sm:w-96 md:w-105 shrink-0 bg-white rounded-2xl p-6 lg:p-8 border border-black/25 flex flex-col justify-between hover:shadow-md transition-shadow duration-300"
                                     >
                                         <p className="text-black text-base md:text-lg leading-relaxed mb-6 font-normal">
                                             "{item.quote}"
