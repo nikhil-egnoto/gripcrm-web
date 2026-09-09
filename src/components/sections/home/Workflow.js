@@ -1,14 +1,38 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-export default function GoesBeyond() {
+export default function Workflow() {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.80 }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
     const icons = [
         {
             id: "cloud-upload",
             bgColor: "bg-[#8fc8f4]",
             shadowColor: "shadow-blue-300/40",
-            position: "top-[0%] left-[0%] md:left-[5%] lg:left-[6%]",
+            position: "top-[6%] left-[12%] md:top-[8%] md:left-[7%] lg:left-[8%]",
             animation: "animate-float-1",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +44,7 @@ export default function GoesBeyond() {
             id: "dollar-circle",
             bgColor: "bg-[#43291a]",
             shadowColor: "shadow-stone-900/30",
-            position: "top-0 left-[50%] md:top-[28%] md:left-[14%] lg:left-[15%]",
+            position: "top-[6%] left-[50%] md:top-[28%] md:left-[14%] lg:left-[15%]",
             animation: "animate-float-2",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,7 +56,7 @@ export default function GoesBeyond() {
             id: "layout-grid",
             bgColor: "bg-[#ff9182]",
             shadowColor: "shadow-rose-300/40",
-            position: "top-0 right-[0%] md:top-[56%] md:left-[14%] lg:left-[15%]",
+            position: "top-[6%] left-[88%] md:top-[56%] md:left-[14%] lg:left-[15%]",
             animation: "animate-float-3",
             svg: (
                 <svg width="62" height="62" viewBox="0 0 56 56" strokeWidth="1.2" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +68,7 @@ export default function GoesBeyond() {
             id: "book-open",
             bgColor: "bg-[#20ad64]",
             shadowColor: "shadow-emerald-300/40",
-            position: "bottom-[60%] left-[25%] md:bottom-[8%] md:left-[5%] lg:left-[6%]",
+            position: "top-[28%] left-[10%] md:top-[84%] md:left-[6%] lg:left-[7%]",
             animation: "animate-float-4",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,7 +80,7 @@ export default function GoesBeyond() {
             id: "id-card",
             bgColor: "bg-[#e79337]",
             shadowColor: "shadow-amber-400/40",
-            position: "bottom-[60%] left-[75%] md:bottom-[4%] md:left-[31%] lg:left-[32%]",
+            position: "top-[92%] left-[20%] md:top-[88%] md:left-[31%] lg:left-[32%]",
             animation: "animate-float-2",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +92,7 @@ export default function GoesBeyond() {
             id: "window-expand",
             bgColor: "bg-[#5f53dc]",
             shadowColor: "shadow-indigo-300/40",
-            position: "top-[80%] right-[88%] md:top-[6%] md:right-[34%] lg:right-[35%]",
+            position: "top-[72%] left-[10%] md:top-[8%] md:left-[66%] lg:left-[65%]",
             animation: "animate-float-3",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +104,7 @@ export default function GoesBeyond() {
             id: "file-lock",
             bgColor: "bg-[#895d43]",
             shadowColor: "shadow-stone-600/30",
-            position: "top-[80%] right-[40%] md:top-[20%] md:right-[10%] lg:right-[15%]",
+            position: "top-[72%] left-[90%] md:top-[20%] md:left-[88%] lg:left-[85%]",
             animation: "animate-float-1",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +116,7 @@ export default function GoesBeyond() {
             id: "clipboard-user",
             bgColor: "bg-[#ffd039]",
             shadowColor: "shadow-yellow-300/40",
-            position: "top-[80%] right-[0%] md:top-[50%] md:right-[10%] lg:right-[17%]",
+            position: "top-[28%] left-[90%] md:top-[50%] md:left-[88%] lg:left-[84%]",
             animation: "animate-float-4",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +128,7 @@ export default function GoesBeyond() {
             id: "clipboard-star",
             bgColor: "bg-[#1274e2]",
             shadowColor: "shadow-blue-400/40",
-            position: "bottom-[24%] right-[24%] md:bottom-[5%] md:right-[26%] lg:right-[27%]",
+            position: "top-[92%] left-[50%] md:top-[84%] md:left-[72%] lg:left-[71%]",
             animation: "animate-float-2",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -116,7 +140,7 @@ export default function GoesBeyond() {
             id: "receipt",
             bgColor: "bg-[#e50f17]",
             shadowColor: "shadow-red-400/40",
-            position: "bottom-[24%] right-[55%] md:bottom-[7%] md:right-[6%] lg:right-[8%]",
+            position: "top-[92%] left-[80%] md:top-[86%] md:left-[92%] lg:left-[90%]",
             animation: "animate-float-3",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -127,24 +151,24 @@ export default function GoesBeyond() {
     ];
 
     return (
-        <section className="bg-white py-16 md:py-24 overflow-hidden relative select-none">
+        <section ref={sectionRef} className="bg-white py-16 md:py-24 overflow-hidden relative select-none">
             {/* Floating animation keyframe styles */}
             <style jsx global>{`
                 @keyframes floatSlow1 {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-8px); }
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(-8px); }
                 }
                 @keyframes floatSlow2 {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(10px); }
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(10px); }
                 }
                 @keyframes floatSlow3 {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-12px); }
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(-12px); }
                 }
                 @keyframes floatSlow4 {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(7px); }
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(7px); }
                 }
                 .animate-float-1 { animation: floatSlow1 4s ease-in-out infinite; }
                 .animate-float-2 { animation: floatSlow2 5.2s ease-in-out infinite; }
@@ -152,18 +176,26 @@ export default function GoesBeyond() {
                 .animate-float-4 { animation: floatSlow4 5.8s ease-in-out infinite; }
             `}</style>
 
-            <div className="px-4 relative min-h-[520px] sm:min-h-[580px] md:min-h-[640px] flex items-center justify-center flex-col md:flex-row gap-10 w-full">
-                {/* Absolute floating cards layer (Desktop & Tablet) */}
-                <div className="w-full relative h-80 md:h-auto md:absolute inset-0 pointer-events-none">
-                    {icons.map((item) => (
+            <div className="px-4 relative min-h-130 sm:min-h-145 md:min-h-160 flex items-center justify-center flex-col md:flex-row gap-10 w-full">
+                {/* Floating cards layer */}
+                <div className="w-full absolute inset-0 pointer-events-none">
+                    {icons.map((item, index) => (
                         <div
                             key={item.id}
-                            className={`absolute ${item.position} ${item.animation} pointer-events-auto transition-transform duration-300 z-10`}
+                            className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 ease-[cubic-bezier(0.34,1.56,0.64,1)] z-10 ${isVisible
+                                ? `${item.position} opacity-100 scale-100 pointer-events-auto`
+                                : "top-[50%] left-[50%] opacity-0 scale-0 pointer-events-none"
+                                }`}
+                            style={{
+                                transitionDelay: isVisible ? `${index * 60}ms` : "0ms",
+                            }}
                         >
-                            <div
-                                className={`size-14 sm:size-18 md:size-22 rounded-lg p-2 ${item.bgColor} ${item.shadowColor} shadow-md flex items-center justify-center text-white transition-shadow duration-300 hover:shadow-xl`}
-                            >
-                                {item.svg}
+                            <div className={item.animation}>
+                                <div
+                                    className={`size-12 sm:size-16 md:size-20 lg:size-22 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 md:p-4 ${item.bgColor} ${item.shadowColor} shadow-md flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:shadow-xl cursor-pointer`}
+                                >
+                                    {item.svg}
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -172,23 +204,17 @@ export default function GoesBeyond() {
                 {/* Center Main Content */}
                 <div className="relative z-20 text-center max-w-2xl mx-auto px-2">
                     {/* Main Title */}
-                    <h2 className="text-4xl lg:text-5xl font-bold text-black">
-                        Creative power that
+                    <h2 className="max-w-xl mx-auto text-4xl lg:text-5xl leading-[1.2] font-spaceGrotesk font-bold text-neutral-900">
+                        Everything You Need to
+                        <span className="ms-2 text-blue-500">
+                            Run Your Workflow
+                            <svg className="mx-auto mt-4" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
+                        </span>
                     </h2>
 
-                    {/* Script Subtitle with pill highlight background */}
-                    <div className="mt-2 mb-6 sm:mb-8 relative">
-                        <span className="inline-block font-caveat font-bold text-5xl md:text-6xl lg:text-7xl text-black">
-                            goes beyond
-                        </span>
-                        <svg className="absolute md:top-0 -top-2 left-[50%] -translate-x-1/2 md:w-auto w-50" width="250" height="70" viewBox="0 0 250 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M225.064 51.0838C229.639 49.8773 231.08 44.3697 230.022 39.7534C232.32 38.1014 233.447 35.1901 233.492 32.2264C236.534 31.728 239.598 31.2558 242.64 30.7314C242.663 30.7314 242.708 30.7314 242.731 30.7314C243.385 30.6266 244.039 30.5216 244.714 30.4168C252.24 29.079 251.295 14.0771 244.625 12.5296C246.381 6.99569 244.241 -0.426686 238.089 0.019177C161.111 5.63182 84.1327 11.2444 7.15462 16.8833C-0.394453 17.434 -2.01694 28.6332 2.51251 33.2491C0.259055 38.6257 3.79697 46.6513 9.25033 46.8611C20.8331 47.3068 32.4159 47.5169 43.9987 47.5692C43.6832 48.0414 43.3902 48.566 43.1423 49.0904C41.3847 49.5888 39.627 50.0871 37.8468 50.5856C29.3513 52.9722 31.7623 68.0267 39.8299 68.6036C102.025 72.9836 164.13 67.0299 225.086 51.1624L225.064 51.0838Z" fill="#432918" fillOpacity="0.1" />
-                        </svg>
-                    </div>
-
                     {/* Description Text */}
-                    <div className="max-w-130 m-auto space-y-1 text-gray-600 text-base md:text-lg leading-relaxed font-medium">
-                        Ready to take your metal building projects to the next level? Discover how GripCRM can transform your business operations and drive growth
+                    <div className="m-auto text-neutral-700 text-base leading-[1.9] font-normal mt-10">
+                        <strong className="font-semibold">GripCRM transforms the way you manage projects. It streamlines every step from start to finish.</strong> Contractors and builders can make faster decisions with all data in one platform. You can unlock smoother and more efficient workflows with CRM for metal building companies.
                     </div>
                 </div>
             </div>

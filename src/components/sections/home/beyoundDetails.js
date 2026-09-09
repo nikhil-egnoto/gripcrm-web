@@ -102,14 +102,14 @@ export default function BeyoundDetails() {
                     <div className="max-w-3xl">
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
                             Creative power that
-                            <span className="block relative font-caveat italic text-4xl sm:text-5xl md:text-6xl font-bold ml-1 text-white">
-                                <spna className="relative z-10 font-caveat font-bold text-5xl md:text-6xl lg:text-7xl">goes beyond</spna>
+                            <span className="block relative font-spaceGrotesk italic text-4xl sm:text-5xl md:text-6xl font-bold ml-1 text-white">
+                                <spna className="relative z-10 font-spaceGrotesk font-bold text-5xl md:text-6xl lg:text-7xl">goes beyond</spna>
                                 <svg className="absolute md:top-0 -top-2 left-5 md:w-auto w-50" width="250" height="70" viewBox="0 0 250 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M225.064 51.0838C229.639 49.8773 231.08 44.3697 230.022 39.7534C232.32 38.1014 233.447 35.1901 233.492 32.2264C236.534 31.728 239.598 31.2558 242.64 30.7314C242.663 30.7314 242.708 30.7314 242.731 30.7314C243.385 30.6266 244.039 30.5216 244.714 30.4168C252.24 29.079 251.295 14.0771 244.625 12.5296C246.381 6.99569 244.241 -0.426686 238.089 0.019177C161.111 5.63182 84.1327 11.2444 7.15462 16.8833C-0.394453 17.434 -2.01694 28.6332 2.51251 33.2491C0.259055 38.6257 3.79697 46.6513 9.25033 46.8611C20.8331 47.3068 32.4159 47.5169 43.9987 47.5692C43.6832 48.0414 43.3902 48.566 43.1423 49.0904C41.3847 49.5888 39.627 50.0871 37.8468 50.5856C29.3513 52.9722 31.7623 68.0267 39.8299 68.6036C102.025 72.9836 164.13 67.0299 225.086 51.1624L225.064 51.0838Z" fill="#0073E6" fillOpacity="0.5" />
                                 </svg>
                             </span>
                         </h2>
-                        <p className="mt-10 text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed font-medium text-white/70">
+                        <p className="mt-10 text-sm sm:text-base md:text-lg leading-relaxed font-medium text-white/70">
                             Ready to take your metal building projects to the next level? Discover how GripCRM can transform your business operations and drive growth
                         </p>
                     </div>

@@ -7,17 +7,33 @@
   --purple: #5C51E0;
   --yellow: #FFD00F;
   --green: #27AE60;
+  --blue-50: #eff5fe;
+  --blue-400: #88a4ec;
+  --blue-500: #6f87e3;
+  --blue-700: #4652bb;
+  --violet-500: #8952f9;
+  --green-500: #17a27f;
+  --orange-500: #e78e38;
+  --olive-500: #b8b243;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-caveat: var(--font-caveat);
+  --font-spaceGrotesk: var(--font-space-grotesk);
   --font-inter: var(--font-inter);
   --color-primary: var(--primary);
   --color-purple: var(--purple);
   --color-yellow: var(--yellow);
   --color-green: var(--green);
+  --color-blue-50: var(--blue-50);
+  --color-blue-400: var(--blue-400);
+  --color-blue-500: var(--blue-500);
+  --color-blue-700: var(--blue-700);
+  --color-violet-500: var(--violet-500);
+  --color-green-500: var(--green-500);
+  --color-orange-500: var(--orange-500);
+  --color-olive-500: var(--olive-500);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,7 +51,7 @@ body {
 
 @media screen and (max-width:767px) {
   .mobile-menu {
-    @apply text-center bg-white w-full absolute top-[84px] gap-10 flex-col pt-10 z-40 opacity-0 invisible left-0 transform -translate-y-4 pointer-events-none border-t border-gray-100 overflow-auto pb-10 bg-contain bg-bottom bg-no-repeat;
+    @apply text-center bg-white w-full absolute top-21 gap-10 flex-col pt-10 z-40 opacity-0 invisible left-0 transform -translate-y-4 pointer-events-none border-t border-gray-100 overflow-auto pb-10 bg-contain bg-bottom bg-no-repeat;
     background-image: url("../../public/images/menu-bg.png");
     transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -81,20 +97,18 @@ body {
     @apply gap-10;
   }
 
-  .mobile-dropdown>div a {
-    @apply capitalize inline-flex lg:px-4 px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 bg-neutral-100 hover:bg-orange-50 hover:text-orange-600 transition-colors;
-  }
 
   .mobile-dropdown>div>div>div {
     display: none;
   }
 
   .platform-swiper .swiper-wrapper {
-    @apply flex-col gap-10 !transform-none;
+    @apply flex-col gap-10;
+    transform: none !important;
   }
 
   .platform-swiper .swiper-wrapper>div {
-    @apply !m-0;
+    margin: 0px !important;
   }
 }
 
@@ -118,8 +132,27 @@ body {
   animation-play-state: paused;
 }
 
-.platform-swiper .swiper-wrapper>div:nth-child(even) {
-  @apply mt-18;
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 25s linear infinite;
+}
+
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
+.platform-swiper .swiper-wrapper>div:nth-child(odd) {
+  @apply mt-12;
 }
 
 @keyframes fillProgress {
@@ -136,13 +169,6 @@ body {
   animation: fillProgress linear forwards;
 }
 
-@media (max-width: 1022px) {
-  .gripcrm-content {
-    max-width: 48rem;
-    margin: 0 auto !important;
-  }
-}
-
 .feedback-swiper .swiper-pagination,
 .beyond-swiper .swiper-pagination {
   @apply sticky mt-10 mb-0;
@@ -154,6 +180,7 @@ body {
 
 .feedback-swiper .swiper-pagination span {
   @apply bg-black/50 opacity-100 scale-none !size-3 rounded-xs;
+
 }
 
 .feedback-swiper .swiper-pagination span.swiper-pagination-bullet-active-main,
@@ -163,6 +190,272 @@ body {
 
 .price-swiper .swiper-wrapper {
   padding: 5px 0px;
+}
+
+.hero-section {
+  background: linear-gradient(120deg,
+      #e9ebf5 0%,
+      #dfe3f7 25%,
+      #ccd4f5 50%,
+      #dbe0f8 75%,
+      #eceef6 100%);
+  background-size: 300% 300%;
+  animation: gradientShift 12s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.gradient-stage {
+  background: #12121f;
+  isolation: isolate;
+}
+
+/* Shared blob base. Each uses a DIFFERENT duration + multi-step path
+     (not just A->B->A) so the motion reads as organic drift rather than
+     a mechanical ping-pong. transform-only animation keeps it GPU-cheap. */
+.blob {
+  position: absolute;
+  width: 65%;
+  height: 65%;
+  border-radius: 50%;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  transform-origin: center;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-iteration-count: infinite;
+}
+
+.blob--1 {
+  top: -15%;
+  left: -15%;
+  background: radial-gradient(circle at 30% 30%, #f4c95d, transparent 70%);
+  animation-name: path1, breathe1;
+  animation-duration: 24s, 7s;
+  opacity: 0.16;
+}
+
+.blob--2 {
+  top: 10%;
+  right: -20%;
+  background: radial-gradient(circle at 70% 40%, #d94f70, transparent 70%);
+  animation-name: path2, breathe2;
+  animation-duration: 31s, 9s;
+  animation-delay: -6s, -2s;
+  opacity: 0.14;
+}
+
+.blob--3 {
+  bottom: -20%;
+  left: 10%;
+  background: radial-gradient(circle at 50% 50%, #7a1f3d, transparent 70%);
+  animation-name: path3, breathe3;
+  animation-duration: 27s, 8s;
+  animation-delay: -12s, -4s;
+  opacity: 0.18;
+}
+
+.blob--4 {
+  bottom: -15%;
+  right: 5%;
+  background: radial-gradient(circle at 40% 60%, #4a3f8f, transparent 70%);
+  animation-name: path4, breathe4;
+  animation-duration: 35s, 10s;
+  animation-delay: -18s, -1s;
+  opacity: 0.13;
+}
+
+.blob--5 {
+  top: 35%;
+  left: 30%;
+  width: 45%;
+  height: 45%;
+  background: radial-gradient(circle at 50% 50%, #f4c95d, transparent 70%);
+  animation-name: path5, breathe1;
+  animation-duration: 10s, 6s;
+  animation-delay: -6s, -3s;
+  opacity: 0.8;
+}
+
+/* Multi-waypoint drift paths -> irregular loops instead of back-and-forth */
+@keyframes path1 {
+  0% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(14%, 8%) scale(1.18) rotate(10deg);
+  }
+
+  50% {
+    transform: translate(6%, 18%) scale(0.92) rotate(-6deg);
+  }
+
+  75% {
+    transform: translate(-10%, 6%) scale(1.1) rotate(14deg);
+  }
+
+  100% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes path2 {
+  0% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+
+  30% {
+    transform: translate(-16%, 10%) scale(1.2) rotate(-14deg);
+  }
+
+  55% {
+    transform: translate(-8%, -12%) scale(0.9) rotate(8deg);
+  }
+
+  80% {
+    transform: translate(10%, -6%) scale(1.12) rotate(-10deg);
+  }
+
+  100% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes path3 {
+  0% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+
+  20% {
+    transform: translate(8%, -14%) scale(1.15) rotate(9deg);
+  }
+
+  50% {
+    transform: translate(18%, -4%) scale(0.95) rotate(-12deg);
+  }
+
+  75% {
+    transform: translate(4%, 10%) scale(1.22) rotate(6deg);
+  }
+
+  100% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes path4 {
+  0% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+
+  28% {
+    transform: translate(-10%, -10%) scale(1.16) rotate(-8deg);
+  }
+
+  58% {
+    transform: translate(-18%, 4%) scale(0.9) rotate(12deg);
+  }
+
+  82% {
+    transform: translate(-4%, 14%) scale(1.08) rotate(-14deg);
+  }
+
+  100% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes path5 {
+  0% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+
+  35% {
+    transform: translate(10%, -8%) scale(1.3) rotate(20deg);
+  }
+
+  70% {
+    transform: translate(-8%, 6%) scale(0.85) rotate(-16deg);
+  }
+
+  100% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+}
+
+/* Independent opacity "breathing" layered on top of the position path,
+     giving the intensity a subtle pulse like the Figma Intensity slider
+     shifting over time. Kept as a SEPARATE animation so duration can
+     differ from the drift path (this is what "Morph speed" is doing). */
+@keyframes breathe1 {
+
+  0%,
+  100% {
+    opacity: 0.10;
+  }
+
+  50% {
+    opacity: 0.20;
+  }
+}
+
+@keyframes breathe2 {
+
+  0%,
+  100% {
+    opacity: 0.09;
+  }
+
+  50% {
+    opacity: 0.17;
+  }
+}
+
+@keyframes breathe3 {
+
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+
+  50% {
+    opacity: 0.22;
+  }
+}
+
+@keyframes breathe4 {
+
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+
+  50% {
+    opacity: 0.15;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  .blob,
+  .noise {
+    animation: none;
+  }
 }
 
 @media (min-width: 1280px) {

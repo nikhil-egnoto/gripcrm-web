@@ -14,7 +14,7 @@ export default function Grow() {
                     <div className="lg:col-span-5 flex flex-col items-start relative z-10">
                         <div className="mb-4 sm:mb-6">
                             <div className="relative">
-                                <span className="inline-block font-caveat font-bold text-5xl md:text-6xl text-yellow">
+                                <span className="inline-block font-spaceGrotesk font-bold text-5xl md:text-6xl text-yellow">
                                     Grow
                                 </span>
                                 <svg className="absolute top-0 lg:top-2 left-0" width="140" height="48" viewBox="0 0 140 48" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,21 +1,6 @@
 "use client";
 
-import Button from "@/components/ui/Button";
-import { ChevronRight } from "lucide-react";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { useRef } from "react";
-
 export default function FeedBacks() {
-    const prevRef = useRef(null);
-    const nextRef = useRef(null);
-
-
     const feedbackColumns = [
         // Column 1
         [
@@ -82,47 +67,51 @@ export default function FeedBacks() {
         ]
     ];
 
-    const columnStyles = [
-        "md:mt-0",
-        "md:mt-20",
-        "md:mt-10"
-    ];
-
     return (
-        <section className="py-16 md:py-24 relative overflow-hidden px-4 bg-white">
-            <div className="container mx-auto relative z-10">
+        <section className="bg-blue-50 py-16 md:py-24 relative overflow-hidden">
+            <div className="container mx-auto relative z-10 px-4">
                 <div className="text-center mb-12 sm:mb-16">
-                    <p className="inline-block text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-purple leading-tight relative font-caveat mb-3">
-                        Trust
-                        <svg width="160" height="15" viewBox="0 0 160 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M80.6129 4.56295C82.3337 4.40995 115.631 1.32495 133.786 0.370951C141.463 -0.0460494 149.154 -0.0160539 156.763 0.0179461C157.886 0.0599461 159.754 0.965948 159.937 1.76495C160.213 3.00795 159.544 4.82995 158.69 5.76295C156.359 8.28295 153.257 9.04295 150.057 9.17995C138.299 9.77095 126.545 10.452 114.784 10.954C84.8641 12.231 54.8585 13.3319 24.9361 14.5189C19.1761 14.7649 13.3312 14.8349 7.56804 14.9909C4.68804 15.1139 2.25204 13.963 0.580839 11.523C-0.0871609 10.565 -0.140761 8.68495 0.225639 7.50295C0.522439 6.68295 2.02484 5.99194 2.98484 5.95094C28.4249 4.86594 77.4009 2.83995 78.6465 2.71595C80.4609 2.53595 78.8913 4.71394 80.6121 4.56194L80.6129 4.56295Z" fill="#27AE60" />
-                        </svg>
-                    </p>
-                    <h2 className="max-w-2xl mx-auto text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black leading-tight">
-                        Our services have earned the trust of many
+                    <h2 className="font-spaceGrotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-blue-500 leading-tight">
+                        Trusted by Teams
+                        <span className="block text-neutral-900">
+                            That Build and Grow
+                        </span>
+                        <svg width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="jsx-74b099b4c2caf5ab mx-auto mt-4"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor" className="jsx-74b099b4c2caf5ab"></path></svg>
                     </h2>
                 </div>
+            </div>
 
-                <div className="feedback-section">
-                    <div className="hidden md:grid grid-cols-1 md:grid-cols-3 lg:gap-10 gap-6 items-start">
-                        {feedbackColumns.map((column, colIdx) => (
+            <div className="feedback-section relative overflow-hidden py-2">
+                {/* Left and Right Gradient Overlay Masks */}
+                <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-r from-blue-50 to-transparent z-10" />
+                <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-l from-blue-50 to-transparent z-10" />
+
+                <div className="flex flex-col gap-6 sm:gap-8">
+                    {feedbackColumns.map((column, colIdx) => (
+                        <div key={colIdx} className="overflow-hidden w-full">
                             <div
-                                key={colIdx}
-                                className={`flex flex-col gap-10 ${columnStyles[colIdx]}`}
+                                className={`flex gap-6 ${
+                                    colIdx % 2 === 1
+                                        ? "animate-marquee-reverse"
+                                        : "animate-marquee"
+                                }`}
+                                style={{
+                                    animationDuration: colIdx === 1 ? "45s" : colIdx === 2 ? "38s" : "40s"
+                                }}
                             >
-                                {column.map((item, itemIdx) => (
+                                {[...column, ...column, ...column].map((item, itemIdx) => (
                                     <div
                                         key={itemIdx}
-                                        className="bg-white rounded-2xl p-6 lg:p-12 border border-black/25 flex flex-col justify-between hover:shadow-md transition-shadow duration-300"
+                                        className="w-[320px] sm:w-[380px] md:w-[420px] shrink-0 bg-white rounded-2xl p-6 lg:p-8 border border-black/25 flex flex-col justify-between hover:shadow-md transition-shadow duration-300"
                                     >
-                                        <p className="text-black text-base/7 md:text-lg/9 leading-relaxed mb-10 font-normal">
+                                        <p className="text-black text-base md:text-lg leading-relaxed mb-6 font-normal">
                                             "{item.quote}"
                                         </p>
                                         <div className="flex items-center gap-3.5 mt-auto">
                                             <img
                                                 src={item.avatar}
                                                 alt={item.name}
-                                                className="size-16 rounded-xl object-cover flex-shrink-0"
+                                                className="size-14 rounded-xl object-cover shrink-0"
                                             />
                                             <div>
                                                 <h4 className="font-bold text-black text-base sm:text-lg leading-tight">
@@ -136,67 +125,11 @@ export default function FeedBacks() {
                                     </div>
                                 ))}
                             </div>
-                        ))}
-                    </div>
-
-                    <div className="md:hidden feedback-swiper">
-
-                        <Swiper
-                            modules={[Navigation, Pagination, Autoplay]}
-                            slidesPerView={1}
-                            spaceBetween={30}
-                            navigation={{
-                                prevEl: prevRef.current,
-                                nextEl: nextRef.current,
-                            }}
-                            onBeforeInit={(swiper) => {
-                                swiper.params.navigation.prevEl = prevRef.current;
-                                swiper.params.navigation.nextEl = nextRef.current;
-                            }}
-                            pagination={{
-                                dynamicBullets: true,
-                                clickable: true,
-                            }}
-                            autoplay={false}
-                        >
-
-                            {feedbackColumns.flat().map((item, index) => (
-                                <SwiperSlide key={index} className="rounded-2xl h-auto">
-                                    <div className="flex flex-col justify-between h-full">
-                                        <p className="text-black/75 text-base/8 mb-10 font-normal min-h-50">
-                                            "{item.quote}"
-                                        </p>
-                                        <div className="flex items-center gap-3.5 mt-auto">
-                                            <img
-                                                src={item.avatar}
-                                                alt={item.name}
-                                                className="size-16 rounded-xl object-cover flex-shrink-0"
-                                            />
-                                            <div>
-                                                <h4 className="font-bold text-black text-base leading-tight">
-                                                    {item.name}
-                                                </h4>
-                                                <p className="text-sm text-black/75 font-medium mt-1">
-                                                    {item.role}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
-
-                    <div className="mt-12 sm:mt-16 flex justify-center">
-                        <Button className="bg-white text-black font-semibold before:bg-black hover:text-white">
-                            <span className="relative z-1">View All Feedbacks</span>
-                            <span className="w-5 h-5 rounded-full bg-black group-hover:bg-white text-white group-hover:text-black flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
-                                <ChevronRight className="size-4" />
-                            </span>
-                        </Button>
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
     );
 }
+

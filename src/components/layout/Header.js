@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 export default function Header() {
     return (
         <header className="relative z-50 bg-white transition-all">
-            <div className="max-w-[1920px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-3.5 flex items-center justify-between lg:gap-15 gap-6">
+            <div className="max-w-[1920px] w-full border-b border-neutral-300 mx-auto px-4 sm:px-8 lg:px-12 py-3.5 flex items-center justify-between lg:gap-15 gap-6">
 
                 {/* --- LOGO --- */}
                 <div className="flex items-center">
