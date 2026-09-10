@@ -13,7 +13,7 @@ export default function Workflow() {
                     setIsVisible(true);
                 }
             },
-            { threshold: 0.80 }
+            { threshold: 0.50 }
         );
 
         if (sectionRef.current) {

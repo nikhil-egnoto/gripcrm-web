@@ -95,7 +95,7 @@ export default function Navbar() {
                                 <button
                                     type="button"
                                     onClick={() => setIsResourcesOpen((prev) => !prev)}
-                                    className={`px-4 py-2 text-sm font-semibold flex items-center gap-1.5 cursor-pointer transition-all ${isResourcesOpen ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900"}`}>
+                                    className={`px-4 text-sm font-semibold flex items-center gap-1.5 cursor-pointer transition-all ${isResourcesOpen ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900"}`}>
                                     <span>{item.label}</span>
 
                                     {isResourcesOpen ? (
@@ -106,7 +106,7 @@ export default function Navbar() {
                                 </button>
 
                                 {/* Dropdown */}
-                                <div className={`mobile-dropdown absolute top-full left-0 mt-4 w-80 sm:w-90 bg-white rounded-b-3xl px-8 sm:px-12 py-8 shadow-[0_20px_60px_rgba(0,0,0,0.18)] border border-gray-100 z-50 transition-all duration-300 ease-in-out transform origin-top-left ${isResourcesOpen ? "opacity-100 translate-y-0 scale-100 pointer-events-auto visible" : "opacity-0 -translate-y-2 md:scale-95 pointer-events-none invisible"}`}>
+                                <div className={`mobile-dropdown absolute top-full left-0 mt-7 w-80 sm:w-90 bg-white rounded-b-3xl px-8 sm:px-12 py-8 shadow-[0_20px_60px_rgba(0,0,0,0.18)] border border-gray-100 z-50 transition-all duration-300 ease-in-out transform origin-top-left ${isResourcesOpen ? "opacity-100 translate-y-0 scale-100 pointer-events-auto visible" : "opacity-0 -translate-y-2 md:scale-95 pointer-events-none invisible"}`}>
 
                                     <div className="flex flex-col gap-5">
 
@@ -150,7 +150,7 @@ export default function Navbar() {
                             <a
                                 href={item.href}
                                 onClick={closeMobileMenu}
-                                className="capitalize lg:px-4 px-3 py-2 rounded-lg text-sm font-semibold text-neutral-500 hover:text-neutral-900 transition-colors"
+                                className="capitalize lg:px-4 px-3 rounded-lg text-sm font-semibold text-neutral-500 hover:text-neutral-900 transition-colors"
                             >
                                 {item.label}
                             </a>
