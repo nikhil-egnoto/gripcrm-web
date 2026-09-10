@@ -10,7 +10,7 @@ export default function Header() {
 
                 {/* --- LOGO --- */}
                 <div className="flex items-center">
-                    <a href="#" className="flex items-center gap-2">
+                    <a href="/" className="flex items-center gap-2">
                         {/* Desktop Logo (Full GRIPCRM) */}
                         <div className="hidden md:block">
                             <Image

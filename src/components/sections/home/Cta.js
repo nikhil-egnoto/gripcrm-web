@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 
 export default function Cta({ className }) {
     return (
-        <section className={`relative ${className}`}>
+        <section className={`gradient-stage py-16 md:py-24 overflow-hidden relative select-none px-4 ${className}`}>
 
             <div className="container mx-auto relative bg-white rounded-2xl lg:pt-0 pt-10 lg:overflow-visible overflow-hidden">
 

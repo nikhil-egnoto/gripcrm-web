@@ -3,11 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #404040;
-  --primary: #395394;
-  --purple: #5C51E0;
-  --yellow: #FFD00F;
-  --green: #27AE60;
+  --red-500: #e7565d;
   --blue-50: #eff5fe;
+  --blue-300: #acc6f4;
   --blue-400: #88a4ec;
   --blue-500: #6f87e3;
   --blue-700: #4652bb;
@@ -22,11 +20,8 @@
   --color-foreground: var(--foreground);
   --font-spaceGrotesk: var(--font-space-grotesk);
   --font-inter: var(--font-inter);
-  --color-primary: var(--primary);
-  --color-purple: var(--purple);
-  --color-yellow: var(--yellow);
-  --color-green: var(--green);
   --color-blue-50: var(--blue-50);
+  --color-blue-300: var(--blue-300);
   --color-blue-400: var(--blue-400);
   --color-blue-500: var(--blue-500);
   --color-blue-700: var(--blue-700);
@@ -97,7 +92,6 @@ body {
     @apply gap-10;
   }
 
-
   .mobile-dropdown>div>div>div {
     display: none;
   }
@@ -136,6 +130,7 @@ body {
   0% {
     transform: translateX(-50%);
   }
+
   100% {
     transform: translateX(0%);
   }
@@ -217,15 +212,11 @@ body {
   }
 }
 
-
 .gradient-stage {
   background: #12121f;
   isolation: isolate;
 }
 
-/* Shared blob base. Each uses a DIFFERENT duration + multi-step path
-     (not just A->B->A) so the motion reads as organic drift rather than
-     a mechanical ping-pong. transform-only animation keeps it GPU-cheap. */
 .blob {
   position: absolute;
   width: 65%;
@@ -397,10 +388,6 @@ body {
   }
 }
 
-/* Independent opacity "breathing" layered on top of the position path,
-     giving the intensity a subtle pulse like the Figma Intensity slider
-     shifting over time. Kept as a SEPARATE animation so duration can
-     differ from the drift path (this is what "Morph speed" is doing). */
 @keyframes breathe1 {
 
   0%,
@@ -455,6 +442,32 @@ body {
   .blob,
   .noise {
     animation: none;
+  }
+}
+
+
+/* The card itself */
+.gradient-card::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(from var(--angle), hsl(46.39deg 100% 80.98% / 0%) 0deg, hsl(244deg 100% 73.53% / 40%) 60deg, hsl(323.53deg 100% 40% / 40%) 140deg, hsl(46.39deg 100% 80.98% / 40%) 200deg, hsl(244deg 100% 73.53% / 40%) 280deg, hsl(323.53deg 100% 50% / 0%) 360deg);
+  animation: rotate 4s linear infinite;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
   }
 }
 
