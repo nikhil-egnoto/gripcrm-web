@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Minus, Plus, MessageSquareText } from "lucide-react";
 
-export default function Faqs({ faqsData }) {
+export default function Faqs({ faqsData, faqsDescription }) {
     const [openIndex, setOpenIndex] = useState(0);
 
     const toggleFaq = (index) => {
@@ -32,7 +32,7 @@ export default function Faqs({ faqsData }) {
 
                             {/* Subtitle */}
                             <p className="text-neutral-300 text-base font-normal mt-8 sm:mt-10 ">
-                                Here are the answers to your common queries about streamlining your projects with GripCRM.
+                                {faqsDescription}
                             </p>
                         </div>
 

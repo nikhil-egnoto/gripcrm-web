@@ -6,6 +6,7 @@ import ComparePlans from "@/components/sections/price/ComparePlans";
 import Plan from "@/components/sections/price/plans";
 import WhyGripCrm from "@/components/sections/price/WhyGripCrm";
 
+const faqDescription = "Find answers to common questions about plans, billing, features, and getting started with GripCRM."
 const faqData = [
     {
         question: "Do you offer a free trial?",
@@ -36,7 +37,7 @@ export default function Pricing() {
             <ComparePlans />
             <BenefitBusiness />
             <WhyGripCrm />
-            <Faqs faqsData={faqData} />
+            <Faqs faqsData={faqData} faqsDescription={faqDescription} />
         </main>
     );
 }

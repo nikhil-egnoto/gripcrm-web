@@ -1,11 +1,45 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Navbar from "./Navbar";
 
 export default function Header() {
+    const [isVisible, setIsVisible] = useState(true);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        let lastScrollY = window.scrollY;
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            // Track if scrolled from very top
+            if (currentScrollY > 10) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+
+            // Hide header on scroll down, show on scroll up
+            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+                setIsVisible(false);
+            } else {
+                setIsVisible(true);
+            }
+
+            lastScrollY = currentScrollY;
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
-        <header className="relative z-50 bg-white transition-all">
+        <header
+            className={`sticky top-0 z-50 bg-white transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0 shadow-md" : "-translate-y-full"
+                } ${isScrolled ? "" : ""}`}
+        >
             <div className="max-w-[1920px] w-full border-b border-neutral-300 mx-auto px-4 sm:px-8 lg:px-12 py-3.5 flex items-center justify-between lg:gap-15 gap-6">
 
                 {/* --- LOGO --- */}
