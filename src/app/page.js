@@ -13,6 +13,7 @@ import Faqs from "@/components/layout/Faqs";
 import Cta from "@/components/sections/home/Cta";
 
 const faqData = [
+  title = "Here are the answers to your common queries about streamlining your projects with GripCRM.",
   {
     question: "Do you offer a free trial?",
     answer: "Yes, we offer personalized demos so you can see how GripCRM works and how it can streamline your business processes. You can contact us anytime to schedule a demo tailored to your specific needs."

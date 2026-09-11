@@ -141,7 +141,7 @@ export default function ComparePlans() {
                                             <p className="text-sm text-neutral-700 font-normal mt-1">
                                                 {billingCycle === "yearly" ? plan.yearlyPrice : plan.monthlyPrice}
                                             </p>
-                                            <Button className="border-2 font-semibold text-center justify-center mt-8 hover:bg-neutral-900 hover:text-neutral-50" href={'/contact'}>
+                                            <Button className="text-nowrap border-2 font-semibold text-center justify-center mt-8 hover:bg-neutral-900 hover:text-neutral-50" href={'/contact'}>
                                                 {plan.buttonText}
                                             </Button>
                                         </th>

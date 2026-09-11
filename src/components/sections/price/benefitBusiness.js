@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Button from "@/components/ui/Button";
 
 export default function BenefitBusiness() {
     const benefits = [
@@ -29,10 +30,10 @@ export default function BenefitBusiness() {
     ];
 
     return (
-        <section className="bg-white py-16 md:py-24 px-4 sm:px-6 lg:px-8 border-t border-neutral-100">
-            <div className="max-w-7xl mx-auto">
+        <section className="bg-white py-16 md:py-24 px-4">
+            <div className="container mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-                    
+
                     {/* Left Column - Text Content & Benefits List */}
                     <div className="lg:col-span-7 flex flex-col">
                         {/* Heading */}
@@ -41,47 +42,35 @@ export default function BenefitBusiness() {
                                 How does GripCRM benefit <br className="hidden sm:inline" />
                                 <span className="relative inline-block">
                                     your business?
-                                    <svg 
-                                        className="mt-1 text-olive-500 w-28 sm:w-36 h-2.5" 
-                                        viewBox="0 0 110 10" 
-                                        fill="none" 
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path 
-                                            d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" 
-                                            fill="currentColor"
-                                        />
-                                    </svg>
+                                    <svg className="mt-3 text-olive-500" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                                 </span>
                             </h2>
                         </div>
 
                         {/* Tagline */}
-                        <p className="text-xs sm:text-sm font-semibold text-neutral-500 uppercase tracking-wider mt-4 mb-6">
+                        <p className="text-sm sm:text-base text-neutral-700 mt-10 mb-15">
                             Work Smarter, Stay Organized
                         </p>
 
                         {/* Callout Quote Box */}
-                        <div className="border-l-2 border-orange-500 pl-5 py-1 mb-10">
-                            <p className="text-neutral-700 text-sm sm:text-base leading-relaxed font-normal">
-                                GripCRM brings your customer information, projects, communication, and workflows together in one place—so your team can spend less time managing information and more time getting work done.
-                            </p>
+                        <div className="border-l-2 border-orange-500 pl-7 mb-15 text-neutral-700 text-sm sm:text-base leading-8">
+                            GripCRM brings your customer information, projects, communication, and workflows together in one place—so your team can spend less time managing information and more time getting work done.
                         </div>
 
                         {/* Benefits List */}
-                        <div className="divide-y divide-neutral-200 border-t border-b border-neutral-200">
+                        <div className="">
                             {benefits.map((benefit, index) => (
-                                <div key={index} className="py-7 flex flex-col sm:flex-row items-start gap-4 sm:gap-5">
+                                <div key={index} className="border-t border-neutral-300 py-10 px-5 flex flex-col items-start gap-5 sm:gap-8">
                                     {/* Icon Badge */}
-                                    <div className="size-10 rounded-lg bg-neutral-800 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
-                                        <svg 
-                                            width="20" 
-                                            height="20" 
-                                            viewBox="0 0 24 24" 
-                                            fill="none" 
-                                            stroke="currentColor" 
-                                            strokeWidth="2" 
-                                            strokeLinecap="round" 
+                                    <div className="size-10 rounded-md bg-neutral-700 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
                                             strokeLinejoin="round"
                                         >
                                             <circle cx="12" cy="12" r="9" />
@@ -91,10 +80,10 @@ export default function BenefitBusiness() {
 
                                     {/* Text Content */}
                                     <div className="flex-1">
-                                        <h3 className="text-base sm:text-lg font-bold text-neutral-900">
+                                        <h3 className="text-lg sm:text-2xl font-semibold text-neutral-900">
                                             {benefit.title}
                                         </h3>
-                                        <p className="mt-1.5 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+                                        <p className="mt-5 text-sm sm:text-base text-neutral-900 leading-relaxed font-normal">
                                             {benefit.description}
                                         </p>
                                     </div>
@@ -121,19 +110,18 @@ export default function BenefitBusiness() {
                         </div>
 
                         {/* Request a Demo Button */}
-                        <Link 
-                            href="/contact"
-                            className="w-full bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-sm py-3.5 px-6 rounded-xl flex items-center justify-center gap-2.5 transition-all duration-200 shadow-md group cursor-pointer"
-                        >
-                            <span>Request a Demo</span>
-                            <span className="size-5 rounded-full bg-white text-neutral-900 flex items-center justify-center text-xs shrink-0 group-hover:scale-110 transition-transform duration-200">
-                                <ArrowRight className="size-3.5 stroke-[2.5]" />
+                        <Button className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 justify-center" type="with-icon">
+                            <span className="relative z-1">
+                                Request a Demo
                             </span>
-                        </Link>
+                            <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                                <ArrowRight className="size-4" />
+                            </span>
+                        </Button>
                     </div>
 
                 </div>
             </div>
         </section>
     );
-}
+}

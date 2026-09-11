@@ -20,6 +20,7 @@
   --color-foreground: var(--foreground);
   --font-spaceGrotesk: var(--font-space-grotesk);
   --font-inter: var(--font-inter);
+  --color-red-500: var(--red-500);
   --color-blue-50: var(--blue-50);
   --color-blue-300: var(--blue-300);
   --color-blue-400: var(--blue-400);

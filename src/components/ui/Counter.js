@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 
-export default function Counter({ end, suffix = "%", duration = 2000 }) {
+export default function Counter({ end, suffix = "%", duration = 2000, decimals = 0 }) {
     const [count, setCount] = useState(0);
     const ref = useRef(null);
     const [hasStarted, setHasStarted] = useState(false);
@@ -39,7 +39,9 @@ export default function Counter({ end, suffix = "%", duration = 2000 }) {
             if (!startTime) startTime = timestamp;
             const progress = Math.min((timestamp - startTime) / duration, 1);
             const easedProgress = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.floor(easedProgress * end));
+            const currentVal = easedProgress * end;
+
+            setCount(decimals > 0 ? parseFloat(currentVal.toFixed(decimals)) : Math.floor(currentVal));
 
             if (progress < 1) {
                 animationFrame = requestAnimationFrame(animate);
@@ -51,7 +53,7 @@ export default function Counter({ end, suffix = "%", duration = 2000 }) {
         animationFrame = requestAnimationFrame(animate);
 
         return () => cancelAnimationFrame(animationFrame);
-    }, [hasStarted, end, duration]);
+    }, [hasStarted, end, duration, decimals]);
 
     return <span ref={ref}>{count}{suffix}</span>;
 }

@@ -4,6 +4,7 @@ import Faqs from "@/components/layout/Faqs";
 import BenefitBusiness from "@/components/sections/price/benefitBusiness";
 import ComparePlans from "@/components/sections/price/ComparePlans";
 import Plan from "@/components/sections/price/plans";
+import WhyGripCrm from "@/components/sections/price/WhyGripCrm";
 
 const faqData = [
     {
@@ -34,6 +35,7 @@ export default function Pricing() {
             <Plan />
             <ComparePlans />
             <BenefitBusiness />
+            <WhyGripCrm />
             <Faqs faqsData={faqData} />
         </main>
     );
