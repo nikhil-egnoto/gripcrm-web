@@ -1,10 +1,14 @@
-import { ArrowRight, Minus, Plus } from "lucide-react";
+import { ArrowRight, Minus, Plus, LogOut, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
+import { useAuth } from "@/context/AuthContext";
+
 
 export default function Navbar() {
+    const { isAuthenticated, logout, user } = useAuth();
     const [isResourcesOpen, setIsResourcesOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
 
     const navigation = [
         {
@@ -158,9 +162,20 @@ export default function Navbar() {
                     </div>
                 ))}
 
-                <div className="md:hidden flex flex-col items-center gap-10">
-                    {/* Login Button */}
-                    <Button href="/login" className="text-sm font-semibold text-neutral-500 hover:text-neutral-900 capitalize inline-flex lg:px-4 px-3 py-2 transition-colors border-0" >Login</Button>
+                <div className="md:hidden flex flex-col items-center gap-6">
+                    {isAuthenticated ? (
+                        <Button onClick={() => {
+                            logout();
+                            closeMobileMenu();
+                        }} className="text-sm font-semibold text-neutral-500 hover:text-neutral-900 capitalize inline-flex lg:px-4 px-3 py-2 transition-colors border-0">
+                            <span>Logout ({user?.username || "Admin"})</span>
+                        </Button>
+
+                    ) : (
+                        <Button href="/login" className="text-sm font-semibold text-neutral-500 hover:text-neutral-900 capitalize inline-flex lg:px-4 px-3 py-2 transition-colors border-0">
+                            Login
+                        </Button>
+                    )}
 
                     <Button className="flex! border-2 bg-neutral-900 text-neutral-100 hover:text-neutral-900 hover:bg-white" type="with-icon">
                         <span>
@@ -175,14 +190,18 @@ export default function Navbar() {
 
             {/* --- DESKTOP RIGHT BUTTONS --- */}
             <div className="hidden md:flex items-center gap-3">
-                {/* Login Button */}
-
-                <Button className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100" href="#login">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 0C12.6522 0 15.1959 1.05335 17.0713 2.92871C18.9467 4.80407 20 7.34784 20 10C20 12.6522 18.9467 15.1959 17.0713 17.0713C15.1959 18.9467 12.6522 20 10 20C7.34784 20 4.80407 18.9467 2.92871 17.0713C1.05335 15.1959 0 12.6522 0 10C0 7.34784 1.05335 4.80407 2.92871 2.92871C4.80407 1.05335 7.34784 0 10 0ZM10 1.25C8.35222 1.25009 6.73773 1.71569 5.34277 2.59277C3.94795 3.46985 2.82934 4.72313 2.11523 6.20801C1.40113 7.69294 1.1209 9.34912 1.30664 10.9863C1.49241 12.6236 2.13636 14.1757 3.16504 15.4629C4.05254 14.0329 6.00625 12.5 10 12.5C13.9937 12.5 15.9462 14.0316 16.835 15.4629C17.8636 14.1757 18.5076 12.6236 18.6934 10.9863C18.8791 9.34912 18.5989 7.69294 17.8848 6.20801C17.1707 4.72313 16.0521 3.46985 14.6572 2.59277C13.2623 1.71569 11.6478 1.25009 10 1.25ZM10 3.75C10.9946 3.75 11.9481 4.14537 12.6514 4.84863C13.3546 5.55189 13.75 6.50544 13.75 7.5C13.75 8.49456 13.3546 9.44811 12.6514 10.1514C11.9481 10.8546 10.9946 11.25 10 11.25C9.00544 11.25 8.05189 10.8546 7.34863 10.1514C6.64537 9.44811 6.25 8.49456 6.25 7.5C6.25 6.50544 6.64537 5.55189 7.34863 4.84863C8.05189 4.14537 9.00544 3.75 10 3.75Z" fill="currentColor" />
-                    </svg>
-                    <span>Login</span>
-                </Button>
+                {isAuthenticated ? (
+                    <Button onClick={logout} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100">
+                        <span>Logout ({user?.username || "Admin"})</span>
+                    </Button>
+                ) : (
+                    <Button className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100" href="/login">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 0C12.6522 0 15.1959 1.05335 17.0713 2.92871C18.9467 4.80407 20 7.34784 20 10C20 12.6522 18.9467 15.1959 17.0713 17.0713C15.1959 18.9467 12.6522 20 10 20C7.34784 20 4.80407 18.9467 2.92871 17.0713C1.05335 15.1959 0 12.6522 0 10C0 7.34784 1.05335 4.80407 2.92871 2.92871C4.80407 1.05335 7.34784 0 10 0ZM10 1.25C8.35222 1.25009 6.73773 1.71569 5.34277 2.59277C3.94795 3.46985 2.82934 4.72313 2.11523 6.20801C1.40113 7.69294 1.1209 9.34912 1.30664 10.9863C1.49241 12.6236 2.13636 14.1757 3.16504 15.4629C4.05254 14.0329 6.00625 12.5 10 12.5C13.9937 12.5 15.9462 14.0316 16.835 15.4629C17.8636 14.1757 18.5076 12.6236 18.6934 10.9863C18.8791 9.34912 18.5989 7.69294 17.8848 6.20801C17.1707 4.72313 16.0521 3.46985 14.6572 2.59277C13.2623 1.71569 11.6478 1.25009 10 1.25ZM10 3.75C10.9946 3.75 11.9481 4.14537 12.6514 4.84863C13.3546 5.55189 13.75 6.50544 13.75 7.5C13.75 8.49456 13.3546 9.44811 12.6514 10.1514C11.9481 10.8546 10.9946 11.25 10 11.25C9.00544 11.25 8.05189 10.8546 7.34863 10.1514C6.64537 9.44811 6.25 8.49456 6.25 7.5C6.25 6.50544 6.64537 5.55189 7.34863 4.84863C8.05189 4.14537 9.00544 3.75 10 3.75Z" fill="currentColor" />
+                        </svg>
+                        <span>Login</span>
+                    </Button>
+                )}
 
 
                 {/* Request a Demo Button */}

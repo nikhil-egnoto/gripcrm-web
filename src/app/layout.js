@@ -2,6 +2,8 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { AuthProvider } from "@/context/AuthContext";
+import AuthGuard from "@/components/auth/AuthGuard";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -12,6 +14,7 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
+
 
 export const metadata = {
   title: "Create Next App",
@@ -24,10 +27,15 @@ export default function RootLayout({ children }) {
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <AuthGuard>
+            <Header />
+            {children}
+            <Footer />
+          </AuthGuard>
+        </AuthProvider>
       </body>
     </html>
   );
 }
+
