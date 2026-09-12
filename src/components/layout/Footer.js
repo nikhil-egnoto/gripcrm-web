@@ -41,9 +41,9 @@ export default function Footer() {
 
                         {/* Resources Section */}
                         <div>
-                            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-900 mb-6 tracking-tight">
+                            <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-900 mb-6 tracking-tight">
                                 Resources
-                            </h3>
+                            </p>
                             <div className="flex flex-wrap gap-4 sm:gap-8">
                                 {resourceLinks.map((link) => (
                                     <Link
@@ -61,10 +61,8 @@ export default function Footer() {
 
                         {/* Pricing Section */}
                         <div className="py-2">
-                            <Link href="#" className="inline-block">
-                                <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-900 tracking-tight">
-                                    Pricing
-                                </h3>
+                            <Link href="pricing" className="inline-block text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-900 tracking-tight">
+                                Pricing
                             </Link>
                         </div>
 
@@ -72,10 +70,8 @@ export default function Footer() {
 
                         {/* Contact Section */}
                         <div className="py-2">
-                            <Link href="#" className="inline-block">
-                                <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-900 tracking-tight">
-                                    Contact
-                                </h3>
+                            <Link href="contact" className="inline-block text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-900 tracking-tight">
+                                Contact
                             </Link>
                         </div>
 
@@ -83,10 +79,8 @@ export default function Footer() {
 
                         {/* Policies Section */}
                         <div className="py-2">
-                            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-900 mb-6 tracking-tight">
-                                Policies
-                            </h3>
-                            <div className="flex flex-wrap gap-4 sm:gap-8">
+                            <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-900 tracking-tight">Policies</p>
+                            <div className="flex flex-wrap gap-4 sm:gap-8 mt-6">
                                 {policyLinks.map((link) => (
                                     <Link
                                         key={link.name}

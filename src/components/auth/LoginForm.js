@@ -44,14 +44,14 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-neutral-950 via-neutral-900 to-black px-4 py-12 relative overflow-hidden font-sans">
+    <div className="min-h-screen w-full flex items-center justify-center bg-linear-to-br from-neutral-950 via-neutral-900 to-black px-4 py-12 relative overflow-hidden font-sans">
       {/* Background Decorative Blur Gradients */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-neutral-800/40 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-neutral-700/20 rounded-full blur-3xl pointer-events-none" />
 
       {/* Main Login Card */}
       <div className="w-full max-w-md bg-neutral-900/90 backdrop-blur-xl border border-neutral-800 rounded-3xl p-8 sm:p-10 shadow-2xl relative z-10 text-white transition-all duration-300">
-        
+
         {/* Logo & Header */}
         <div className="flex flex-col items-center text-center mb-8">
           <div className="mb-4 p-3 bg-neutral-800/80 border border-neutral-700/60 rounded-2xl shadow-inner flex items-center justify-center">
