@@ -536,12 +536,12 @@ body {
 }
 
 
-.moving-gradient {
+.cta-moving-gradient {
   background: #884cff;
 }
 
-.moving-gradient::before,
-.moving-gradient::after {
+.cta-moving-gradient::before,
+.cta-moving-gradient::after {
   content: "";
   position: absolute;
   width: 60%;
@@ -551,7 +551,7 @@ body {
   opacity: 0.9;
 }
 
-.moving-gradient::before {
+.cta-moving-gradient::before {
   background: #f79432;
   top: 20%;
   left: -10%;

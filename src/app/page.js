@@ -10,7 +10,6 @@ import CompetitiveAdvantage from "@/components/sections/home/CompetitiveAdvantag
 import Workflow from "@/components/sections/home/Workflow";
 import FeedBacks from "@/components/sections/home/feedbacks";
 import Faqs from "@/components/layout/Faqs";
-import Cta from "@/components/sections/home/Cta";
 
 
 const faqDescription = "Here are the answers to your common queries about streamlining your projects with GripCRM."
@@ -48,7 +47,7 @@ export default function Home() {
       <Workflow />
       <FeedBacks />
       <Faqs faqsData={faqData} faqsDescription={faqDescription} />
-      <Cta />
+
     </main>
   );
 }

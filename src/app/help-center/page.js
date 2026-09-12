@@ -204,7 +204,7 @@ export default function HelpCenter() {
                     </div>
 
                     <div className="lg:col-span-6 flex justify-center lg:justify-end z-10">
-                        <div className="relative overflow-hidden p-2 rounded-2xl moving-gradient w-full">
+                        <div className="relative overflow-hidden p-2 rounded-2xl cta-moving-gradient w-full">
                             <div className="relative z-10 w-full rounded-2xl overflow-hidden bg-slate-900">
                                 <Image
                                     src="/images/help-center/promo-new.png"

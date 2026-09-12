@@ -1,14 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Minus, Plus, MessageSquareText } from "lucide-react";
+import Cta from "./Cta";
 
 export default function Faqs({ faqsData, faqsDescription }) {
+    const pathname = usePathname();
     const [openIndex, setOpenIndex] = useState(0);
 
     const toggleFaq = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
+
+    const Faqs = {
+        title: "Ready to Simplify Your",
+        title2: "Workflow?",
+        description: "See how GripCRM can help your team manage more, work smarter, and stay connected."
+    }
 
     return (
         <section className="gradient-stage py-16 md:py-24 overflow-hidden relative select-none px-4">
@@ -100,9 +109,12 @@ export default function Faqs({ faqsData, faqsDescription }) {
                             );
                         })}
                     </div>
-
                 </div>
             </div>
+
+            {pathname === "/" && (
+                <Cta className="mt-10 sm:mt-24" title={Faqs.title} title2={Faqs.title2} description={Faqs.description} />
+            )}
         </section>
     );
 }
