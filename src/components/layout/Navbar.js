@@ -24,7 +24,7 @@ export default function Navbar() {
                 },
                 {
                     label: "Knowledge Hubs / Help Center",
-                    href: "/knowledge",
+                    href: "/help-center",
                     children: [
                         {
                             label: "Account & Billing",

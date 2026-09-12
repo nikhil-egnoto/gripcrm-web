@@ -535,6 +535,44 @@ body {
   }
 }
 
+
+.moving-gradient {
+  background: #884cff;
+}
+
+.moving-gradient::before,
+.moving-gradient::after {
+  content: "";
+  position: absolute;
+  width: 60%;
+  height: 80%;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.9;
+}
+
+.moving-gradient::before {
+  background: #f79432;
+  top: 20%;
+  left: -10%;
+
+  animation: orangeMove 7s ease-in-out infinite alternate;
+}
+
+@keyframes orangeMove {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(80%, -10%) scale(1.3);
+  }
+
+  100% {
+    transform: translate(30%, 20%) scale(1.1);
+  }
+}
+
 @media (min-width: 1280px) {
   .price-swiper .swiper-wrapper {
     justify-content: center;

@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Footer() {
     const resourceLinks = [
         { name: "About us", href: "#" },
-        { name: "Knowledge Hubs/ Help Center", href: "#" },
+        { name: "Knowledge Hubs/ Help Center", href: "help-center" },
         { name: "Blog", href: "#" },
         { name: "Faq's", href: "#" },
         { name: "What's New", href: "#" },
@@ -34,7 +34,7 @@ export default function Footer() {
                                     alt="GRIPCRM Logo"
                                     width={222}
                                     height={50}
-                                    className="h-auto w-auto object-contain"
+                                    className="h-auto object-contain"
                                 />
                             </Link>
                         </div>
