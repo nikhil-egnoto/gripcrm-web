@@ -193,7 +193,7 @@ export default function Faqs() {
                     {/* Content Layout Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                         {/* Quick Nav Sidebar */}
-                        <div className="lg:col-span-4 lg:sticky lg:top-8">
+                        <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-8">
                             <div className="bg-white rounded-2xl p-6">
                                 <h2 className="font-spaceGrotesk text-xl font-semibold text-neutral-900 mb-8">
                                     Quick Nav
@@ -226,9 +226,9 @@ export default function Faqs() {
 
                         {/* FAQ Content Main Column */}
                         <div className="lg:col-span-8">
-                            <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-12 space-y-5">
+                            <div className="bg-transparent sm:bg-white rounded-2xl sm:p-4 sm:p-8 md:p-12 space-y-5">
                                 {faqData.map((section) => (
-                                    <div key={section.id} id={section.id} className="scroll-mt-10 mt-20 first:mt-0 space-y-8">
+                                    <div key={section.id} id={section.id} className="scroll-mt-10 mt-10 sm:mt-20 first:mt-0 space-y-5 sm:space-y-8">
                                         <h2 className="font-spaceGrotesk text-xl sm:text-3xl font-semibold text-neutral-900">
                                             {section.title}
                                         </h2>
@@ -245,7 +245,7 @@ export default function Faqs() {
                                                             className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 cursor-pointer select-none"
                                                             aria-expanded={isOpen}
                                                         >
-                                                            <span className="font-semibold text-neutral-900 text-lg sm:text-xl leading-snug">
+                                                            <span className="font-semibold text-neutral-900 text-base sm:text-xl leading-snug">
                                                                 {item.question}
                                                             </span>
                                                             <span className={`shrink-0 w-9 h-6 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-900 hover:bg-neutral-200 transition-transform duration-300 ${isOpen ? "rotate-180 bg-neutral-100" : ""

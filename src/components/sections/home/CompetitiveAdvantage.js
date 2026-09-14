@@ -39,7 +39,7 @@ export default function CompetitiveAdvantage() {
 
             <div className="mx-auto relative z-10">
                 {/* Top Section Header */}
-                <div className="container mx-auto mb-15 lg:mb-20 px-4">
+                <div className="container mx-auto px-4">
                     <div className="max-w-4xl">
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-spaceGrotesk font-bold tracking-tight text-neutral-50 leading-tight">
                             Turn Your Workflow Into a

@@ -23,7 +23,7 @@ export default function Cta({ className, title, title2, description }) {
 
                 {/* Left Column: Heading, Subtitle & Action Buttons */}
                 <div className="col-span-12 lg:col-span-7 flex flex-col items-start text-center lg:text-left lg:px-0 px-4">
-                    <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 font-spaceGrotesk tracking-tight leading-[1.18] w-full">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 font-spaceGrotesk tracking-tight leading-[1.18] w-full">
                         {title}<br />
                         {title2}
                     </h2>

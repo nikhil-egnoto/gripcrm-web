@@ -32,13 +32,6 @@
   --color-olive-500: var(--olive-500);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -47,7 +40,7 @@ body {
 
 @media screen and (max-width:767px) {
   .mobile-menu {
-    @apply text-center bg-white w-full absolute top-21 gap-10 flex-col pt-10 z-40 opacity-0 invisible left-0 transform -translate-y-4 pointer-events-none border-t border-gray-100 overflow-auto pb-10 bg-contain bg-bottom bg-no-repeat;
+    @apply text-center bg-white w-full absolute top-20 gap-10 flex-col pt-10 z-40 opacity-0 invisible left-0 transform -translate-y-4 pointer-events-none border-t border-gray-100 overflow-auto pb-10 bg-contain bg-bottom bg-no-repeat;
     background-image: url("../../public/images/menu-bg.png");
     transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -60,7 +53,7 @@ body {
     visibility: visible;
     transform: translateY(0);
     pointer-events: auto;
-    height: calc(100vh - 68px);
+    height: calc(100vh - 64px);
   }
 
   .mobile-menu button {
@@ -165,23 +158,16 @@ body {
   animation: fillProgress linear forwards;
 }
 
-.feedback-swiper .swiper-pagination,
-.beyond-swiper .swiper-pagination {
-  @apply sticky mt-10 mb-0;
+.blog-swiper .swiper-pagination {
+  @apply sticky mt-6 mb-0;
 }
 
-.beyond-swiper .swiper-pagination span {
-  @apply bg-white/50 scale-none !size-3 rounded-xs;
+.blog-swiper .swiper-pagination span {
+  @apply bg-transparent border-2 border-neutral-700 scale-none;
 }
 
-.feedback-swiper .swiper-pagination span {
-  @apply bg-black/50 opacity-100 scale-none !size-3 rounded-xs;
-
-}
-
-.feedback-swiper .swiper-pagination span.swiper-pagination-bullet-active-main,
-.beyond-swiper .swiper-pagination span.swiper-pagination-bullet-active-main {
-  @apply bg-[#ffd039] w-8;
+.blog-swiper .swiper-pagination span.swiper-pagination-bullet-active {
+  @apply bg-neutral-700 scale-none;
 }
 
 .price-swiper .swiper-wrapper {
@@ -570,6 +556,33 @@ body {
 
   100% {
     transform: translate(30%, 20%) scale(1.1);
+  }
+}
+
+.blog-moving-gradient::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0;
+  opacity: 0.08;
+  background: linear-gradient(90deg,
+      #9effb8 0%,
+      #ff78b0 50%,
+      #fff600 100%);
+  background-size: 200% 100%;
+  animation: gradientMove 5s ease-in-out infinite alternate;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
   }
 }
 

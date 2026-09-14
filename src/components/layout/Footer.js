@@ -6,18 +6,18 @@ import Link from "next/link";
 
 export default function Footer() {
     const resourceLinks = [
-        { name: "About us", href: "#" },
-        { name: "Knowledge Hubs/ Help Center", href: "help-center" },
-        { name: "Blog", href: "#" },
-        { name: "Faq's", href: "#" },
-        { name: "What's New", href: "#" },
+        { name: "About us", href: "about" },
+        { name: "Help Center", href: "help-center" },
+        { name: "Blog", href: "blog" },
+        { name: "Faq's", href: "faqs" },
+        { name: "What's New", href: "whats-new" },
     ];
 
     const policyLinks = [
-        { name: "Terms", href: "#" },
-        { name: "Privacy", href: "#" },
-        { name: "Refund & Cancellation", href: "#" },
-        { name: "Sitemap", href: "#" },
+        { name: "Terms", href: "terms" },
+        { name: "Privacy", href: "privacy" },
+        { name: "Refund & Cancellation", href: "refund-policy" },
+        { name: "Sitemap", href: "sitemap" },
     ];
 
     return (
