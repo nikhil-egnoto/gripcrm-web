@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Cta from "@/components/layout/Cta";
+import Grainient from "@/components/ui/Grainient";
 
 export default function BlogDetailsPage() {
   const post = SINGLE_POST_DATA;
@@ -250,12 +251,33 @@ export default function BlogDetailsPage() {
         </div>
       </div>
 
-      <section className={`gradient-stage py-16 md:py-24 overflow-hidden relative select-none px-4`}>
-        <div className="blob blob--1"></div>
-        <div className="blob blob--2"></div>
-        <div className="blob blob--3"></div>
-        <div className="blob blob--4"></div>
-        <div className="blob blob--5"></div>
+      <section className={`bg-neutral-900 py-16 md:py-24 overflow-hidden relative select-none px-4`}>
+        <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
+          <Grainient
+            color1="#9EFFB8"
+            color2="#FF78B0"
+            color3="#FFF600 "
+            timeSpeed={1.5}
+            colorBalance={-0.21}
+            warpStrength={1}
+            warpFrequency={5}
+            warpSpeed={2}
+            warpAmplitude={50}
+            blendAngle={0}
+            blendSoftness={0.05}
+            rotationAmount={500}
+            noiseScale={2}
+            grainAmount={0.1}
+            grainScale={2}
+            grainAnimated={false}
+            contrast={1.5}
+            gamma={1}
+            saturation={1}
+            centerX={0}
+            centerY={0}
+            zoom={0.9}
+          />
+        </div>
         <Cta title={Faqs.title} title2={Faqs.title2} description={Faqs.description} />
       </section>
     </main>

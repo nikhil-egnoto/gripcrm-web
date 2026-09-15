@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Check, ArrowRight } from "lucide-react";
 import Button from "@/components/ui/Button";
+import Grainient from "@/components/ui/Grainient";
 
 export default function Plan() {
     const [billingCycle, setBillingCycle] = useState("monthly");
@@ -85,12 +86,33 @@ export default function Plan() {
     ];
 
     return (
-        <section className="gradient-stage text-white py-16 md:py-24 relative overflow-hidden px-4">
-            <div className="blob blob--1"></div>
-            <div className="blob blob--2"></div>
-            <div className="blob blob--3"></div>
-            <div className="blob blob--4"></div>
-            <div className="blob blob--5"></div>
+        <section className="bg-neutral-950 text-white py-16 md:py-24 relative overflow-hidden px-4">
+            <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
+                <Grainient
+                    color1="#33BDDB"
+                    color2="#8A5285"
+                    color3="#FF7300 "
+                    timeSpeed={1.5}
+                    colorBalance={-0.21}
+                    warpStrength={1}
+                    warpFrequency={5}
+                    warpSpeed={2}
+                    warpAmplitude={50}
+                    blendAngle={0}
+                    blendSoftness={0.05}
+                    rotationAmount={500}
+                    noiseScale={2}
+                    grainAmount={0.1}
+                    grainScale={2}
+                    grainAnimated={false}
+                    contrast={1.5}
+                    gamma={1}
+                    saturation={1}
+                    centerX={0}
+                    centerY={0}
+                    zoom={0.9}
+                />
+            </div>
 
             <div className="container mx-auto relative z-10">
                 <div className="text-center max-w-4xl mx-auto px-4 mb-10">

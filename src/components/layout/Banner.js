@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Play } from "lucide-react";
 import Image from "next/image";
 import Button from "../ui/Button";
+import Grainient from "../ui/Grainient";
 
 const BRAND_LOGOS = [
     "logo-1.svg",
@@ -49,8 +50,37 @@ export default function Banner() {
     }, [isOverflowing]);
 
     return (
-        <section className="hero-section md:py-20 py-15">
-            <div className="container mx-auto">
+        <section className="bg-white hero-section md:py-20 py-15 relative">
+
+            <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
+                <Grainient
+                    color1="#F0BF69"
+                    color2="#6D86E7"
+                    color3="#79DCBA"
+                    timeSpeed={1.5}
+                    colorBalance={-0.21}
+                    warpStrength={1}
+                    warpFrequency={5}
+                    warpSpeed={2}
+                    warpAmplitude={50}
+                    blendAngle={0}
+                    blendSoftness={0.05}
+                    rotationAmount={500}
+                    noiseScale={2}
+                    grainAmount={0.1}
+                    grainScale={2}
+                    grainAnimated={false}
+                    contrast={1.5}
+                    gamma={1}
+                    saturation={1}
+                    centerX={0}
+                    centerY={0}
+                    zoom={0.9}
+                />
+            </div>
+
+
+            <div className="container mx-auto relative z-10">
                 <div className="max-w-4xl mx-auto flex flex-col text-center">
                     {/* Main Heading */}
                     <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-spaceGrotesk font-bold text-neutral-900 tracking-tight leading-[1.08] select-none">

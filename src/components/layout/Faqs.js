@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Minus, Plus, MessageSquareText } from "lucide-react";
 import Cta from "./Cta";
+import Grainient from "../ui/Grainient";
 
 export default function Faqs({ faqsData, faqsDescription }) {
     const pathname = usePathname();
@@ -20,12 +21,33 @@ export default function Faqs({ faqsData, faqsDescription }) {
     }
 
     return (
-        <section className="gradient-stage py-16 md:py-24 overflow-hidden relative select-none px-4">
-            <div className="blob blob--1"></div>
-            <div className="blob blob--2"></div>
-            <div className="blob blob--3"></div>
-            <div className="blob blob--4"></div>
-            <div className="blob blob--5"></div>
+        <section className="bg-neutral-950 text-white py-16 md:py-24 overflow-hidden relative select-none px-4">
+            <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
+                <Grainient
+                    color1="#FFE99E"
+                    color2="#09090b"
+                    color3="#B497CF"
+                    timeSpeed={1.5}
+                    colorBalance={-0.21}
+                    warpStrength={1}
+                    warpFrequency={5}
+                    warpSpeed={2}
+                    warpAmplitude={50}
+                    blendAngle={0}
+                    blendSoftness={0.05}
+                    rotationAmount={500}
+                    noiseScale={2}
+                    grainAmount={0.1}
+                    grainScale={2}
+                    grainAnimated={false}
+                    contrast={1.5}
+                    gamma={1}
+                    saturation={1}
+                    centerX={0}
+                    centerY={0}
+                    zoom={0.9}
+                />
+            </div>
 
             <div className="container mx-auto relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
