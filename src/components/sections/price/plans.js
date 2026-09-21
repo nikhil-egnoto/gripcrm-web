@@ -4,11 +4,13 @@ import { useState } from "react";
 import { Check, ArrowRight } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Grainient from "@/components/ui/Grainient";
+import { useGripData } from "@/context/GripDataContext";
 
-export default function Plan() {
+export default function Plan({ customPlans }) {
+    const { plans: apiPlans } = useGripData();
     const [billingCycle, setBillingCycle] = useState("monthly");
 
-    const plans = [
+    const defaultPlans = [
         {
             name: "Standard",
             monthlyPrice: 99,
@@ -84,6 +86,8 @@ export default function Plan() {
             ],
         }
     ];
+
+    const plans = customPlans || (apiPlans && apiPlans.length > 0 ? apiPlans : defaultPlans);
 
     return (
         <section className="bg-neutral-950 text-white py-16 md:py-24 relative overflow-hidden px-4">

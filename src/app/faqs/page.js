@@ -13,7 +13,7 @@ export default function Faqs() {
         setOpenItemId((prev) => (prev === id ? null : id));
     };
 
-    const Faqs = {
+    const ctaContent = {
         title: "Not Sure",
         title2: "Where to Start?",
         description: "Let us know what you need - we're happy to help!"
@@ -308,7 +308,7 @@ export default function Faqs() {
                         zoom={0.9}
                     />
                 </div>
-                <Cta title={Faqs.title} title2={Faqs.title2} description={Faqs.description} />
+                <Cta title={ctaContent.title} title2={ctaContent.title2} description={ctaContent.description} />
             </section>
         </main>
     );

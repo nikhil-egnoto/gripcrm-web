@@ -10,7 +10,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-export default function Platform() {
+export default function Platform({ fields }) {
 
     const prevRef = useRef(null);
     const nextRef = useRef(null);
@@ -32,7 +32,7 @@ export default function Platform() {
             bgColor: "bg-green-500",
             icon: "/images/home/quotes.svg",
             description:
-                "Create and manage estimates and proposals..",
+                "Create and manage estimates and proposals.",
             mockupType: "quotes",
             image: "/images/home/platform-placeholder.png"
         },
@@ -60,13 +60,13 @@ export default function Platform() {
 
 
     return (
-        <section className="pt-16 md:pt-24 md:pb-0 pb-10 border-t border-neutral-300">
+        <section className="pt-16 md:pt-24 md:pb-9 pb-10 border-t border-neutral-300">
             {/* Main Title Section */}
             <div className="text-center max-w-4xl mx-auto px-4">
                 <h2 className="font-spaceGrotesk text-4xl sm:text-5xl md:text-6xl font-bold text-black">
-                    Everything Your Team Needs,
+                    {fields?.platform_title || "Everything Your Team Needs,"}
                     <span className="block text-blue-700">
-                        one platform.
+                        {fields?.platform_highlight || "one platform."}
                         <svg className="mx-auto mt-4" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                     </span>
 
@@ -74,7 +74,7 @@ export default function Platform() {
 
                 {/* Subtitle Description */}
                 <p className="mt-5 text-neutral-700 text-base font-normal leading-relaxed font-sans">
-                    Connect your sales, customer management, projects, and daily workflows in one platform.
+                    {fields.platform_desc}
                 </p>
             </div>
 
@@ -108,9 +108,9 @@ export default function Platform() {
                 }}
             >
 
-                {PLATFORM_CARDS.map((card, index) => {
+                {(fields?.platform_cards || PLATFORM_CARDS).map((card, index) => {
                     return (
-                        <SwiperSlide key={card.id}
+                        <SwiperSlide key={index}
                             className={`${card.bgColor} rounded-2xl p-7 flex flex-col justify-between text-white`}>
                             {/* Card Header Row */}
                             <div>

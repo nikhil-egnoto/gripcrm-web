@@ -14,14 +14,33 @@ export default function Faqs({ faqsData, faqsDescription }) {
         setOpenIndex(openIndex === index ? null : index);
     };
 
-    const Faqs = {
+    const ctaContent = {
         title: "Ready to Simplify Your",
         title2: "Workflow?",
         description: "See how GripCRM can help your team manage more, work smarter, and stay connected."
     }
 
+    const currentCategory = pathname.replace("/faqs/", "");
+
+    const apiFaqs = faqsData?.filter(
+        (faq) => faq.category === currentCategory
+    );
+
+    const finalFaqs =
+        apiFaqs?.length > 0
+            ? apiFaqs
+            : faqsData;
+
+    const displayedFaqs = finalFaqs ? [...finalFaqs].reverse() : [];
+
+    const stripHtml = (html) => {
+        if (!html) return "";
+
+        return html.replace(/<[^>]*>/g, "");
+    };
+
     return (
-        <section className="bg-neutral-950 text-white py-16 md:py-24 overflow-hidden relative select-none px-4">
+        <section className="bg-neutral-950 text-white py-16 md:py-24 overflow-hidden relative select-none px-4 sm:px-8 lg:px-12">
             <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
                 <Grainient
                     color1="#FFE99E"
@@ -84,8 +103,11 @@ export default function Faqs({ faqsData, faqsDescription }) {
 
                     {/* Right Column: Accordion Items */}
                     <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-4.5 w-full">
-                        {faqsData?.map((faq, index) => {
+
+
+                        {displayedFaqs?.map((faq, index) => {
                             const isOpen = openIndex === index;
+                            console.log(faq.category)
                             return (
                                 <div
                                     key={index}
@@ -98,7 +120,7 @@ export default function Faqs({ faqsData, faqsDescription }) {
                                         <div className="flex-1">
                                             {/* Question Title */}
                                             <h3 className="font-semibold text-base sm:text-lg text-neutral-900 leading-snug">
-                                                {faq.question}
+                                                {faq.question || faq.title}
                                             </h3>
 
                                             {/* Expandable Answer */}
@@ -110,7 +132,8 @@ export default function Faqs({ faqsData, faqsDescription }) {
                                             >
                                                 <div className="overflow-hidden">
                                                     <p className="text-neutral-700 text-base font-normal leading-7">
-                                                        {faq.answer}
+
+                                                        {stripHtml(faq.answer || faq.content)}
                                                     </p>
                                                 </div>
                                             </div>
@@ -135,7 +158,7 @@ export default function Faqs({ faqsData, faqsDescription }) {
             </div>
 
             {pathname === "/" && (
-                <Cta className="mt-10 sm:mt-24" title={Faqs.title} title2={Faqs.title2} description={Faqs.description} />
+                <Cta className="mt-10 sm:mt-24" title={ctaContent.title} title2={ctaContent.title2} description={ctaContent.description} />
             )}
         </section>
     );

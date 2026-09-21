@@ -1,18 +1,16 @@
-"use client";
-
 import Banner from "@/components/layout/Banner";
-
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import Platform from "@/components/sections/home/platform";
 import CompetitiveAdvantage from "@/components/sections/home/CompetitiveAdvantage";
 import Workflow from "@/components/sections/home/Workflow";
 import FeedBacks from "@/components/sections/home/feedbacks";
 import Faqs from "@/components/layout/Faqs";
+import { fetchHomePageData, fetchFeedbacks, fetchFaqs } from "@/lib/api";
 
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-const faqDescription = "Here are the answers to your common queries about streamlining your projects with GripCRM."
+const faqDescription = "Here are the answers to your common queries about streamlining your projects with GripCRM.";
 
 const faqData = [
   {
@@ -37,17 +35,25 @@ const faqData = [
   }
 ];
 
-export default function Home() {
+export default async function Home() {
+  // Server-side fetch to ensure fields, feedbacks & faqs are populated on initial load
+  const [{ page, fields }, { feedbacks }, { faqs }] = await Promise.all([
+    fetchHomePageData(),
+    fetchFeedbacks(),
+    fetchFaqs(),
+  ]);
+
+  const activeFaqs = faqs?.length > 0 ? faqs : faqData;
 
   return (
     <main className="bg-white">
-      <Banner />
-      <Platform />
-      <CompetitiveAdvantage />
-      <Workflow />
-      <FeedBacks />
-      <Faqs faqsData={faqData} faqsDescription={faqDescription} />
-
+      {console.log(faqs)}
+      <Banner fields={fields} page={page} />
+      <Platform fields={fields} />
+      <CompetitiveAdvantage fields={fields} />
+      <Workflow fields={fields} />
+      <FeedBacks fields={fields} feedbacksData={feedbacks} />
+      <Faqs faqsData={activeFaqs} faqsDescription={faqDescription} />
     </main>
   );
 }
