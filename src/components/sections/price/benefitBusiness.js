@@ -5,8 +5,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Button from "@/components/ui/Button";
 
-export default function BenefitBusiness() {
-    const benefits = [
+export default function BenefitBusiness({ fields }) {
+    const defaultBenefits = [
         {
             title: "Better Customer Relationships",
             description: "Keep customer information organized and accessible so your team can deliver a more consistent experience."
@@ -29,6 +29,17 @@ export default function BenefitBusiness() {
         }
     ];
 
+    const benefits = Array.isArray(fields?.benefits_list) && fields.benefits_list.length > 0
+        ? fields.benefits_list
+        : defaultBenefits;
+
+    const title = fields?.benefit_title || "How does GripCRM benefit your business?";
+    const tagline = fields?.benefit_tagline || "Work Smarter, Stay Organized";
+    const quote = fields?.benefit_quote || "GripCRM brings your customer information, projects, communication, and workflows together in one place—so your team can spend less time managing information and more time getting work done.";
+    const imageSrc = fields?.benefit_image || "/images/home/screen-cover.png";
+    const btnText = fields?.benefit_btn_text || "Request a Demo";
+    const btnUrl = fields?.benefit_btn_url || "/contact";
+
     return (
         <section className="bg-white py-16 md:py-24 px-4">
             <div className="container mx-auto">
@@ -39,22 +50,19 @@ export default function BenefitBusiness() {
                         {/* Heading */}
                         <div className="mb-2">
                             <h2 className="font-spaceGrotesk text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 tracking-tight leading-tight">
-                                How does GripCRM benefit <br className="hidden sm:inline" />
-                                <span className="relative inline-block">
-                                    your business?
-                                    <svg className="mt-3 text-olive-500" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
-                                </span>
+                                {title}
+                                <svg className="mt-3 text-olive-500" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                             </h2>
                         </div>
 
                         {/* Tagline */}
                         <p className="text-sm sm:text-base text-neutral-700 mt-10 mb-15">
-                            Work Smarter, Stay Organized
+                            {tagline}
                         </p>
 
                         {/* Callout Quote Box */}
                         <div className="border-l-2 border-orange-500 pl-7 mb-15 text-neutral-700 text-sm sm:text-base leading-8">
-                            GripCRM brings your customer information, projects, communication, and workflows together in one place—so your team can spend less time managing information and more time getting work done.
+                            {quote}
                         </div>
 
                         {/* Benefits List */}
@@ -99,7 +107,7 @@ export default function BenefitBusiness() {
                             {/* Decorative top bar */}
                             <div className="relative aspect-4/3 w-full bg-neutral-900 overflow-hidden flex items-center justify-center">
                                 <Image
-                                    src="/images/home/screen-cover.png"
+                                    src={imageSrc}
                                     alt="GripCRM Workflow Interface"
                                     width={600}
                                     height={450}
@@ -110,9 +118,9 @@ export default function BenefitBusiness() {
                         </div>
 
                         {/* Request a Demo Button */}
-                        <Button className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 justify-center" type="with-icon">
+                        <Button href={btnUrl} className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 justify-center" type="with-icon">
                             <span className="relative z-1">
-                                Request a Demo
+                                {btnText}
                             </span>
                             <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                 <ArrowRight className="size-4" />

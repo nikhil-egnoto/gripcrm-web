@@ -12,7 +12,8 @@ export async function fetchHomePageData() {
       cache: "no-store",
     });
     if (!res.ok) {
-      throw new Error(`Failed to fetch home page: ${res.status} ${res.statusText}`);
+      console.warn(`[fetchHomePageData] ${res.status} ${res.statusText}`);
+      return { page: null, fields: null, error: `Failed to fetch home page: ${res.status} ${res.statusText}` };
     }
     const data = await res.json();
     return {
@@ -36,7 +37,8 @@ export async function fetchGlobalOptions() {
       cache: "no-store",
     });
     if (!optionsRes.ok) {
-      throw new Error(`Failed to fetch options: ${optionsRes.status} ${optionsRes.statusText}`);
+      console.warn(`[fetchGlobalOptions] ${optionsRes.status} ${optionsRes.statusText}`);
+      return { options: null, error: `Failed to fetch options: ${optionsRes.status} ${optionsRes.statusText}` };
     }
     const data = await optionsRes.json();
     return {
@@ -59,7 +61,8 @@ export async function fetchPricingPlans() {
       cache: "no-store",
     });
     if (!plansRes.ok) {
-      throw new Error(`Failed to fetch plans: ${plansRes.status} ${plansRes.statusText}`);
+      console.warn(`[fetchPricingPlans] ${plansRes.status} ${plansRes.statusText}`);
+      return { plans: [], error: `Failed to fetch plans: ${plansRes.status} ${plansRes.statusText}` };
     }
     const data = await plansRes.json();
     return {
@@ -82,7 +85,8 @@ export async function fetchFeedbacks() {
       cache: "no-store",
     });
     if (!feedbacksRes.ok) {
-      throw new Error(`Failed to fetch feedbacks: ${feedbacksRes.status} ${feedbacksRes.statusText}`);
+      console.warn(`[fetchFeedbacks] ${feedbacksRes.status} ${feedbacksRes.statusText}`);
+      return { feedbacks: [], error: `Failed to fetch feedbacks: ${feedbacksRes.status} ${feedbacksRes.statusText}` };
     }
     const data = await feedbacksRes.json();
     return {
@@ -105,7 +109,8 @@ export async function fetchFaqs() {
       cache: "no-store",
     });
     if (!faqsRes.ok) {
-      throw new Error(`Failed to fetch faqs: ${faqsRes.status} ${faqsRes.statusText}`);
+      console.warn(`[fetchFaqs] ${faqsRes.status} ${faqsRes.statusText}`);
+      return { faqs: [], error: `Failed to fetch faqs: ${faqsRes.status} ${faqsRes.statusText}` };
     }
     const data = await faqsRes.json();
     return {
@@ -128,7 +133,8 @@ export async function fetchPageBySlug(slug) {
       cache: "no-store",
     });
     if (!res.ok) {
-      throw new Error(`Failed to fetch page '${slug}': ${res.status} ${res.statusText}`);
+      console.warn(`[fetchPageBySlug] (${slug}) ${res.status} ${res.statusText}`);
+      return { page: null, fields: null, error: `Failed to fetch page '${slug}': ${res.status} ${res.statusText}` };
     }
     const data = await res.json();
     return {
@@ -170,3 +176,24 @@ export async function fetchAllGripCrmData() {
     },
   };
 }
+
+/**
+ * Fetch Pricing Page Data and Pricing Plans in parallel
+ */
+export async function fetchPricingPageData() {
+  const [pageResult, plansResult] = await Promise.all([
+    fetchPageBySlug("pricing"),
+    fetchPricingPlans(),
+  ]);
+
+  return {
+    page: pageResult.page,
+    fields: pageResult.fields,
+    plans: plansResult.plans,
+    errors: {
+      page: pageResult.error,
+      plans: plansResult.error,
+    },
+  };
+}
+

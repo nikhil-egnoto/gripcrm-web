@@ -203,7 +203,7 @@ export default function Plan({ customPlans }) {
                                         </span>
                                         {plan.name !== "Let's Talk" &&
                                             <span className="text-sm text-neutral-700 font-semibold">
-                                                /month for up to X users
+                                                {plan.userLimit || "/month for up to X users"}
                                             </span>
                                         }
                                     </div>
