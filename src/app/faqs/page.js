@@ -1,11 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Minus } from "lucide-react";
 import Cta from "@/components/layout/Cta";
 import Grainient from "@/components/ui/Grainient";
+import { fetchFaqs } from "@/lib/api";
 
 export default function Faqs() {
+    const [fields, setFields] = useState(null);
+
+    useEffect(() => {
+        const getFaqs = async () => {
+            const data = await fetchFaqs();
+            setFields(data?.fields || data?.data || data);
+        };
+
+        getFaqs();
+    }, []);
+
     const [activeNav, setActiveNav] = useState("general");
     const [openItemId, setOpenItemId] = useState("what-is-gripcrm");
 
@@ -13,13 +25,19 @@ export default function Faqs() {
         setOpenItemId((prev) => (prev === id ? null : id));
     };
 
-    const ctaContent = {
+    const defaultCtaContent = {
         title: "Not Sure",
         title2: "Where to Start?",
         description: "Let us know what you need - we're happy to help!"
-    }
+    };
 
-    const navItems = [
+    const ctaContent = {
+        title: fields?.ctaContent?.title || fields?.faq_cta_title || defaultCtaContent.title,
+        title2: fields?.ctaContent?.title2 || fields?.faq_cta_title2 || defaultCtaContent.title2,
+        description: fields?.ctaContent?.description || fields?.faq_cta_description || defaultCtaContent.description
+    };
+
+    const defaultNavItems = [
         { id: "general", label: "General Questions" },
         { id: "billing", label: "Account and Billing" },
         { id: "features", label: "Features and Functionality" },
@@ -28,7 +46,7 @@ export default function Faqs() {
         { id: "customization", label: "Customization and Settings" },
     ];
 
-    const faqData = [
+    const defaultFaqData = [
         {
             id: "general",
             title: "General Questions",
@@ -169,6 +187,21 @@ export default function Faqs() {
         },
     ];
 
+    const navItems = (fields?.navItems && fields.navItems.length > 0)
+        ? fields.navItems
+        : (fields?.faq_categories && fields.faq_categories.length > 0)
+            ? fields.faq_categories
+            : defaultNavItems;
+
+    const faqData = (fields?.faqData && fields.faqData.length > 0)
+        ? fields.faqData
+        : (fields?.faqs && fields.faqs.length > 0)
+            ? fields.faqs
+            : defaultFaqData;
+
+    const heroTitle = fields?.hero?.title || fields?.faq_hero_title || fields?.title || "FAQs";
+    const heroSubtitle = fields?.hero?.subtitle || fields?.faq_hero_subtitle || fields?.subtitle || "Find answers to your most common questions here to help you make informed decisions about managing your sales and customer data and whether to purchase GripCRM software.";
+
     const handleNavClick = (id) => {
         setActiveNav(id);
         const element = document.getElementById(id);
@@ -184,11 +217,11 @@ export default function Faqs() {
                     {/* Header Section */}
                     <div className="text-center">
                         <h1 className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
-                            FAQs
+                            {heroTitle}
                             <svg width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mt-4 text-red-500"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                         </h1>
                         <p className="max-w-4xl mx-auto mt-10 m-auto text-neutral-700 text-base leading-[1.9] font-normal">
-                            Find answers to your most common questions here to help you make informed decisions about managing your sales and customer data and whether to purchase GripCRM software.
+                            {heroSubtitle}
                         </p>
                     </div>
                     {/* Content Layout Grid */}

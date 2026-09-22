@@ -74,7 +74,7 @@ export default function Platform({ fields }) {
 
                 {/* Subtitle Description */}
                 <p className="mt-5 text-neutral-700 text-base font-normal leading-relaxed font-sans">
-                    {fields.platform_desc}
+                    {fields?.platform_desc || "Connect your sales, customer management, projects, and daily workflows in one platform."}
                 </p>
             </div>
 

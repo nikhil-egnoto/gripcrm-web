@@ -54,7 +54,7 @@ export default function Contact() {
     };
 
     return (
-        <main className="bg-blue-50 py-16 md:py-24 px-4 relative overflow-hidden">
+        <main className="bg-blue-50 py-16 md:py-24 px-4 sm:px-8 lg:px-12 relative overflow-hidden">
             <div className="container mx-auto space-y-15">
                 {/* Top Header Section */}
                 <div className="text-center">

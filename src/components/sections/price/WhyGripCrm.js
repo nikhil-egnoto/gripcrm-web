@@ -28,8 +28,6 @@ export default function WhyGripCrm({ fields }) {
                     </p>
                 </div>
 
-                {console.log(statsList)}
-
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-center">
 
                     {/* Column 1 */}

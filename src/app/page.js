@@ -19,7 +19,6 @@ export default async function Home() {
 
   return (
     <main className="bg-white">
-      {console.log(fields)}
       <Banner fields={fields} page={page} />
       <Platform fields={fields} />
       <CompetitiveAdvantage fields={fields} />

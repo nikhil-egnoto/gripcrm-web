@@ -110,16 +110,22 @@ export async function fetchFaqs() {
     });
     if (!faqsRes.ok) {
       console.warn(`[fetchFaqs] ${faqsRes.status} ${faqsRes.statusText}`);
-      return { faqs: [], error: `Failed to fetch faqs: ${faqsRes.status} ${faqsRes.statusText}` };
+      return { faqs: [], fields: null, data: null, error: `Failed to fetch faqs: ${faqsRes.status} ${faqsRes.statusText}` };
     }
     const data = await faqsRes.json();
     return {
-      faqs: data?.faqs || data || [],
+      faqs: (data?.faqData && data.faqData.length > 0) ? data.faqData : (data?.faqs || data || []),
+      fields: data?.fields || data || null,
+      data: data || null,
+      hero: data?.hero || null,
+      navItems: data?.navItems || [],
+      faqData: data?.faqData || [],
+      ctaContent: data?.ctaContent || null,
       error: null,
     };
   } catch (error) {
     console.error("Error in fetchFaqs:", error);
-    return { faqs: [], error: error.message };
+    return { faqs: [], fields: null, data: null, error: error.message };
   }
 }
 
