@@ -1,11 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowRight, Phone, Mail, Check } from "lucide-react"; 3
+import { useState, useEffect } from "react";
+import { ArrowRight, Phone, Mail, Check } from "lucide-react";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
+import { fetchContactData } from "@/lib/api";
 
 export default function Contact() {
+    const [fields, setFields] = useState(null);
+
+    useEffect(() => {
+        const getContactData = async () => {
+            const data = await fetchContactData();
+            if (data?.fields || data?.contact) {
+                setFields(data.fields || data.contact);
+            }
+        };
+
+        getContactData();
+    }, []);
+
+    console.log(fields)
+
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -59,11 +75,11 @@ export default function Contact() {
                 {/* Top Header Section */}
                 <div className="text-center">
                     <h1 className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
-                        Contact Us
+                        {fields?.contact_hero_title || "Contact"}
                         <svg width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mt-4 text-orange-500"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                     </h1>
                     <p className="mt-10 m-auto text-neutral-700 text-base leading-[1.9] font-normal">
-                        Get help with GripCRM, report an issue, request a feature, or reach out to our team.
+                        {fields?.contact_hero_subtitle || "Get help with GripCRM, report an issue, request a feature, or reach out to our team."}
                     </p>
                 </div>
 
@@ -78,15 +94,15 @@ export default function Contact() {
                             </div>
                             <div className="flex-1">
                                 <h3 className="text-2xl sm:text-3xl font-semibold text-neutral-900 mb-3">
-                                    Bug Reports
+                                    {fields?.contact_topics?.[0] || "Bug Reports"}
                                 </h3>
                                 <p className="text-base text-neutral-700 mb-6 leading-relaxed">
                                     Something not working as expected?
                                 </p>
 
-                                <Button onClick={() => selectTopic("Bug Report")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
+                                <Button onClick={() => selectTopic(fields?.contact_topics?.[0] || "Bug Reports")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
                                     <span className="relative z-1">
-                                        Report a Bug
+                                        {fields?.contact_topics?.[0] || "Bug Reports"}
                                     </span>
                                     <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:bg-white group-hover:text-neutral-900 transition-transform">
                                         <ArrowRight className="size-4" />
@@ -104,15 +120,15 @@ export default function Contact() {
                             </div>
                             <div className="flex-1">
                                 <h3 className="text-2xl sm:text-3xl font-semibold text-neutral-900 mb-3">
-                                    Request a Feature
+                                    {fields?.contact_topics?.[1] || "Request a Feature"}
                                 </h3>
                                 <p className="text-base text-neutral-700 mb-6 leading-relaxed">
                                     Have an idea? Share your suggestion with us.
                                 </p>
 
-                                <Button onClick={() => selectTopic("Feature Request")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
+                                <Button onClick={() => selectTopic(fields?.contact_topics?.[1] || "Request a Feature")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
                                     <span className="relative z-1">
-                                        Request a Feature
+                                        {fields?.contact_topics?.[1] || "Request a Feature"}
                                     </span>
                                     <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:bg-white group-hover:text-neutral-900 transition-transform">
                                         <ArrowRight className="size-4" />
@@ -129,13 +145,13 @@ export default function Contact() {
                             </div>
                             <div className="flex-1">
                                 <h3 className="text-2xl sm:text-3xl font-semibold text-neutral-900 mb-3">
-                                    Account & Billing
+                                    {fields?.contact_topics?.[2] || "Account & Billing"}
                                 </h3>
                                 <p className="text-base text-neutral-700 mb-6 leading-relaxed">
                                     Need help with your account, subscription, or payments?
                                 </p>
 
-                                <Button onClick={() => selectTopic("Account & Billing")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
+                                <Button onClick={() => selectTopic(fields?.contact_topics?.[2] || "Account & Billing")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
                                     <span className="relative z-1">
                                         Get Support
                                     </span>
@@ -252,7 +268,7 @@ export default function Contact() {
                                         </label>
                                     </div>
 
-                                    <Button onClick={() => selectTopic("Account & Billing")} className="bg-neutral-100 border-2 border-white text-neutral-900 hover:bg-transparent hover:text-neutral-100 w-full justify-center" type="with-icon submit">
+                                    <Button className="bg-neutral-100 border-2 border-white text-neutral-900 hover:bg-transparent hover:text-neutral-100 w-full justify-center" type="with-icon submit">
                                         <span className="relative z-1">
                                             Submit
                                         </span>
@@ -273,7 +289,7 @@ export default function Contact() {
                     <div className="md:col-span-6 w-full h-65 md:h-86 rounded-2xl overflow-hidden border border-neutral-100 relative">
                         <iframe
                             title="GripCRM Headquarters Map"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.077224203407!2d75.76100527632616!3d26.899479976657962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db467c6999999%3A0x6b19a1db4b7c1234!2sMetropolis%20Tower%2C%20Ajmer%20Rd%2C%20Purani%20Chungi%2C%20Jaipur%2C%20Rajasthan%20302019!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                            src={fields?.hq_map_url || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.077224203407!2d75.76100527632616!3d26.899479976657962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db467c6999999%3A0x6b19a1db4b7c1234!2sMetropolis%20Tower%2C%20Ajmer%20Rd%2C%20Purani%20Chungi%2C%20Jaipur%2C%20Rajasthan%20302019!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}
@@ -290,9 +306,15 @@ export default function Contact() {
                             <h3 className="text-2xl font-semibold text-neutral-900 mb-4">
                                 Headquarters
                             </h3>
-                            <p className="text-base/8 text-neutral-700 font-medium">
-                                119, First Floor, Metropolis Tower,<br />
-                                Ajmer Rd, Purani Chungi, Jaipur, Rajasthan 302019
+                            <p className="text-base/8 text-neutral-700 font-medium max-w-md">
+                                {fields?.hq_address ? (
+                                    fields.hq_address
+                                ) : (
+                                    <>
+                                        119, First Floor, Metropolis Tower,<br />
+                                        Ajmer Rd, Purani Chungi, Jaipur, Rajasthan 302019
+                                    </>
+                                )}
                             </p>
                         </div>
 
@@ -305,10 +327,10 @@ export default function Contact() {
                                     <Phone className="size-6" />
                                 </div>
                                 <a
-                                    href="tel:+919461349253"
+                                    href={`tel:${(fields?.hq_phone || "+91 94613 49253").replace(/\s+/g, "")}`}
                                     className="text-lg md:text-2xl font-semibold text-neutral-900 transition-colors"
                                 >
-                                    +91 94613 49253
+                                    {fields?.hq_phone || "+91 94613 49253"}
                                 </a>
                             </div>
                         </div>
@@ -322,10 +344,10 @@ export default function Contact() {
                                     <Mail className="size-6" />
                                 </div>
                                 <a
-                                    href="mailto:info@gripcrm.com"
+                                    href={`mailto:${fields?.hq_email || "info@gripcrm.com"}`}
                                     className="text-lg md:text-2xl font-semibold text-neutral-900 transition-colors"
                                 >
-                                    info@gripcrm.com
+                                    {fields?.hq_email || "info@gripcrm.com"}
                                 </a>
                             </div>
                         </div>

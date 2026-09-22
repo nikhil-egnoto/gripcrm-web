@@ -15,8 +15,8 @@ function getApiBaseUrl() {
     const host = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : typeof window !== "undefined"
-      ? window.location.origin
-      : "https://crm-mokup.vercel.app";
+        ? window.location.origin
+        : "https://crm-mokup.vercel.app";
     return `${host}/wp-json.json`;
   }
   return "http://localhost/gripcrm-backend/wp-json";
@@ -43,9 +43,8 @@ async function fetchApiEndpoint(endpointPath) {
 
   // Normal REST endpoint call
   try {
-    const fullUrl = `${baseUrl.replace(/\/$/, "")}${
-      endpointPath.startsWith("/") ? endpointPath : `/${endpointPath}`
-    }`;
+    const fullUrl = `${baseUrl.replace(/\/$/, "")}${endpointPath.startsWith("/") ? endpointPath : `/${endpointPath}`
+      }`;
     const res = await fetch(fullUrl, { cache: "no-store" });
     if (res.ok) {
       const data = await res.json();
@@ -151,6 +150,44 @@ export async function fetchFaqs() {
   } catch (error) {
     console.error("Error in fetchFaqs:", error);
     return { faqs: [], fields: null, data: null, error: error.message };
+  }
+}
+
+/**
+ * Fetch Contact Page Data
+ * GET /gripcrm/v1/contact
+ */
+export async function fetchContactData() {
+  try {
+    let { data } = await fetchApiEndpoint("/gripcrm/v1/contact");
+
+    // If /gripcrm/v1/contact didn't return fields and hit root fallback, try /gripcrm/v1/page/contact as fallback
+    if (!data?.fields && (!data || data.routes)) {
+      const pageFallback = await fetchApiEndpoint("/gripcrm/v1/page/contact");
+      if (pageFallback?.data?.fields) {
+        data = pageFallback.data;
+      }
+    }
+
+    const fields = data?.fields || data?.contact || (data && !data.routes ? data : null);
+    return {
+      status: data?.status || 200,
+      page: data?.page || null,
+      fields: fields,
+      contact: fields,
+      data: fields ? data : null,
+      error: null,
+    };
+  } catch (error) {
+    console.error("Error in fetchContactData:", error);
+    return {
+      status: 500,
+      page: null,
+      fields: null,
+      contact: null,
+      data: null,
+      error: error.message,
+    };
   }
 }
 
