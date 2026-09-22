@@ -1,6 +1,64 @@
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
-  "http://localhost/gripcrm-backend/wp-json";
+import localWpJson from "@/data/wp-json.json";
+
+function getApiBaseUrl() {
+  const envUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
+  if (envUrl) {
+    return envUrl;
+  }
+  if (
+    process.env.VERCEL ||
+    process.env.VERCEL_URL ||
+    (typeof window !== "undefined" &&
+      (window.location.origin.includes("vercel.app") ||
+        window.location.origin.includes("crm-mokup")))
+  ) {
+    const host = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : typeof window !== "undefined"
+      ? window.location.origin
+      : "https://crm-mokup.vercel.app";
+    return `${host}/wp-json.json`;
+  }
+  return "http://localhost/gripcrm-backend/wp-json";
+}
+
+async function fetchApiEndpoint(endpointPath) {
+  const baseUrl = getApiBaseUrl();
+
+  // If base URL points directly to a .json file (e.g. wp-json.json)
+  if (baseUrl.endsWith(".json")) {
+    if (typeof window !== "undefined") {
+      try {
+        const res = await fetch(baseUrl, { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          return { ok: true, data };
+        }
+      } catch (err) {
+        console.warn(`[fetchApiEndpoint] Error fetching json from ${baseUrl}:`, err);
+      }
+    }
+    return { ok: true, data: localWpJson };
+  }
+
+  // Normal REST endpoint call
+  try {
+    const fullUrl = `${baseUrl.replace(/\/$/, "")}${
+      endpointPath.startsWith("/") ? endpointPath : `/${endpointPath}`
+    }`;
+    const res = await fetch(fullUrl, { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      return { ok: true, data };
+    }
+  } catch (error) {
+    // Network/Offline fallback
+  }
+
+  // Fallback to local wp-json.json if live API call failed
+  return { ok: true, data: localWpJson };
+}
+
 
 /**
  * Fetch Home Page Content & Fields
@@ -8,14 +66,7 @@ const API_BASE_URL =
  */
 export async function fetchHomePageData() {
   try {
-    const res = await fetch(`${API_BASE_URL}/gripcrm/v1/page/home`, {
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      console.warn(`[fetchHomePageData] ${res.status} ${res.statusText}`);
-      return { page: null, fields: null, error: `Failed to fetch home page: ${res.status} ${res.statusText}` };
-    }
-    const data = await res.json();
+    const { data } = await fetchApiEndpoint("/gripcrm/v1/page/home");
     return {
       page: data?.page || null,
       fields: data?.fields || null,
@@ -33,14 +84,7 @@ export async function fetchHomePageData() {
  */
 export async function fetchGlobalOptions() {
   try {
-    const optionsRes = await fetch(`${API_BASE_URL}/gripcrm/v1/options`, {
-      cache: "no-store",
-    });
-    if (!optionsRes.ok) {
-      console.warn(`[fetchGlobalOptions] ${optionsRes.status} ${optionsRes.statusText}`);
-      return { options: null, error: `Failed to fetch options: ${optionsRes.status} ${optionsRes.statusText}` };
-    }
-    const data = await optionsRes.json();
+    const { data } = await fetchApiEndpoint("/gripcrm/v1/options");
     return {
       options: data?.options || null,
       error: null,
@@ -57,14 +101,7 @@ export async function fetchGlobalOptions() {
  */
 export async function fetchPricingPlans() {
   try {
-    const plansRes = await fetch(`${API_BASE_URL}/gripcrm/v1/plans`, {
-      cache: "no-store",
-    });
-    if (!plansRes.ok) {
-      console.warn(`[fetchPricingPlans] ${plansRes.status} ${plansRes.statusText}`);
-      return { plans: [], error: `Failed to fetch plans: ${plansRes.status} ${plansRes.statusText}` };
-    }
-    const data = await plansRes.json();
+    const { data } = await fetchApiEndpoint("/gripcrm/v1/plans");
     return {
       plans: data?.plans || [],
       error: null,
@@ -81,14 +118,7 @@ export async function fetchPricingPlans() {
  */
 export async function fetchFeedbacks() {
   try {
-    const feedbacksRes = await fetch(`${API_BASE_URL}/gripcrm/v1/feedbacks`, {
-      cache: "no-store",
-    });
-    if (!feedbacksRes.ok) {
-      console.warn(`[fetchFeedbacks] ${feedbacksRes.status} ${feedbacksRes.statusText}`);
-      return { feedbacks: [], error: `Failed to fetch feedbacks: ${feedbacksRes.status} ${feedbacksRes.statusText}` };
-    }
-    const data = await feedbacksRes.json();
+    const { data } = await fetchApiEndpoint("/gripcrm/v1/feedbacks");
     return {
       feedbacks: data?.feedbacks || [],
       error: null,
@@ -105,16 +135,11 @@ export async function fetchFeedbacks() {
  */
 export async function fetchFaqs() {
   try {
-    const faqsRes = await fetch(`${API_BASE_URL}/gripcrm/v1/faqs`, {
-      cache: "no-store",
-    });
-    if (!faqsRes.ok) {
-      console.warn(`[fetchFaqs] ${faqsRes.status} ${faqsRes.statusText}`);
-      return { faqs: [], fields: null, data: null, error: `Failed to fetch faqs: ${faqsRes.status} ${faqsRes.statusText}` };
-    }
-    const data = await faqsRes.json();
+    const { data } = await fetchApiEndpoint("/gripcrm/v1/faqs");
     return {
-      faqs: (data?.faqData && data.faqData.length > 0) ? data.faqData : (data?.faqs || data || []),
+      faqs: (data?.faqData && data.faqData.length > 0)
+        ? data.faqData
+        : (data?.faqs || (Array.isArray(data) ? data : [])),
       fields: data?.fields || data || null,
       data: data || null,
       hero: data?.hero || null,
@@ -135,14 +160,7 @@ export async function fetchFaqs() {
  */
 export async function fetchPageBySlug(slug) {
   try {
-    const res = await fetch(`${API_BASE_URL}/gripcrm/v1/page/${slug}`, {
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      console.warn(`[fetchPageBySlug] (${slug}) ${res.status} ${res.statusText}`);
-      return { page: null, fields: null, error: `Failed to fetch page '${slug}': ${res.status} ${res.statusText}` };
-    }
-    const data = await res.json();
+    const { data } = await fetchApiEndpoint(`/gripcrm/v1/page/${slug}`);
     return {
       page: data?.page || null,
       fields: data?.fields || null,
@@ -158,13 +176,14 @@ export async function fetchPageBySlug(slug) {
  * Helper to fetch Home Page, Options, Plans, Feedbacks, and FAQs in parallel
  */
 export async function fetchAllGripCrmData() {
-  const [homeResult, optionsResult, plansResult, feedbacksResult, faqsResult] = await Promise.all([
-    fetchHomePageData(),
-    fetchGlobalOptions(),
-    fetchPricingPlans(),
-    fetchFeedbacks(),
-    fetchFaqs(),
-  ]);
+  const [homeResult, optionsResult, plansResult, feedbacksResult, faqsResult] =
+    await Promise.all([
+      fetchHomePageData(),
+      fetchGlobalOptions(),
+      fetchPricingPlans(),
+      fetchFeedbacks(),
+      fetchFaqs(),
+    ]);
 
   return {
     page: homeResult.page,
@@ -202,4 +221,5 @@ export async function fetchPricingPageData() {
     },
   };
 }
+
 
