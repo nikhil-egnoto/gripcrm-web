@@ -1,5 +1,4 @@
 import localWpJson from "@/data/wp-json.json";
-import { FEATURED_POSTS, BLOG_POSTS, SINGLE_POST_DATA } from "@/data/blogData";
 
 function getApiBaseUrl() {
   const envUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
@@ -222,7 +221,7 @@ export async function fetchBlogData() {
       status: data?.status || 200,
       page: data?.page || null,
       fields: fields,
-      blogs: data.blogs,
+      blogs: data?.blogs || (Array.isArray(fields) ? fields : []),
       data: fields ? data : null,
       error: null,
     };
@@ -232,7 +231,7 @@ export async function fetchBlogData() {
       status: 500,
       page: null,
       fields: null,
-      contact: null,
+      blogs: [],
       data: null,
       error: error.message,
     };
@@ -292,31 +291,7 @@ export async function fetchBlogPostBySlug(slug) {
       return { post: normalized, error: null };
     }
 
-    // 3. Fallback to local blog posts if API does not contain post
-    const localPosts = [...FEATURED_POSTS, ...BLOG_POSTS];
-    const localMatch = localPosts.find(
-      (p) =>
-        String(p.slug).toLowerCase() === String(slug).toLowerCase() ||
-        String(p.id) === String(slug)
-    );
-
-    if (localMatch) {
-      if (
-        localMatch.slug === SINGLE_POST_DATA.slug ||
-        String(localMatch.id) === String(SINGLE_POST_DATA.id)
-      ) {
-        return { post: SINGLE_POST_DATA, error: null };
-      }
-      return { post: localMatch, error: null };
-    }
-
-    if (
-      String(SINGLE_POST_DATA.slug).toLowerCase() === String(slug).toLowerCase() ||
-      String(SINGLE_POST_DATA.id) === String(slug)
-    ) {
-      return { post: SINGLE_POST_DATA, error: null };
-    }
-
+    // If not found in custom endpoint or standard WP endpoint
     return { post: null, error: "Post not found" };
   } catch (error) {
     console.error(`Error in fetchBlogPostBySlug (${slug}):`, error);
