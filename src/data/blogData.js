@@ -5,7 +5,7 @@ export const FEATURED_POSTS = [
     date: "3 Sep, 2026",
     title: "Why Grip CRM is the Ultimate Solution for Metal Building Companies",
     excerpt: "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lorem generator.",
-    image: "/images/blog/featured-metal-building.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     category: "CRM Solutions"
   },
   {
@@ -14,7 +14,7 @@ export const FEATURED_POSTS = [
     date: "1 Sep, 2026",
     title: "Streamlining Lead Management for Construction and Manufacturing",
     excerpt: "Discover how automated workflows and real-time tracking can boost conversion rates by 40%.",
-    image: "/images/blog/lead-management.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     category: "Lead Management"
   },
   {
@@ -23,7 +23,7 @@ export const FEATURED_POSTS = [
     date: "28 Aug, 2026",
     title: "Modern Project Tracking Tools for Contractors & Steel Builders",
     excerpt: "Keep teams synchronized across field operations and backend management smoothly.",
-    image: "/images/blog/project-tracking.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     category: "Project Management"
   }
 ];
@@ -35,7 +35,7 @@ export const BLOG_POSTS = [
     date: "3 Sep, 2026",
     title: "We use this anonymous data to analyze request and usage",
     excerpt: "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lorem generator.",
-    image: "/images/blog/analytics-1.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     isSpecialCta: false
   },
   {
@@ -44,7 +44,7 @@ export const BLOG_POSTS = [
     date: "3 Sep, 2026",
     title: "We use this anonymous data to analyze request and usage",
     excerpt: "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lorem generator.",
-    image: "/images/blog/analytics-2.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     isSpecialCta: false
   },
   {
@@ -53,16 +53,11 @@ export const BLOG_POSTS = [
     date: "3 Sep, 2026",
     title: "We use this anonymous data to analyze request and usage",
     excerpt: "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lorem generator.",
-    image: "/images/blog/analytics-3.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     isSpecialCta: false
   },
   {
-    id: "special-cta-card",
     isSpecialCta: true,
-    title: "Need help choosing a plan?",
-    phone: "+1 (123) 456-7890",
-    pricingUrl: "/pricing",
-    image: "/images/blog/support-agent.png"
   },
   {
     id: "anonymous-data-analyze-request-4",
@@ -70,7 +65,7 @@ export const BLOG_POSTS = [
     date: "3 Sep, 2026",
     title: "We use this anonymous data to analyze request and usage",
     excerpt: "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lorem generator.",
-    image: "/images/blog/analytics-4.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     isSpecialCta: false
   },
   {
@@ -79,7 +74,7 @@ export const BLOG_POSTS = [
     date: "3 Sep, 2026",
     title: "We use this anonymous data to analyze request and usage",
     excerpt: "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lorem generator.",
-    image: "/images/blog/analytics-5.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     isSpecialCta: false
   },
   {
@@ -88,7 +83,7 @@ export const BLOG_POSTS = [
     date: "3 Sep, 2026",
     title: "We use this anonymous data to analyze request and usage",
     excerpt: "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lorem generator.",
-    image: "/images/blog/analytics-6.jpg",
+    image: "/images/blog/image-thumbnail@2x.png",
     isSpecialCta: false
   }
 ];

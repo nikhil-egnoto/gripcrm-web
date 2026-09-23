@@ -320,3 +320,89 @@ body {
     padding: 5px 0px;
   }
 }
+
+/* Blog Article Content Prose Styling */
+
+.blog-content h2,
+.blog-content .wp-block-heading:is(h2) {
+  @apply text-neutral-900 font-spaceGrotesk text-xl sm:text-2xl md:text-4xl font-bold mt-12 mb-6 scroll-mt-32;
+}
+
+.blog-content h3,
+.blog-content .wp-block-heading:is(h3) {
+  @apply text-neutral-900 font-spaceGrotesk text-lg sm:text-xl md:text-2xl font-bold mt-10 mb-5 scroll-mt-32;
+}
+
+.blog-content h4 {
+  @apply text-neutral-900 font-spaceGrotesk text-base sm:text-lg md:text-xl font-bold mt-8 mb-4 scroll-mt-32;
+}
+
+.blog-content p,
+.blog-content .wp-block-paragraph {
+  @apply text-sm sm:text-base text-neutral-700 mb-5 leading-[1.7];
+}
+
+.blog-content ul {
+  @apply text-neutral-700 text-sm sm:text-base pl-5 mb-5 list-disc;
+}
+
+.blog-content ol {
+  @apply text-neutral-700 text-sm sm:text-base pl-5 mb-5 list-decimal;
+}
+
+.blog-content li {
+  @apply mb-2 leading-[1.7];
+}
+
+.blog-content strong,
+.blog-content b {
+  @apply font-bold text-neutral-900;
+}
+
+.blog-content a {
+  @apply text-neutral-700 text-sm sm:text-base underline transition-colors duration-200 ease-in-out;
+}
+
+.blog-content a:hover {
+  @apply text-neutral-900;
+}
+
+.blog-content blockquote {
+  @apply border-l-4 border-neutral-900 bg-gray-100 py-6 px-8 my-5 italic;
+}
+
+.blog-content blockquote p {
+  @apply !mb-0;
+}
+
+.blog-content figure {
+  @apply rounded-2xl my-5 overflow-auto;
+}
+
+.blog-content img {
+  @apply rounded-2xl max-w-full h-auto block;
+}
+
+.blog-content figcaption {
+  @apply text-sm text-neutral-700 my-2 text-center italic;
+}
+
+.blog-content table {
+  @apply w-full border-collapse my-5 rounded-2xl overflow-hidden border-neutral-700 text-sm;
+}
+
+.blog-content th {
+  @apply bg-gray-100 text-neutral-900 font-semibold p-3 md:p-4 text-left border border-neutral-200;
+}
+
+.blog-content td {
+  @apply p-3 md:p-4 border border-neutral-200;
+}
+
+.blog-content tr:nth-child(even) {
+  @apply bg-neutral-100;
+}
+
+.blog-content hr {
+  @apply my-10 border border-neutral-200;
+}
