@@ -34,8 +34,7 @@ export default function Footer() {
                                     alt="GRIPCRM Logo"
                                     width={222}
                                     height={50}
-                                    style={{ height: "auto", width: "auto" }}
-                                    className="h-auto object-contain"
+                                    className="h-12 w-auto object-contain"
                                 />
                             </Link>
                         </div>
