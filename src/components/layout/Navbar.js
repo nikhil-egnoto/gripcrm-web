@@ -1,67 +1,93 @@
-import { ArrowRight, Minus, Plus, LogOut, User } from "lucide-react";
+﻿import { ArrowRight, Minus, Plus, LogOut, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
 import { useAuth } from "@/context/AuthContext";
 
+const defaultNavigation = [
+    {
+        label: "Pricing",
+        href: "/pricing",
+    },
+    {
+        label: "Resources",
+        dropdown: [
+            {
+                label: "About us",
+                href: "/about",
+            },
+            {
+                label: "Knowledge Hubs / Help Center",
+                href: "/help-center",
+                children: [
+                    {
+                        label: "Account & Billing",
+                        href: "/account-billing",
+                    },
+                    {
+                        label: "Articles",
+                        href: "/articles",
+                    },
+                    {
+                        label: "What's New",
+                        href: "/whats-new",
+                    },
+                ],
+            },
+            {
+                label: "Blog",
+                href: "/blog",
+            },
+            {
+                label: "FAQ's",
+                href: "/faqs",
+            },
+        ],
+    },
+    {
+        label: "Contact",
+        href: "/contact",
+    },
+];
 
-export default function Navbar() {
+export default function Navbar({ navLinks, options }) {
     const { isAuthenticated, logout, user } = useAuth();
-    const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+    const [openDropdown, setOpenDropdown] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+    const activeLinks = navLinks || options?.options?.nav_links || options?.nav_links;
 
-    const navigation = [
-        {
-            label: "Pricing",
-            href: "/pricing",
-        },
-        {
-            label: "Resources",
-            dropdown: [
-                {
-                    label: "About us",
-                    href: "/about",
-                },
-                {
-                    label: "Knowledge Hubs / Help Center",
-                    href: "/help-center",
-                    children: [
-                        {
-                            label: "Account & Billing",
-                            href: "/account-billing",
-                        },
-                        {
-                            label: "Articles",
-                            href: "/articles",
-                        },
-                        {
-                            label: "What's New",
-                            href: "/whats-new",
-                        },
-                    ],
-                },
-                {
-                    label: "Blog",
-                    href: "/blog",
-                },
-                {
-                    label: "FAQ's",
-                    href: "/faqs",
-                },
-            ],
-        },
-        {
-            label: "Contact",
-            href: "/contact",
-        },
-    ];
+    const navigation = (Array.isArray(activeLinks) && activeLinks.length > 0)
+        ? activeLinks.map((item) => {
+            const rawDropdown = item.dropdown || item.submenus || item.submenu || [];
+            const hasDropdown = Array.isArray(rawDropdown) && rawDropdown.length > 0;
+            return {
+                label: item.label || item.name || "",
+                href: item.href || item.url || "#",
+                dropdown: hasDropdown ? rawDropdown.map((sub) => {
+                    const rawChildren = sub.children || sub.supersubmenu || sub.supersubmenus || [];
+                    return {
+                        label: sub.label || sub.name || "",
+                        href: sub.href || sub.url || "#",
+                        children: Array.isArray(rawChildren) ? rawChildren.map((child) => ({
+                            label: child.label || child.name || "",
+                            href: child.href || child.url || "#",
+                        })) : [],
+                    };
+                }) : null,
+            };
+        })
+        : defaultNavigation;
+
+    const ctaText = options?.options?.header_cta_text || options?.header_cta_text || "Request a Demo";
+    const ctaUrl = options?.options?.header_cta_url || options?.header_cta_url || "/contact";
+
     const dropdownRef = useRef(null);
 
     // Close dropdown when clicking outside
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsResourcesOpen(false);
+                setOpenDropdown(null);
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
@@ -81,7 +107,7 @@ export default function Navbar() {
     }, [isMobileMenuOpen]);
 
     const closeMobileMenu = () => {
-        setIsResourcesOpen(false);
+        setOpenDropdown(null);
         setIsMobileMenuOpen(false);
     };
 
@@ -90,77 +116,81 @@ export default function Navbar() {
             {/* --- DESKTOP / MOBILE NAVIGATION --- */}
             <nav className={`mobile-menu flex items-center gap-2 relative ${isMobileMenuOpen ? "open" : ""}`} ref={dropdownRef}>
 
-                {navigation.map((item) => (
-                    <div key={item.label} className="relative">
+                {navigation.map((item) => {
+                    const isOpen = openDropdown === item.label;
 
-                        {item.dropdown ? (
-                            <>
-                                {/* Resources Button */}
-                                <button
-                                    type="button"
-                                    onClick={() => setIsResourcesOpen((prev) => !prev)}
-                                    className={`px-4 text-sm font-semibold flex items-center gap-1.5 cursor-pointer transition-all ${isResourcesOpen ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900"}`}>
-                                    <span>{item.label}</span>
+                    return (
+                        <div key={item.label} className="relative">
 
-                                    {isResourcesOpen ? (
-                                        <Minus className="size-4" />
-                                    ) : (
-                                        <Plus className="size-4" />
-                                    )}
-                                </button>
+                            {item.dropdown ? (
+                                <>
+                                    {/* Dropdown Toggle Button */}
+                                    <button
+                                        type="button"
+                                        onClick={() => setOpenDropdown((prev) => (prev === item.label ? null : item.label))}
+                                        className={`px-4 text-sm font-semibold flex items-center gap-1.5 cursor-pointer transition-all ${isOpen ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900"}`}>
+                                        <span>{item.label}</span>
 
-                                {/* Dropdown */}
-                                <div className={`mobile-dropdown absolute top-full left-0 mt-7 w-80 sm:w-90 bg-white rounded-b-3xl px-8 sm:px-12 py-8 shadow-[0_20px_60px_rgba(0,0,0,0.18)] border border-gray-100 z-50 transition-all duration-300 ease-in-out transform origin-top-left ${isResourcesOpen ? "opacity-100 translate-y-0 scale-100 pointer-events-auto visible" : "opacity-0 -translate-y-2 md:scale-95 pointer-events-none invisible"}`}>
+                                        {isOpen ? (
+                                            <Minus className="size-4" />
+                                        ) : (
+                                            <Plus className="size-4" />
+                                        )}
+                                    </button>
 
-                                    <div className="flex flex-col gap-5">
+                                    {/* Dropdown Panel */}
+                                    <div className={`mobile-dropdown absolute top-full left-0 mt-7 w-80 sm:w-90 bg-white rounded-b-3xl px-8 sm:px-12 py-8 shadow-[0_20px_60px_rgba(0,0,0,0.18)] border border-gray-100 z-50 transition-all duration-300 ease-in-out transform origin-top-left ${isOpen ? "opacity-100 translate-y-0 scale-100 pointer-events-auto visible" : "opacity-0 -translate-y-2 md:scale-95 pointer-events-none invisible"}`}>
 
-                                        {item.dropdown.map((dropdownItem) => (
-                                            <div key={dropdownItem.label}>
+                                        <div className="flex flex-col gap-5">
 
-                                                {/* Main Item */}
-                                                <a
-                                                    href={dropdownItem.href}
-                                                    onClick={closeMobileMenu}
-                                                    className="text-sm font-semibold text-neutral-500 hover:text-neutral-900 transition-colors block"
-                                                >
-                                                    {dropdownItem.label}
-                                                </a>
+                                            {item.dropdown.map((dropdownItem) => (
+                                                <div key={dropdownItem.label}>
 
-                                                {/* Children */}
-                                                {dropdownItem.children?.length > 0 && (
-                                                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-1.5">
-                                                        {dropdownItem.children.map(
-                                                            (child) => (
-                                                                <a
-                                                                    key={child.label}
-                                                                    href={child.href}
-                                                                    onClick={closeMobileMenu}
-                                                                    className="text-xs text-neutral-400 hover:text-neutral-900 transition-colors"
-                                                                >
-                                                                    {child.label}
-                                                                </a>
-                                                            )
-                                                        )}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
+                                                    {/* Submenu Item */}
+                                                    <a
+                                                        href={dropdownItem.href}
+                                                        onClick={closeMobileMenu}
+                                                        className="text-sm font-semibold text-neutral-500 hover:text-neutral-900 transition-colors block"
+                                                    >
+                                                        {dropdownItem.label}
+                                                    </a>
 
+                                                    {/* Super Submenu (Children) */}
+                                                    {dropdownItem.children?.length > 0 && (
+                                                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-1.5">
+                                                            {dropdownItem.children.map(
+                                                                (child) => (
+                                                                    <a
+                                                                        key={child.label}
+                                                                        href={child.href}
+                                                                        onClick={closeMobileMenu}
+                                                                        className="text-xs text-neutral-400 hover:text-neutral-900 transition-colors"
+                                                                    >
+                                                                        {child.label}
+                                                                    </a>
+                                                                )
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))}
+
+                                        </div>
                                     </div>
-                                </div>
-                            </>
-                        ) : (
-                            /* Normal Navigation Item */
-                            <a
-                                href={item.href}
-                                onClick={closeMobileMenu}
-                                className="capitalize lg:px-4 px-3 rounded-lg text-sm font-semibold text-neutral-500 hover:text-neutral-900 transition-colors"
-                            >
-                                {item.label}
-                            </a>
-                        )}
-                    </div>
-                ))}
+                                </>
+                            ) : (
+                                /* Normal Navigation Item */
+                                <a
+                                    href={item.href}
+                                    onClick={closeMobileMenu}
+                                    className="capitalize lg:px-4 px-3 rounded-lg text-sm font-semibold text-neutral-500 hover:text-neutral-900 transition-colors"
+                                >
+                                    {item.label}
+                                </a>
+                            )}
+                        </div>
+                    );
+                })}
 
                 <div className="md:hidden flex flex-col items-center gap-6">
                     {isAuthenticated ? (
@@ -177,9 +207,9 @@ export default function Navbar() {
                         </Button>
                     )}
 
-                    <Button className="flex! border-2 bg-neutral-900 text-neutral-100 hover:text-neutral-900 hover:bg-white" type="with-icon">
+                    <Button href={ctaUrl} className="flex! border-2 bg-neutral-900 text-neutral-100 hover:text-neutral-900 hover:bg-white" type="with-icon">
                         <span>
-                            Request a Demo
+                            {ctaText}
                         </span>
                         <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                             <ArrowRight className="size-4" />
@@ -205,9 +235,9 @@ export default function Navbar() {
 
 
                 {/* Request a Demo Button */}
-                <Button className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100" type="with-icon">
+                <Button href={ctaUrl} className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100" type="with-icon">
                     <span className="relative z-1">
-                        Request a Demo
+                        {ctaText}
                     </span>
                     <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                         <ArrowRight className="size-4" />
@@ -216,7 +246,7 @@ export default function Navbar() {
 
             </div>
 
-            {/* --- MOBILE HAMBURGER BUTTON (Matches Screenshot 2) --- */}
+            {/* --- MOBILE HAMBURGER BUTTON --- */}
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle mobile menu"
@@ -228,9 +258,6 @@ export default function Navbar() {
                     </svg> : <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M35.3478 33.402C35.4756 33.5297 35.5769 33.6814 35.6461 33.8483C35.7152 34.0152 35.7508 34.1941 35.7508 34.3748C35.7508 34.5555 35.7152 34.7344 35.6461 34.9013C35.5769 35.0682 35.4756 35.2199 35.3478 35.3476C35.2201 35.4754 35.0684 35.5767 34.9015 35.6458C34.7346 35.715 34.5557 35.7506 34.375 35.7506C34.1944 35.7506 34.0155 35.715 33.8486 35.6458C33.6816 35.5767 33.53 35.4754 33.4022 35.3476L22 23.9437L10.5978 35.3476C10.3398 35.6056 9.98991 35.7506 9.62503 35.7506C9.26016 35.7506 8.91023 35.6056 8.65222 35.3476C8.39421 35.0896 8.24927 34.7397 8.24927 34.3748C8.24927 34.0099 8.39421 33.66 8.65222 33.402L20.0561 21.9998L8.65222 10.5976C8.39421 10.3396 8.24927 9.98966 8.24927 9.62479C8.24927 9.25991 8.39421 8.90998 8.65222 8.65198C8.91023 8.39397 9.26016 8.24902 9.62503 8.24902C9.98991 8.24902 10.3398 8.39397 10.5978 8.65198L22 20.0559L33.4022 8.65198C33.6602 8.39397 34.0102 8.24902 34.375 8.24902C34.7399 8.24902 35.0898 8.39397 35.3478 8.65198C35.6059 8.90998 35.7508 9.25991 35.7508 9.62479C35.7508 9.98966 35.6059 10.3396 35.3478 10.5976L23.9439 21.9998L35.3478 33.402Z" fill="black" />
                     </svg>}
-
-
-
             </button>
         </div>
     );

@@ -1,12 +1,32 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Navbar from "./Navbar";
+import { fetchGlobalOptions } from "@/lib/api";
 
 export default function Header() {
+    const [options, setOptions] = useState(null);
+
+    useEffect(() => {
+        const getGlobalOptions = async () => {
+            try {
+                const data = await fetchGlobalOptions();
+                setOptions(data);
+            } catch (error) {
+                console.error("Error fetching global options:", error);
+            }
+        };
+
+        getGlobalOptions();
+    }, []);
+
+    console.log(options);
+
+
     const [isVisible, setIsVisible] = useState(true);
     const [isScrolled, setIsScrolled] = useState(false);
+
 
     useEffect(() => {
         let lastScrollY = window.scrollY;
@@ -35,6 +55,8 @@ export default function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const logoUrl = options?.options?.logo_url || options?.logo_url || "/gripcrm-web.svg";
+
     return (
         <header
             className={`sticky top-0 z-50 bg-white transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
@@ -48,7 +70,7 @@ export default function Header() {
                         {/* Desktop Logo (Full GRIPCRM) */}
                         <div className="hidden md:block">
                             <Image
-                                src="/gripcrm-web.svg"
+                                src={logoUrl}
                                 alt="GRIPCRM Logo"
                                 width={165}
                                 height={36}
@@ -57,7 +79,7 @@ export default function Header() {
                             />
                         </div>
 
-                        {/* Mobile Logo Icon (Matches Screenshot 2) */}
+                        {/* Mobile Logo Icon */}
                         <div className="block md:hidden">
                             <svg
                                 width="36"
@@ -80,7 +102,7 @@ export default function Header() {
                     </a>
                 </div>
 
-                <Navbar />
+                <Navbar options={options} navLinks={options?.options?.nav_links || options?.nav_links} />
             </div>
         </header>
     );
