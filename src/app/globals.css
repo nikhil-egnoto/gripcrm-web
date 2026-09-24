@@ -38,6 +38,15 @@ body {
   font-family: var(--font-inter);
 }
 
+.bg-blue-500 {
+  background-color: var(--blue-500);
+}
+
+.bg-red-500 {
+  background-color: var(--red-500);
+}
+
+
 @media screen and (max-width:767px) {
   .mobile-menu {
     @apply text-center bg-white w-full absolute top-20 gap-10 flex-col pt-10 z-40 opacity-0 invisible left-0 transform -translate-y-4 pointer-events-none border-t border-gray-100 overflow-auto pb-10 bg-contain bg-bottom bg-no-repeat;

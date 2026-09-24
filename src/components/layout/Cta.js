@@ -5,7 +5,7 @@ import { Phone, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 
-export default function Cta({ className, title, title2, description }) {
+export default function Cta({ className, title, title2, description, btnText, btnLink }) {
     return (
         <div className={`container mx-auto relative bg-white rounded-2xl lg:pt-0 pt-10 lg:overflow-visible overflow-hidden ${className}`}>
 
@@ -42,9 +42,9 @@ export default function Cta({ className, title, title2, description }) {
 
 
                         {/* Tour Button */}
-                        <Button className="bg-black/10 border-2 border-transparent text-neutral-900 hover:bg-neutral-50 hover:border-neutral-900" type="with-icon">
+                        <Button href={btnLink} className="bg-black/10 border-2 border-transparent text-neutral-900 hover:bg-neutral-50 hover:border-neutral-900" type="with-icon">
                             <span className="relative z-1">
-                                Request a Demo
+                                {btnText}
                             </span>
                             <span className="w-5 h-5 rounded-full bg-neutral-900 text-neutral-100 flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                 <ArrowRight className="size-4" />

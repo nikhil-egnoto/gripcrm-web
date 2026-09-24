@@ -17,6 +17,8 @@ export default async function Home() {
     fetchFeedbacks(),
   ]);
 
+  console.log(fields);
+
   return (
     <main className="bg-white">
       <Banner fields={fields} page={page} />

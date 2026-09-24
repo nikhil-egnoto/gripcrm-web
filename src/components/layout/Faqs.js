@@ -14,12 +14,6 @@ export default function Faqs({ fields, faqsDescription }) {
         setOpenIndex(openIndex === index ? null : index);
     };
 
-    const ctaContent = {
-        title: "Ready to Simplify Your",
-        title2: "Workflow?",
-        description: "See how GripCRM can help your team manage more, work smarter, and stay connected."
-    }
-
     const faqsData = fields?.faqs;
 
     return (
@@ -137,7 +131,7 @@ export default function Faqs({ fields, faqsDescription }) {
             </div>
 
             {pathname === "/" && (
-                <Cta className="mt-10 sm:mt-24" title={ctaContent.title} title2={ctaContent.title2} description={ctaContent.description} />
+                <Cta className="mt-10 sm:mt-24" title={fields?.cta_title || "Ready to Simplify Your Workflow?"} description={fields?.cta_subtitle || "See how GripCRM can help your team manage more, work smarter, and stay connected."} btnText={fields?.cta_btn_text || "Get Started"} btnLink={fields?.cta_btn_url || "/request-demo"} />
             )}
         </section>
     );

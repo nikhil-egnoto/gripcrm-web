@@ -21,9 +21,6 @@ export default function Header() {
         getGlobalOptions();
     }, []);
 
-    console.log(options);
-
-
     const [isVisible, setIsVisible] = useState(true);
     const [isScrolled, setIsScrolled] = useState(false);
 
