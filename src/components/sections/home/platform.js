@@ -79,7 +79,7 @@ export default function Platform({ fields }) {
 
             {/* Cards Carousel Container */}
             <Swiper
-                className="platform-swiper md:py-15! py-10! xl:pl-50! lg:pl-25! md:pl-4! md:px-0! px-4! reveal-on-scroll"
+                className="platform-swiper md:py-15! py-10! xl:pl-50! lg:pl-25! md:pl-4! md:px-0! px-4!"
                 modules={[Navigation, Pagination, Autoplay]}
                 slidesPerView={1}
                 spaceBetween={20}
@@ -110,7 +110,7 @@ export default function Platform({ fields }) {
                 {(fields?.platform_cards || PLATFORM_CARDS).map((card, index) => {
                     return (
                         <SwiperSlide key={index}
-                            className={`${card.bgColor} rounded-2xl p-7 flex flex-col justify-between text-white`}>
+                            className={`${card.bgColor} rounded-2xl p-7 flex flex-col justify-between text-white reveal-on-scroll`}>
                             {/* Card Header Row */}
                             <div>
                                 <div className="flex items-end justify-between mb-5">

@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const SmoothScrollContext = createContext({
   lenis: null,
-  scrollTo: () => {},
+  scrollTo: () => { },
 });
 
 export const useLenis = () => useContext(SmoothScrollContext);

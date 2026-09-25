@@ -95,7 +95,7 @@ export default function FeedBacks({ fields, feedbacksData }) {
     }
 
     return (
-        <section className="bg-blue-50 py-16 md:py-24 relative overflow-hidden">
+        <section className="bg-blue-50 py-16 md:py-24 px-4 sm:px-8 lg:px-12 relative overflow-hidden">
             <div className="container mx-auto relative z-10 px-4">
                 <div className="text-center mb-12 sm:mb-16">
                     <h2 className="font-spaceGrotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-blue-500 leading-tight">
@@ -108,7 +108,7 @@ export default function FeedBacks({ fields, feedbacksData }) {
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 max-w-7xl relative">
+            <div className="container mx-auto relative">
                 <div className="feedback-section relative overflow-hidden h-[620px] sm:h-[660px] lg:h-[720px]">
                     {/* Top and Bottom Gradient Overlay Masks */}
                     <div className="pointer-events-none absolute top-0 left-0 right-0 h-24 sm:h-36 bg-linear-to-b from-blue-50 to-transparent z-20" />
