@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Search, ArrowRight, MoveRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import Button from "@/components/ui/Button";
 
 export default function HelpCenter() {
@@ -88,11 +87,11 @@ export default function HelpCenter() {
             <div className="container mx-auto space-y-10 md:space-y-15">
 
                 <div className="text-center">
-                    <h1 className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
-                        Contact Us
+                    <h1 className="reveal-on-scroll font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
+                        How can we help you?
                         <svg width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mt-4 text-orange-500"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                     </h1>
-                    <p className="mt-10 m-auto text-neutral-700 text-base leading-[1.9] font-normal">
+                    <p className="reveal-on-scroll mt-10 m-auto text-neutral-700 text-base leading-[1.9] font-normal">
                         Get help with GripCRM, report an issue, request a feature, or reach out to our team.
                     </p>
                 </div>
@@ -102,7 +101,7 @@ export default function HelpCenter() {
                 <div className="max-w-4xl mx-auto space-y-10">
                     <form
                         onSubmit={(e) => e.preventDefault()}
-                        className="bg-white rounded-full p-2 pl-6 flex items-center justify-between border border-neutral-300 hover:border-neutral-500 transition-all group"
+                        className="reveal-on-scroll bg-white rounded-full p-2 pl-6 flex items-center justify-between border border-neutral-300 hover:border-neutral-500 transition-all group"
                     >
                         <div className="flex items-center gap-3 flex-1">
                             <Search className="w-5 h-5 text-neutral-400 shrink-0 group-focus-within:text-neutral-900 transition-colors" />
@@ -124,7 +123,7 @@ export default function HelpCenter() {
                     </form>
 
                     {/* Popular Topics Section */}
-                    <div className="text-center space-y-5">
+                    <div className="reveal-on-scroll text-center space-y-5">
                         <h2 className="text-base md:text-xl font-bold text-neutral-900 tracking-tight">
                             Popular topics
                         </h2>
@@ -155,7 +154,7 @@ export default function HelpCenter() {
                         {filteredCards.map((card) => (
                             <div
                                 key={card.id}
-                                className="bg-white rounded-2xl p-8 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+                                className="reveal-on-scroll bg-white rounded-2xl p-8 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
                             >
                                 <div>
                                     <div className="mb-6 inline-block transform group-hover:scale-105 transition-transform duration-300">
@@ -187,13 +186,13 @@ export default function HelpCenter() {
                 )}
 
                 {/* Bottom Banner Card */}
-                <div className="bg-blue-950 rounded-2xl p-4 text-white relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="reveal-on-scroll bg-blue-950 rounded-2xl p-4 text-white relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div className="lg:col-span-6 space-y-10 z-10 lg:ps-18">
-                        <h2 className="font-spaceGrotesk text-3xl sm:text-4xl lg:text-5xl font-bold leading-12 text-white">
+                        <h2 className="reveal-on-scroll font-spaceGrotesk text-3xl sm:text-4xl lg:text-5xl font-bold leading-12 text-white">
                             Companies are saving time and money with{" "}
                             <span className="text-orange-500 block mt-1">GripCRM.</span>
                         </h2>
-                        <Button href="contact" className="bg-neutral-50 border-2 border-white text-neutral-900 hover:text-neutral-50 hover:bg-transparent inline-flex" type="with-icon">
+                        <Button href="contact" className="reveal-on-scroll bg-neutral-50 border-2 border-white text-neutral-900 hover:text-neutral-50 hover:bg-transparent inline-flex" type="with-icon">
                             <span className="relative z-1">
                                 Get Started
                             </span>

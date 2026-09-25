@@ -13,7 +13,7 @@ export default function Workflow() {
                     setIsVisible(true);
                 }
             },
-            { threshold: 0.50 }
+            { threshold: 0.20 }
         );
 
         if (sectionRef.current) {
@@ -202,7 +202,7 @@ export default function Workflow() {
                 </div>
 
                 {/* Center Main Content */}
-                <div className="relative z-20 text-center max-w-2xl mx-auto px-2">
+                <div className="relative z-20 text-center max-w-2xl mx-auto px-2 reveal-on-scroll">
                     {/* Main Title */}
                     <h2 className="max-w-xl mx-auto text-4xl lg:text-5xl leading-[1.2] font-spaceGrotesk font-bold text-neutral-900">
                         Everything You Need to

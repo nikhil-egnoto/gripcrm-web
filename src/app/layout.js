@@ -23,6 +23,8 @@ export const metadata = {
 
 import { GripDataProvider } from "@/context/GripDataContext";
 import { fetchAllGripCrmData } from "@/lib/api";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import PageFadeTransition from "@/components/providers/PageFadeTransition";
 
 export default async function RootLayout({ children }) {
   const initialData = await fetchAllGripCrmData();
@@ -35,9 +37,13 @@ export default async function RootLayout({ children }) {
         <AuthProvider>
           <GripDataProvider initialData={initialData}>
             <AuthGuard>
-              <Header />
-              {children}
-              <Footer />
+              <SmoothScrollProvider>
+                <Header />
+                <PageFadeTransition>
+                  {children}
+                </PageFadeTransition>
+                <Footer />
+              </SmoothScrollProvider>
             </AuthGuard>
           </GripDataProvider>
         </AuthProvider>

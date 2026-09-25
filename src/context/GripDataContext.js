@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { fetchHomePageData, fetchGlobalOptions, fetchPricingPlans, fetchFeedbacks, fetchFaqs } from "@/lib/api";
+import { fetchHomePageData, fetchGlobalOptions, fetchPricingPlans, fetchFeedbacks, fetchFaqs, fetchBlogData } from "@/lib/api";
 
 const GripDataContext = createContext({
   page: null,
@@ -12,7 +12,7 @@ const GripDataContext = createContext({
   faqs: [],
   loading: true,
   error: null,
-  refetchData: () => {},
+  refetchData: () => { },
 });
 
 export function GripDataProvider({ children, initialData = {} }) {
@@ -55,6 +55,10 @@ export function GripDataProvider({ children, initialData = {} }) {
     } finally {
       setLoading(false);
     }
+
+    // 6. Fetch Blog
+    const blogRes = await fetchBlogData();
+    if (blogRes.blogs?.length > 0) setBlogs(blogRes.blogs);
   };
 
   useEffect(() => {

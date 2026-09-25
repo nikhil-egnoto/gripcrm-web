@@ -64,7 +64,7 @@ export default function CompetitiveAdvantage({ fields }) {
             {/* Top Section Header */}
             <div className="container mx-auto relative z-10 ">
                 <div className="max-w-4xl">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-spaceGrotesk font-bold tracking-tight text-neutral-50 leading-tight">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-spaceGrotesk font-bold tracking-tight text-neutral-50 leading-tight reveal-on-scroll">
                         {fields?.workflow_title || "Turn Your Workflow Into a"}
                         <span className="block text-orange-500">
                             {fields?.workflow_highlight || "Competitive Advantage"}
@@ -102,7 +102,7 @@ export default function CompetitiveAdvantage({ fields }) {
                         <div className="w-full block">
                             {(fields?.workflow_steps || FEATURES).map((feature, index) => {
                                 return (
-                                    <div key={index} className={`relative py-8 sm:py-10 px-5 cursor-pointer transition-all duration-300 overflow-hidden ${index !== FEATURES.length - 1 ? "border-b border-neutral-700" : ""}`}>
+                                    <div key={index} className={`relative py-8 sm:py-10 px-5 cursor-pointer transition-all duration-300 overflow-hidden reveal-on-scroll ${index !== FEATURES.length - 1 ? "border-b border-neutral-700" : ""}`}>
                                         <div className="flex items-start gap-8">
                                             <div className={`size-10 sm:size-12 rounded-md flex items-center justify-center shrink-0 transition-all duration-300 bg-neutral-50`}>
                                                 <span className="size-8 bg-neutral-900 rounded-full flex items-center justify-center">

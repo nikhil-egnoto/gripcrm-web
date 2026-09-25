@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Fragment } from "react";
-import { Check, Info } from "lucide-react";
+import { Check } from "lucide-react";
 import Button from "@/components/ui/Button";
 
 export default function ComparePlans() {
@@ -85,7 +85,7 @@ export default function ComparePlans() {
         <section className="bg-blue-50 py-16 md:py-24 relative overflow-hidden px-4 sm:px-6">
             <div className="container mx-auto relative z-10">
                 {/* Section Title */}
-                <div className="text-center max-w-4xl mx-auto px-4 mb-15">
+                <div className="text-center max-w-4xl mx-auto px-4 mb-15 reveal-on-scroll">
                     <h2 className="inline-block font-spaceGrotesk text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 leading-tight relative">
                         Compare Plans
                         <svg className="mx-auto mt-3 text-red-500" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +98,7 @@ export default function ComparePlans() {
                 </div>
 
                 {/* Compare Table Wrapper */}
-                <div className="bg-white border border-blue-300 overflow-hidden shadow-xs">
+                <div className="reveal-on-scroll bg-white border border-blue-300 overflow-hidden shadow-xs">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse min-w-3xl">
                             <thead>

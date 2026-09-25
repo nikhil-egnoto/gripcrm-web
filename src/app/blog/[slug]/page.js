@@ -1,262 +1,672 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { useParams } from "next/navigation";
 import Image from "next/image";
-import { SINGLE_POST_DATA } from "@/data/blogData";
 import {
   ArrowLeft,
+  Calendar,
+  Copy,
+  Check,
+  BookOpen,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Cta from "@/components/layout/Cta";
 import Grainient from "@/components/ui/Grainient";
+import { fetchBlogPostBySlug, fetchBlogData } from "@/lib/api";
+
+const getCleanTitle = (post) => {
+  if (!post) return "";
+  if (typeof post.title === "object") return post.title?.rendered || "";
+  return post.title || "";
+};
 
 export default function BlogDetailsPage() {
-  const post = SINGLE_POST_DATA;
-  const [activeSection, setActiveSection] = useState(false);
+  const params = useParams();
+  const rawSlug = params?.slug;
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug;
 
-  const Faqs = {
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeSection, setActiveSection] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [recentPosts, setRecentPosts] = useState([]);
+  const [currentUrl, setCurrentUrl] = useState("");
+
+  const ctaData = {
     title: "Not Sure",
     title2: "Where to Start?",
-    description: "Let us know what you need - we're happy to help!"
-  }
+    description: "Let us know what you need - we're happy to help!",
+  };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = post.sections.map(s => document.getElementById(s.id)).filter(Boolean);
-      const scrollPosition = window.scrollY + 200;
+    if (typeof window !== "undefined") {
+      setCurrentUrl(window.location.href);
+    }
+  }, []);
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section.offsetTop <= scrollPosition) {
-          setActiveSection(section.id);
-          break;
+  // Fetch the dynamic post by slug and load other recent articles for the sidebar
+  useEffect(() => {
+    if (!slug) return;
+
+    let isMounted = true;
+    setLoading(true);
+    setError(null);
+
+    const loadData = async () => {
+      try {
+        const [postRes, blogListRes] = await Promise.all([
+          fetchBlogPostBySlug(slug),
+          fetchBlogData(),
+        ]);
+
+        if (!isMounted) return;
+
+        if (postRes?.post) {
+          setPost(postRes.post);
+        } else {
+          setError(postRes?.error || "Post not found");
+        }
+
+        // Collect other posts for recommended sidebar
+        const allBlogs =
+          blogListRes?.blogs ||
+          (Array.isArray(blogListRes?.fields) ? blogListRes.fields : []);
+        if (Array.isArray(allBlogs)) {
+          const others = allBlogs
+            .filter((b) => b.slug !== slug && String(b.id) !== String(slug))
+            .slice(0, 3);
+          setRecentPosts(others);
+        }
+      } catch (err) {
+        console.error("Error loading blog details:", err);
+        if (isMounted) {
+          setError(err.message || "Failed to load article");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
         }
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    loadData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
+
+  // Extract Table of Contents and inject IDs into H2 tags of HTML content
+  const { processedHtml, tableOfContents } = useMemo(() => {
+    if (!post) return { processedHtml: "", tableOfContents: [] };
+
+    // 1. If post already contains structured tableOfContents
+    if (Array.isArray(post.tableOfContents) && post.tableOfContents.length > 0) {
+      return {
+        processedHtml: post.content || "",
+        tableOfContents: post.tableOfContents,
+      };
+    }
+
+    // 2. If post has structured sections with IDs and headings
+    if (Array.isArray(post.sections) && post.sections.length > 0) {
+      const toc = post.sections.map((s) => ({
+        id: s.id,
+        title: s.heading || s.title,
+      }));
+      return {
+        processedHtml: post.content || "",
+        tableOfContents: toc,
+      };
+    }
+
+    // 3. Extract dynamically from HTML content
+    const html = post.content || "";
+    if (!html) return { processedHtml: "", tableOfContents: [] };
+
+    const toc = [];
+    let count = 0;
+
+    const processed = html.replace(
+      /<h2([^>]*)>(.*?)<\/h2>/gi,
+      (match, attrs, innerText) => {
+        const cleanText = innerText
+          .replace(/<[^>]+>/g, "")
+          .replace(/&nbsp;/g, " ")
+          .trim();
+        if (!cleanText) return match;
+
+        // Check if an id already exists in attrs
+        const existingIdMatch = attrs.match(/id=["']([^"']+)["']/i);
+        const id = existingIdMatch
+          ? existingIdMatch[1]
+          : `heading-${cleanText
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, "") || ++count}`;
+
+        toc.push({ id, title: cleanText });
+
+        if (existingIdMatch) {
+          return match;
+        }
+        return `<h2 id="${id}"${attrs}>${innerText}</h2>`;
+      }
+    );
+
+    return { processedHtml: processed, tableOfContents: toc };
+  }, [post]);
+
+  // Scroll-spy effect to highlight the current section in Table of Contents
+  useEffect(() => {
+    if (!tableOfContents || tableOfContents.length === 0) return;
+
+    const handleScroll = () => {
+      const sections = tableOfContents
+        .map((item) => document.getElementById(item.id))
+        .filter(Boolean);
+      const scrollPosition = window.scrollY + 220;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.offsetTop <= scrollPosition) {
+          setActiveSection(tableOfContents[i].id);
+          return;
+        }
+      }
+      if (sections.length > 0 && window.scrollY < sections[0].offsetTop - 100) {
+        setActiveSection("");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [post.sections]);
+  }, [tableOfContents]);
 
   const scrollToSection = (id) => {
     setActiveSection(id);
     const element = document.getElementById(id);
     if (element) {
       const yOffset = -100;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
-  return (
-    <main className="bg-blue-50 relative">
+  const handleCopyLink = () => {
+    if (typeof window !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
 
+  const postTitle = getCleanTitle(post);
+  const shareTitle = encodeURIComponent(postTitle || "Blog Post");
+  const shareUrl = encodeURIComponent(currentUrl || "");
+
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+  const twitterShareUrl = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`;
+  const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
+
+  return (
+    <main className="bg-blue-50 relative min-h-screen">
       {/* Dark Sub-Header Navigation Bar */}
       <div className="blog-moving-gradient bg-neutral-900 text-white pt-20 py-10 sm:py-15 px-4 border-b border-gray-800 shadow-sm relative">
-
-        <div className="container mx-auto flex items-center justify-between sm:flex-row flex-col relative">
-
-          {/* Left: Blog Details + Back Button */}
-          <div className="flex sm:items-start items-center flex-col gap-5">
+        <div className="container mx-auto flex items-center justify-between sm:flex-row flex-col relative gap-5">
+          {/* Left: Blog Details Title + Back Button */}
+          <div className="flex sm:items-start items-center flex-col gap-4 reveal-on-scroll">
             <h1 className="font-spaceGrotesk text-3xl md:text-4xl font-bold text-neutral-100">
               Blog Details
             </h1>
 
-            <Button href="/blog" className="sm:relative absolute sm:top-0 -top-15 left-0 bg-white/10 border-none text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100">
-              <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+            <Button
+              href="/blog"
+              className="sm:relative absolute sm:top-0 -top-15 left-0 bg-white/10 border-none text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 transition-all"
+            >
+              <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:-translate-x-0.5 transition-transform">
                 <ArrowLeft className="size-4" />
               </span>
-              <span className="relative z-1">
-                Back to Blog Listing
-              </span>
+              <span className="relative z-1">Back to Blog Listing</span>
             </Button>
           </div>
 
           {/* Right: Share Article Social Buttons */}
-          <div className="flex items-center gap-8 sm:mt-0 mt-5">
-            <span className="text-xl text-neutral-100 font-semibold hidden sm:inline-block">
-              Share this article
+          <div className="flex items-center gap-4 sm:gap-6 sm:mt-0 mt-3 reveal-on-scroll">
+            <span className="text-base sm:text-lg text-neutral-200 font-medium hidden sm:inline-block">
+              Share article:
             </span>
 
-            <div className="flex items-center gap-2.5">
-              <Button href="/facebook" className="bg-white/10 border-none text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 rounded-full!">
-                <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="none"><path d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z" fill="currentColor" /></svg>
-              </Button>
+            <div className="flex items-center gap-2">
+              {/* Facebook */}
+              <a
+                href={facebookShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Share on Facebook"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-neutral-100 text-neutral-100 hover:text-neutral-900 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                <svg
+                  width={18}
+                  height={18}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 640"
+                  fill="none"
+                >
+                  <path
+                    d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </a>
 
-              <Button href="/twitter" className="bg-white/10 border-none text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 rounded-full!">
-                <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z" fill="currentColor" /></svg>
-              </Button>
+              {/* Twitter / X */}
+              <a
+                href={twitterShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Share on X (Twitter)"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-neutral-100 text-neutral-100 hover:text-neutral-900 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                <svg
+                  width={18}
+                  height={18}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 640"
+                >
+                  <path
+                    d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </a>
 
-              <Button href="/linkedin" className="bg-white/10 border-none text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 rounded-full!">
-                <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M512 96L127.9 96C110.3 96 96 110.5 96 128.3L96 511.7C96 529.5 110.3 544 127.9 544L512 544C529.6 544 544 529.5 544 511.7L544 128.3C544 110.5 529.6 96 512 96zM231.4 480L165 480L165 266.2L231.5 266.2L231.5 480L231.4 480zM198.2 160C219.5 160 236.7 177.2 236.7 198.5C236.7 219.8 219.5 237 198.2 237C176.9 237 159.7 219.8 159.7 198.5C159.7 177.2 176.9 160 198.2 160zM480.3 480L413.9 480L413.9 376C413.9 351.2 413.4 319.3 379.4 319.3C344.8 319.3 339.5 346.3 339.5 374.2L339.5 480L273.1 480L273.1 266.2L336.8 266.2L336.8 295.4L337.7 295.4C346.6 278.6 368.3 260.9 400.6 260.9C467.8 260.9 480.3 305.2 480.3 362.8L480.3 480z" fill="currentColor" /></svg>
-              </Button>
+              {/* LinkedIn */}
+              <a
+                href={linkedinShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Share on LinkedIn"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-neutral-100 text-neutral-100 hover:text-neutral-900 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                <svg
+                  width={18}
+                  height={18}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 640"
+                >
+                  <path
+                    d="M512 96L127.9 96C110.3 96 96 110.5 96 128.3L96 511.7C96 529.5 110.3 544 127.9 544L512 544C529.6 544 544 529.5 544 511.7L544 128.3C544 110.5 529.6 96 512 96zM231.4 480L165 480L165 266.2L231.5 266.2L231.5 480L231.4 480zM198.2 160C219.5 160 236.7 177.2 236.7 198.5C236.7 219.8 219.5 237 198.2 237C176.9 237 159.7 219.8 159.7 198.5C159.7 177.2 176.9 160 198.2 160zM480.3 480L413.9 480L413.9 376C413.9 351.2 413.4 319.3 379.4 319.3C344.8 319.3 339.5 346.3 339.5 374.2L339.5 480L273.1 480L273.1 266.2L336.8 266.2L336.8 295.4L337.7 295.4C346.6 278.6 368.3 260.9 400.6 260.9C467.8 260.9 480.3 305.2 480.3 362.8L480.3 480z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </a>
 
-              <Button href="/linkedin" className="bg-white/10 border-none text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 rounded-full!">
-                <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z" fill="currentColor" /></svg>
-              </Button>
+              {/* Copy Link */}
+              <button
+                onClick={handleCopyLink}
+                aria-label="Copy link to article"
+                title={copied ? "Link copied!" : "Copy link"}
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-neutral-100 text-neutral-100 hover:text-neutral-900 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                {copied ? (
+                  <Check className="size-4 text-emerald-400" />
+                ) : (
+                  <Copy className="size-4" />
+                )}
+              </button>
             </div>
           </div>
-
         </div>
       </div>
 
-      <div className="py-16 md:py-24 px-4">
-        {/* Main Content Area */}
+      {/* Main Content Area */}
+      <div className="py-12 md:py-20 px-4">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Loading Skeleton */}
+          {loading && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-pulse">
+              <aside className="lg:col-span-4 xl:col-span-3 w-full">
+                <div className="bg-white rounded-2xl p-6 sm:p-8 space-y-4">
+                  <div className="h-6 bg-neutral-200 rounded-md w-3/4 mb-6"></div>
+                  <div className="h-4 bg-neutral-100 rounded w-full"></div>
+                  <div className="h-4 bg-neutral-100 rounded w-5/6"></div>
+                  <div className="h-4 bg-neutral-100 rounded w-4/6"></div>
+                  <div className="h-4 bg-neutral-100 rounded w-full"></div>
+                </div>
+              </aside>
 
-            {/* Left Sidebar: Table of Content */}
-            <aside className="lg:col-span-4 xl:col-span-3 w-full md:sticky top-4">
-              <div className="bg-white rounded-2xl p-5 sm:p-7 md:p-9">
-                <h2 className="text-xl font-semibold text-neutral-900 mb-8">
-                  Table of Content
-                </h2>
+              <article className="xl:col-span-9 lg:col-span-8 w-full bg-white rounded-2xl p-6 sm:p-10 md:p-12 space-y-6">
+                <div className="h-4 bg-neutral-200 rounded w-32"></div>
+                <div className="h-10 bg-neutral-200 rounded w-4/5"></div>
+                <div className="aspect-video bg-neutral-100 rounded-2xl w-full"></div>
+                <div className="space-y-3 pt-4">
+                  <div className="h-4 bg-neutral-100 rounded w-full"></div>
+                  <div className="h-4 bg-neutral-100 rounded w-full"></div>
+                  <div className="h-4 bg-neutral-100 rounded w-3/4"></div>
+                </div>
+              </article>
+            </div>
+          )}
 
-                <nav className="space-y-6">
-                  {post.tableOfContents.map((item) => {
-                    const isActive = activeSection === item.id;
-                    return (
-                      <button
-                        key={item.id}
-                        onClick={() => scrollToSection(item.id)}
-                        className={`w-full text-left flex items-center gap-2.5 text-base font-medium transition-all duration-200 cursor-pointer hover:text-neutral-900 ${isActive
-                          ? "text-neutral-900"
-                          : "text-neutral-700"
-                          }`}
-                      >
-                        <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="none"><path d="M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM320 112C205.1 112 112 205.1 112 320C112 434.9 205.1 528 320 528C434.9 528 528 434.9 528 320C528 205.1 434.9 112 320 112zM320 416C267 416 224 373 224 320C224 267 267 224 320 224C373 224 416 267 416 320C416 373 373 416 320 416z" fill="currentColor" /></svg>
-                        <span className="leading-snug w-full">{item.title}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
+          {/* Not Found / Error State */}
+          {!loading && (!post || error) && (
+            <div className="max-w-xl mx-auto bg-white rounded-3xl p-8 sm:p-12 text-center shadow-sm border border-gray-100 my-10">
+              <div className="w-16 h-16 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center mx-auto mb-6">
+                <BookOpen className="size-8" />
               </div>
-            </aside>
-
-            {/* Right Main Column: Blog Article Body */}
-            <article className="xl:col-span-9 lg:col-span-8 w-full bg-white rounded-2xl p-6 sm:p-8 md:p-12">
-
-              {/* Article Date */}
-              <div className="text-sm sm:text-base text-neutral-700 font-medium mb-5">
-                {post.date}
-              </div>
-
-              {/* Main Article Title */}
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-10 font-spaceGrotesk">
-                {post.title}
-              </h1>
-
-              {/* Intro Paragraph */}
-              <p className="text-neutral-700 text-base md:text-xl lg:leading-10 leading-relaxed mb-10 sm:mb-15 md:mb-20">
-                {post.intro}
+              <h2 className="font-spaceGrotesk text-2xl sm:text-3xl font-bold text-neutral-900 mb-3">
+                Article Not Found
+              </h2>
+              <p className="text-neutral-600 text-base leading-relaxed mb-8">
+                The blog article you are looking for does not exist or may have
+                been moved.
               </p>
+              <Button
+                href="/blog"
+                className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 inline-flex"
+              >
+                <ArrowLeft className="size-4" />
+                <span>Browse All Articles</span>
+              </Button>
+            </div>
+          )}
 
-              {/* Dynamic Sections */}
-              {post.sections.map((section) => (
-                <section key={section.id} id={section.id} className="scroll-mt-20 mb-10 sm:mb-15 md:mb-20">
+          {/* Loaded Post Content */}
+          {!loading && post && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Sidebar: Table of Content & Recommended Reads */}
+              <aside className="lg:col-span-4 xl:col-span-3 w-full lg:sticky top-24 space-y-6">
+                {/* Table of Contents Card */}
+                {tableOfContents.length > 0 && (
+                  <div className="bg-white rounded-2xl p-5 sm:p-7 md:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.02)] border border-gray-100">
+                    <h2 className="text-lg sm:text-xl font-bold font-spaceGrotesk text-neutral-900 mb-6 flex items-center gap-2">
+                      <span>Table of Content</span>
+                    </h2>
 
-                  <h2 className="text-xl sm:text-2xl md:text-4xl font-bold font-spaceGrotesk text-neutral-900 mb-10">
-                    {section.heading}
-                  </h2>
-
-                  {/* Section Content Paragraphs */}
-                  {section.content && section.content.map((paragraph, pIdx) => (
-                    <p key={pIdx} className="text-neutral-700 text-base md:text-xl lg:leading-10 leading-relaxed mb-10">
-                      {paragraph}
-                    </p>
-                  ))}
-
-                  {/* Section Image if present */}
-                  {section.image && (
-                    <div className="rounded-2xl overflow-hidden relative aspect-video">
-                      <Image
-                        src={section.image}
-                        alt={section.imageAlt || section.heading}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-
-                  {/* Section Numbered List if present */}
-                  {section.list && (
-                    <div className="space-y-10">
-                      {section.list.map((item) => (
-                        <div key={item.num} className="space-y-5">
-                          <h3 className="text-lg sm:text-xl font-bold text-neutral-900 flex items-center gap-2">
-                            <span>{item.num}. {item.title}</span>
-                          </h3>
-                          <p className="text-neutral-700 text-base md:text-lg lg:leading-8 leading-relaxed pl-4">
-                            {item.desc}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Closing text if present */}
-                  {section.closing && (
-                    <p className="text-neutral-700 text-base md:text-xl lg:leading-10 leading-relaxed mt-10">
-                      {section.closing}
-                    </p>
-                  )}
-
-                </section>
-              ))}
-
-              {/* Footer Divider & Action Bar inside Article Card */}
-              <div className="border-t border-neutral-300 pt-8 flex sm:flex-row flex-col sm:items-center items-start justify-between gap-6">
-
-                {/* Back to Blog Button */}
-                <Button href="/blog" className="bg-neutral-900 border-2 text-neutral-50 hover:text-neutral-900 hover:bg-neutral-50">
-                  <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
-                    <ArrowLeft className="size-4" />
-                  </span>
-                  <span className="relative z-1">
-                    Back to Blog
-                  </span>
-                </Button>
-
-                {/* Share This Article */}
-
-                <div className="flex items-center gap-8">
-                  <span className="text-xl text-neutral-900 font-semibold hidden sm:inline-block">
-                    Share this article
-                  </span>
-
-                  <div className="flex items-center gap-2.5">
-                    <Button href="/facebook" className="bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!">
-                      <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="none"><path d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z" fill="currentColor" /></svg>
-                    </Button>
-
-                    <Button href="/twitter" className="bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!">
-                      <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z" fill="currentColor" /></svg>
-                    </Button>
-
-                    <Button href="/linkedin" className="bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!">
-                      <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M512 96L127.9 96C110.3 96 96 110.5 96 128.3L96 511.7C96 529.5 110.3 544 127.9 544L512 544C529.6 544 544 529.5 544 511.7L544 128.3C544 110.5 529.6 96 512 96zM231.4 480L165 480L165 266.2L231.5 266.2L231.5 480L231.4 480zM198.2 160C219.5 160 236.7 177.2 236.7 198.5C236.7 219.8 219.5 237 198.2 237C176.9 237 159.7 219.8 159.7 198.5C159.7 177.2 176.9 160 198.2 160zM480.3 480L413.9 480L413.9 376C413.9 351.2 413.4 319.3 379.4 319.3C344.8 319.3 339.5 346.3 339.5 374.2L339.5 480L273.1 480L273.1 266.2L336.8 266.2L336.8 295.4L337.7 295.4C346.6 278.6 368.3 260.9 400.6 260.9C467.8 260.9 480.3 305.2 480.3 362.8L480.3 480z" fill="currentColor" /></svg>
-                    </Button>
-
-                    <Button href="/linkedin" className="bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!">
-                      <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z" fill="currentColor" /></svg>
-                    </Button>
+                    <nav className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+                      {tableOfContents.map((item) => {
+                        const isActive = activeSection === item.id;
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => scrollToSection(item.id)}
+                            className={`group w-full text-left flex items-start gap-2.5 text-sm font-medium transition-all duration-200 cursor-pointer ${isActive
+                              ? "text-neutral-900 translate-x-1"
+                              : "text-neutral-700 hover:text-neutral-900"
+                              }`}
+                          >
+                            <span
+                              className={`w-2 h-2 rounded-full shrink-0 mt-2 transition-all ${isActive ? "bg-neutral-900 scale-125" : "bg-neutral-300 group-hover:bg-neutral-900"
+                                }`}
+                            />
+                            <span className="leading-snug">{item.title}</span>
+                          </button>
+                        );
+                      })}
+                    </nav>
                   </div>
+                )}
+
+                {/* Recommended / Recent Reads Card in Sidebar */}
+                {/* {recentPosts.length > 0 && (
+                  <div className="bg-white rounded-2xl p-5 sm:p-7 shadow-[0_4px_25px_rgba(0,0,0,0.02)] border border-gray-100">
+                    <h3 className="text-base font-bold font-spaceGrotesk text-neutral-900 mb-5">
+                      Recent Articles
+                    </h3>
+                    <div className="space-y-4">
+                      {recentPosts.map((other) => {
+                        const otherTitle = getCleanTitle(other);
+                        const otherSlug = other.slug || other.id;
+                        return (
+                          <Link
+                            key={other.id || otherSlug}
+                            href={`/blog/${otherSlug}`}
+                            className="group block space-y-1 hover:text-violet-600 transition-colors"
+                          >
+                            {other.date && (
+                              <div className="text-xs text-neutral-500 font-medium">
+                                {other.date}
+                              </div>
+                            )}
+                            <h4 className="text-sm font-semibold text-neutral-800 group-hover:text-violet-600 line-clamp-2 leading-snug">
+                              {otherTitle}
+                            </h4>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )} */}
+              </aside>
+
+              {/* Right Main Column: Blog Article Body */}
+              <article className="xl:col-span-9 lg:col-span-8 w-full bg-white rounded-2xl p-6 sm:p-8 md:p-12 shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-gray-100">
+                {/* Meta Row: Date & Category */}
+                <div className="flex flex-wrap items-center gap-3 text-sm sm:text-base text-neutral-600 font-medium mb-4">
+                  {post.date && (
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="size-4 text-neutral-400" />
+                      {post.date}
+                    </span>
+                  )}
+                  {/* {post.category && (
+                    <span className="bg-violet-50 text-violet-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+                      {post.category}
+                    </span>
+                  )} */}
                 </div>
 
-              </div>
+                {/* Main Article Title */}
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-8 font-spaceGrotesk leading-tight tracking-tight">
+                  {postTitle}
+                </h1>
 
-            </article>
+                {/* Featured Image */}
+                {post.image && (
+                  <div className="mb-10 rounded-2xl overflow-hidden relative aspect-video w-full border border-gray-100 shadow-xs">
+                    <Image
+                      src={post.image}
+                      alt={postTitle || "Featured Blog Image"}
+                      fill
+                      priority
+                      unoptimized={post.image.startsWith("http://")}
+                      className="object-cover"
+                    />
+                  </div>
+                )}
 
-          </div>
+                {/* Intro Paragraph */}
+                {post.intro && (
+                  <p className="text-neutral-700 text-base md:text-xl lg:leading-10 leading-relaxed mb-10">
+                    {post.intro}
+                  </p>
+                )}
+
+                {/* Dynamic Content (WordPress HTML) */}
+                {processedHtml && (
+                  <div
+                    className="blog-content text-neutral-700 mb-12"
+                    dangerouslySetInnerHTML={{ __html: processedHtml }}
+                  />
+                )}
+
+                {/* Dynamic Sections (Structured Fallback format) */}
+                {Array.isArray(post.sections) &&
+                  post.sections.length > 0 &&
+                  post.sections.map((section) => (
+                    <section
+                      key={section.id}
+                      id={section.id}
+                      className="scroll-mt-24 mb-10 sm:mb-14"
+                    >
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-spaceGrotesk text-neutral-900 mb-6">
+                        {section.heading}
+                      </h2>
+
+                      {/* Section Content Paragraphs */}
+                      {section.content &&
+                        section.content.map((paragraph, pIdx) => (
+                          <p
+                            key={pIdx}
+                            className="text-neutral-700 text-base md:text-lg lg:leading-8 leading-relaxed mb-6"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+
+                      {/* Section Image if present */}
+                      {section.image && (
+                        <div className="rounded-2xl overflow-hidden relative aspect-video my-8 border border-gray-100">
+                          <Image
+                            src={section.image}
+                            alt={section.imageAlt || section.heading}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+
+                      {/* Section Numbered List if present */}
+                      {section.list && (
+                        <div className="space-y-8 my-8">
+                          {section.list.map((item) => (
+                            <div key={item.num} className="space-y-3">
+                              <h3 className="text-lg sm:text-xl font-bold text-neutral-900 flex items-center gap-2">
+                                <span>
+                                  {item.num}. {item.title}
+                                </span>
+                              </h3>
+                              <p className="text-neutral-700 text-base md:text-lg lg:leading-8 leading-relaxed pl-4">
+                                {item.desc}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Closing text if present */}
+                      {section.closing && (
+                        <p className="text-neutral-700 text-base md:text-lg lg:leading-8 leading-relaxed mt-6">
+                          {section.closing}
+                        </p>
+                      )}
+                    </section>
+                  ))}
+
+                {/* Footer Divider & Action Bar inside Article Card */}
+                <div className="reveal-on-scroll border-t border-neutral-200 pt-8 mt-12 flex sm:flex-row flex-col sm:items-center items-start justify-between gap-6">
+                  {/* Back to Blog Button */}
+                  <Button
+                    href="/blog"
+                    className="bg-neutral-900 border-2 text-neutral-50 hover:text-neutral-900 hover:bg-neutral-50"
+                  >
+                    <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:-translate-x-0.5 transition-transform">
+                      <ArrowLeft className="size-4" />
+                    </span>
+                    <span className="relative z-1">Back to Blog Listing</span>
+                  </Button>
+
+                  {/* Share This Article Buttons */}
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm font-semibold text-neutral-700 hidden sm:inline-block">
+                      Share:
+                    </span>
+
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={facebookShareUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share on Facebook"
+                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!"
+                      >
+                        <svg
+                          width={20}
+                          height={20}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 640 640"
+                          fill="none"
+                        >
+                          <path
+                            d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </a>
+
+                      <a
+                        href={twitterShareUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share on X"
+                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!"
+                      >
+                        <svg
+                          width={20}
+                          height={20}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 640 640"
+                        >
+                          <path
+                            d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </a>
+
+                      <a
+                        href={linkedinShareUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share on LinkedIn"
+                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!"
+                      >
+                        <svg
+                          width={20}
+                          height={20}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 640 640"
+                        >
+                          <path
+                            d="M512 96L127.9 96C110.3 96 96 110.5 96 128.3L96 511.7C96 529.5 110.3 544 127.9 544L512 544C529.6 544 544 529.5 544 511.7L544 128.3C544 110.5 529.6 96 512 96zM231.4 480L165 480L165 266.2L231.5 266.2L231.5 480L231.4 480zM198.2 160C219.5 160 236.7 177.2 236.7 198.5C236.7 219.8 219.5 237 198.2 237C176.9 237 159.7 219.8 159.7 198.5C159.7 177.2 176.9 160 198.2 160zM480.3 480L413.9 480L413.9 376C413.9 351.2 413.4 319.3 379.4 319.3C344.8 319.3 339.5 346.3 339.5 374.2L339.5 480L273.1 480L273.1 266.2L336.8 266.2L336.8 295.4L337.7 295.4C346.6 278.6 368.3 260.9 400.6 260.9C467.8 260.9 480.3 305.2 480.3 362.8L480.3 480z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </a>
+
+                      <button
+                        onClick={handleCopyLink}
+                        aria-label="Copy link to article"
+                        title={copied ? "Link copied!" : "Copy link"}
+                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!"
+                      >
+                        {copied ? (
+                          <Check className="size-5 text-emerald-600" />
+                        ) : (
+                          <Copy className="size-5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          )}
         </div>
       </div>
 
-      <section className={`bg-neutral-900 py-16 md:py-24 overflow-hidden relative select-none px-4`}>
+      {/* Call to Action Section */}
+      <section className="bg-neutral-900 py-16 md:py-24 overflow-hidden relative select-none px-4">
         <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
           <Grainient
             color1="#9EFFB8"
             color2="#FF78B0"
-            color3="#FFF600 "
+            color3="#FFF600"
             timeSpeed={1.5}
             colorBalance={-0.21}
             warpStrength={1}
@@ -278,7 +688,11 @@ export default function BlogDetailsPage() {
             zoom={0.9}
           />
         </div>
-        <Cta title={Faqs.title} title2={Faqs.title2} description={Faqs.description} />
+        <Cta
+          title={ctaData.title}
+          title2={ctaData.title2}
+          description={ctaData.description}
+        />
       </section>
     </main>
   );

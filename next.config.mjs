@@ -5,8 +5,11 @@ const nextConfig = {
             {
                 protocol: "http",
                 hostname: "localhost",
-                port: "",
-                pathname: "/gripcrm-backend/wp-content/uploads/**",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "**",
             },
         ],
     },
