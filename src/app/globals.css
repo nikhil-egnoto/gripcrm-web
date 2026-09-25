@@ -3,16 +3,72 @@
 :root {
   --background: #ffffff;
   --foreground: #404040;
+  --red-50: #FEF3F2;
+  --red-100: #FDE7E6;
+  --red-200: #FAD1D1;
+  --red-300: #F6ABAB;
+  --red-400: #F07C7E;
   --red-500: #e7565d;
-  --blue-50: #eff5fe;
-  --blue-300: #acc6f4;
-  --blue-400: #88a4ec;
-  --blue-500: #6f87e3;
-  --blue-700: #4652bb;
-  --violet-500: #8952f9;
-  --green-500: #17a27f;
-  --orange-500: #e78e38;
-  --olive-500: #b8b243;
+  --red-600: #D12D3C;
+  --red-700: #B02030;
+  --red-800: #931E2F;
+  --red-900: #7E1D2E;
+  --red-950: #4B0A04;
+  --blue-50: #EFF5FE;
+  --blue-100: #E2EDFD;
+  --blue-200: #CBDDFA;
+  --blue-300: #ABC6F6;
+  --blue-400: #87A4EF;
+  --blue-500: #6D86E7;
+  --blue-600: #5264D9;
+  --blue-700: #4351BF;
+  --blue-800: #38449B;
+  --blue-900: #343F7B;
+  --blue-950: #1E2348;
+  --violet-50: #F4F2FF;
+  --violet-100: #EDE8FF;
+  --violet-200: #DCD4FF;
+  --violet-300: #C2B1FF;
+  --violet-400: #A585FF;
+  --violet-500: #864FFE;
+  --violet-600: #7B31F6;
+  --violet-700: #6D1FE2;
+  --violet-800: #5B19BE;
+  --violet-900: #4C179B;
+  --violet-950: #2E0C69;
+  --green-50: #EEFBF6;
+  --green-100: #D5F6E7;
+  --green-200: #AEECD3;
+  --green-300: #79DCBA;
+  --green-400: #42C59C;
+  --green-500: #1EA37E;
+  --green-600: #12896A;
+  --green-700: #0E6E58;
+  --green-800: #0E5746;
+  --green-900: #0C483B;
+  --green-940: #062822;
+  --orange-50: #FEF9EE;
+  --orange-100: #FCF1D8;
+  --orange-200: #F7DFB1;
+  --orange-300: #F0BF69;
+  --orange-400: #ECA84B;
+  --orange-500: #E78E28;
+  --orange-600: #D8751E;
+  --orange-700: #B45A1A;
+  --orange-800: #8F481D;
+  --orange-900: #743C1A;
+  --orange-950: #3E1D0C;
+  --olive-50: #FAF9EC;
+  --olive-100: #F3F3D1;
+  --olive-200: #E8E6A7;
+  --olive-300: #DAD773;
+  --olive-400: #CBC54A;
+  --olive-500: #B9B235;
+  --olive-600: #978E28;
+  --olive-700: #766C23;
+  --olive-800: #615722;
+  --olive-900: #544B21;
+  --olive-950: #2F2A0F;
 }
 
 @theme inline {
@@ -20,16 +76,72 @@
   --color-foreground: var(--foreground);
   --font-spaceGrotesk: var(--font-space-grotesk);
   --font-inter: var(--font-inter);
+  --color-red-50: var(--red-50);
+  --color-red-100: var(--red-100);
+  --color-red-200: var(--red-200);
+  --color-red-300: var(--red-300);
+  --color-red-400: var(--red-400);
   --color-red-500: var(--red-500);
+  --color-red-600: var(--red-600);
+  --color-red-700: var(--red-700);
+  --color-red-800: var(--red-800);
+  --color-red-900: var(--red-900);
+  --color-red-950: var(--red-950);
   --color-blue-50: var(--blue-50);
+  --color-blue-100: var(--blue-100);
+  --color-blue-200: var(--blue-200);
   --color-blue-300: var(--blue-300);
   --color-blue-400: var(--blue-400);
   --color-blue-500: var(--blue-500);
+  --color-blue-600: var(--blue-600);
   --color-blue-700: var(--blue-700);
+  --color-blue-800: var(--blue-800);
+  --color-blue-900: var(--blue-900);
+  --color-blue-950: var(--blue-950);
+  --color-violet-50: var(--violet-50);
+  --color-violet-100: var(--violet-100);
+  --color-violet-200: var(--violet-200);
+  --color-violet-300: var(--violet-300);
+  --color-violet-400: var(--violet-400);
   --color-violet-500: var(--violet-500);
+  --color-violet-600: var(--violet-600);
+  --color-violet-700: var(--violet-700);
+  --color-violet-800: var(--violet-800);
+  --color-violet-900: var(--violet-900);
+  --color-violet-950: var(--violet-950);
+  --color-green-50: var(--green-50);
+  --color-green-100: var(--green-100);
+  --color-green-200: var(--green-200);
+  --color-green-300: var(--green-300);
+  --color-green-400: var(--green-400);
   --color-green-500: var(--green-500);
+  --color-green-600: var(--green-600);
+  --color-green-700: var(--green-700);
+  --color-green-800: var(--green-800);
+  --color-green-900: var(--green-900);
+  --color-green-940: var(--green-940);
+  --color-orange-50: var(--orange-50);
+  --color-orange-100: var(--orange-100);
+  --color-orange-200: var(--orange-200);
+  --color-orange-300: var(--orange-300);
+  --color-orange-400: var(--orange-400);
   --color-orange-500: var(--orange-500);
+  --color-orange-600: var(--orange-600);
+  --color-orange-700: var(--orange-700);
+  --color-orange-800: var(--orange-800);
+  --color-orange-900: var(--orange-900);
+  --color-orange-950: var(--orange-950);
+  --color-olive-50: var(--olive-50);
+  --color-olive-100: var(--olive-100);
+  --color-olive-200: var(--olive-200);
+  --color-olive-300: var(--olive-300);
+  --color-olive-400: var(--olive-400);
   --color-olive-500: var(--olive-500);
+  --color-olive-600: var(--olive-600);
+  --color-olive-700: var(--olive-700);
+  --color-olive-800: var(--olive-800);
+  --color-olive-900: var(--olive-900);
+  --color-olive-950: var(--olive-950);
 }
 
 body {
@@ -481,6 +593,7 @@ body {
     opacity: 0;
     transform: translateY(12px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -500,7 +613,7 @@ body {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -525,7 +638,7 @@ body {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -537,22 +650,34 @@ body {
 
 /* Sequential Stagger Delays */
 .stagger-group.is-revealed .stagger-item:nth-child(1),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(1) { transition-delay: 0.06s; }
+.reveal-on-scroll.is-revealed .stagger-item:nth-child(1) {
+  transition-delay: 0.06s;
+}
 
 .stagger-group.is-revealed .stagger-item:nth-child(2),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(2) { transition-delay: 0.12s; }
+.reveal-on-scroll.is-revealed .stagger-item:nth-child(2) {
+  transition-delay: 0.12s;
+}
 
 .stagger-group.is-revealed .stagger-item:nth-child(3),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(3) { transition-delay: 0.18s; }
+.reveal-on-scroll.is-revealed .stagger-item:nth-child(3) {
+  transition-delay: 0.18s;
+}
 
 .stagger-group.is-revealed .stagger-item:nth-child(4),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(4) { transition-delay: 0.24s; }
+.reveal-on-scroll.is-revealed .stagger-item:nth-child(4) {
+  transition-delay: 0.24s;
+}
 
 .stagger-group.is-revealed .stagger-item:nth-child(5),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(5) { transition-delay: 0.30s; }
+.reveal-on-scroll.is-revealed .stagger-item:nth-child(5) {
+  transition-delay: 0.30s;
+}
 
 .stagger-group.is-revealed .stagger-item:nth-child(6),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(6) { transition-delay: 0.36s; }
+.reveal-on-scroll.is-revealed .stagger-item:nth-child(6) {
+  transition-delay: 0.36s;
+}
 
 /* ==========================================================================
    Lenis Smooth Scrolling Styles
@@ -584,6 +709,7 @@ html.lenis body {
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
+
   .page-fade-wrapper,
   .reveal-on-scroll,
   .reveal-fade,
@@ -597,4 +723,4 @@ html.lenis body {
     animation: none !important;
     transition: none !important;
   }
-}
+}

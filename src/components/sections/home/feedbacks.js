@@ -109,7 +109,7 @@ export default function FeedBacks({ fields, feedbacksData }) {
             </div>
 
             <div className="container mx-auto relative">
-                <div className="feedback-section relative overflow-hidden h-[620px] sm:h-[660px] lg:h-[720px]">
+                <div className="feedback-section relative overflow-hidden h-155 sm:h-165 lg:h-175">
                     {/* Top and Bottom Gradient Overlay Masks */}
                     <div className="pointer-events-none absolute top-0 left-0 right-0 h-24 sm:h-36 bg-linear-to-b from-blue-50 to-transparent z-20" />
                     <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 sm:h-36 bg-linear-to-t from-blue-50 to-transparent z-20" />

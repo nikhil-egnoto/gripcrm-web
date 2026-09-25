@@ -1,19 +1,26 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { MoveLeft, MoveRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 export default function Platform({ fields }) {
-
+    const sectionRef = useRef(null);
+    const swiperRef = useRef(null);
+    const triggerRef = useRef(null);
     const prevRef = useRef(null);
     const nextRef = useRef(null);
+
+    const [isBeginning, setIsBeginning] = useState(true);
+    const [isEnd, setIsEnd] = useState(false);
 
     const PLATFORM_CARDS = [
         {
@@ -58,9 +65,72 @@ export default function Platform({ fields }) {
         }
     ];
 
+    const cards = fields?.platform_cards || PLATFORM_CARDS;
+
+    // Initialize ScrollTrigger on desktop/tablet to tie page scroll to Swiper translation (no position: fixed)
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        const ctx = gsap.context(() => {
+            const mm = gsap.matchMedia();
+
+            mm.add("(min-width: 768px)", () => {
+                if (!sectionRef.current) return;
+
+                const trigger = ScrollTrigger.create({
+                    trigger: sectionRef.current,
+                    start: "top 85%",
+                    end: "bottom 15%",
+                    scrub: 1.2,
+                    invalidateOnRefresh: true,
+                    onUpdate: (self) => {
+                        if (swiperRef.current && !swiperRef.current.destroyed) {
+                            swiperRef.current.setProgress(self.progress, 0);
+                            setIsBeginning(self.progress <= 0.05);
+                            setIsEnd(self.progress >= 0.95);
+                        }
+                    },
+                });
+
+                triggerRef.current = trigger;
+            });
+        }, sectionRef);
+
+        return () => {
+            ctx.revert();
+            triggerRef.current = null;
+        };
+    }, [cards.length]);
+
+    // Refresh ScrollTrigger once Swiper is mounted and initialized
+    const handleSwiperInit = (swiper) => {
+        swiperRef.current = swiper;
+        if (typeof window !== "undefined" && ScrollTrigger) {
+            ScrollTrigger.refresh();
+        }
+    };
+
+    // Next button click
+    const handleNext = useCallback(() => {
+        if (swiperRef.current) {
+            swiperRef.current.slideNext();
+        }
+    }, []);
+
+    // Prev button click
+    const handlePrev = useCallback(() => {
+        if (swiperRef.current) {
+            swiperRef.current.slidePrev();
+        }
+    }, []);
 
     return (
-        <section className="pt-16 md:pt-24 md:pb-9 pb-10 border-t border-neutral-300">
+        <section
+            ref={sectionRef}
+            className="pt-16 md:pt-24 md:pb-9 pb-10 border-t border-neutral-300 relative bg-white overflow-hidden"
+        >
             {/* Main Title Section */}
             <div className="text-center max-w-4xl mx-auto px-4">
                 <h2 className="font-spaceGrotesk text-4xl sm:text-5xl md:text-6xl font-bold text-black reveal-on-scroll">
@@ -79,20 +149,17 @@ export default function Platform({ fields }) {
 
             {/* Cards Carousel Container */}
             <Swiper
-                className="platform-swiper md:py-15! py-10! xl:pl-50! lg:pl-25! md:pl-4! md:px-0! px-4!"
-                modules={[Navigation, Pagination, Autoplay]}
+                className="platform-swiper md:py-10! py-8! xl:pl-50! lg:pl-25! md:pl-4! md:px-0! px-4! w-full"
+                modules={[Navigation, Pagination]}
                 slidesPerView={1}
                 spaceBetween={20}
-                navigation={{
-                    prevEl: prevRef.current,
-                    nextEl: nextRef.current,
-                }}
-                onBeforeInit={(swiper) => {
-                    swiper.params.navigation.prevEl = prevRef.current;
-                    swiper.params.navigation.nextEl = nextRef.current;
+                watchSlidesProgress={true}
+                onSwiper={handleSwiperInit}
+                onSlideChange={(swiper) => {
+                    setIsBeginning(swiper.isBeginning);
+                    setIsEnd(swiper.isEnd);
                 }}
                 pagination={false}
-                autoplay={false}
                 breakpoints={{
                     767: {
                         slidesPerView: 2,
@@ -100,24 +167,24 @@ export default function Platform({ fields }) {
                     1024: {
                         slidesPerView: 3,
                     },
-
                     1280: {
                         slidesPerView: 3.5,
                     },
                 }}
             >
-
-                {(fields?.platform_cards || PLATFORM_CARDS).map((card, index) => {
+                {cards.map((card, index) => {
                     return (
-                        <SwiperSlide key={index}
-                            className={`${card.bgColor} rounded-2xl p-7 flex flex-col justify-between text-white reveal-on-scroll`}>
+                        <SwiperSlide
+                            key={card.id || index}
+                            className={`${card.bgColor} rounded-2xl p-7 flex flex-col justify-between text-white select-none`}
+                        >
                             {/* Card Header Row */}
                             <div>
                                 <div className="flex items-end justify-between mb-5">
                                     <h3 className="text-2xl sm:text-3xl font-semibold font-spaceGrotesk">
                                         {card.title}
                                     </h3>
-                                    <div className="size-14 absolute top-4 right-4 rounded-md bg-white flex items-center justify-center text-white shrink-0">
+                                    <div className="size-14 absolute top-4 right-4 rounded-md bg-white flex items-center justify-center text-white shrink-0 shadow-sm">
                                         <Image src={card.icon} alt={card.title} width={32} height={32} />
                                     </div>
                                 </div>
@@ -129,30 +196,43 @@ export default function Platform({ fields }) {
                             </div>
 
                             {/* Card Mockup Graphic */}
-                            <div className="bg-white p-3 rounded-xl">
-                                <Image src={card.image} alt={card.title} className="aspect-3/2 w-full" width={400} height={287} />
+                            <div className="bg-white p-3 rounded-xl shadow-xs">
+                                <Image
+                                    src={card.image}
+                                    alt={card.title}
+                                    className="aspect-3/2 w-full object-cover rounded-lg"
+                                    width={400}
+                                    height={287}
+                                />
                             </div>
                         </SwiperSlide>
                     );
                 })}
 
-                <div className="md:flex items-center justify-center gap-5 mt-10 sm:mt-15 hidden reveal-on-scroll">
+                {/* Navigation Buttons */}
+                <div className="md:flex items-center justify-center gap-5 mt-8 sm:mt-10 hidden">
                     <button
                         ref={prevRef}
+                        type="button"
+                        onClick={handlePrev}
+                        disabled={isBeginning}
                         aria-label="Previous slide"
-                        className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl  transition-all duration-200 cursor-pointer"
+                        className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
                     >
                         <MoveLeft className="size-5" />
                     </button>
                     <button
                         ref={nextRef}
+                        type="button"
+                        onClick={handleNext}
+                        disabled={isEnd}
                         aria-label="Next slide"
-                        className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl  transition-all duration-200 cursor-pointer"
+                        className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
                     >
                         <MoveRight className="size-5" />
                     </button>
                 </div>
             </Swiper>
         </section>
-    )
+    );
 }

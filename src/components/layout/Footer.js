@@ -91,17 +91,17 @@ export default function Footer() {
                     {/* Left Column: Logo & Nav Sections */}
                     <div className="lg:col-span-6 xl:col-span-7 flex flex-col py-10 pt-16 lg:py-24">
                         {/* Logo */}
-                        <div className="mb-10">
-                            <Link href="/" className="inline-block">
-                                <Image
-                                    src={logoUrl}
-                                    alt="GRIPCRM Logo"
-                                    width={222}
-                                    height={50}
-                                    className="h-12 w-auto object-contain"
-                                />
-                            </Link>
-                        </div>
+                        <Link href="/" className="inline-block">
+                            <Image
+                                src={logoUrl}
+                                alt="GRIPCRM Logo"
+                                width={222}
+                                height={50}
+                                className="h-12 w-auto object-contain"
+                            />
+                        </Link>
+
+                        <div className="border-t border-neutral-300 my-5 sm:my-8" />
 
                         {/* Navigation Sections */}
                         {sections.map((section, idx) => {
