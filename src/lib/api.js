@@ -25,6 +25,8 @@ function getApiBaseUrl() {
 async function fetchApiEndpoint(endpointPath) {
   const baseUrl = getApiBaseUrl();
 
+  console.log(baseUrl, "baseUrl");
+
   // If base URL points directly to a .json file (e.g. wp-json.json)
   if (baseUrl.endsWith(".json")) {
     if (typeof window !== "undefined") {
