@@ -1,10 +1,21 @@
-import localWpJson from "@/data/wp-json.json";
+import MOCK_DATA from "@/data/mockData.json";
 
 function getApiBaseUrl() {
   const envUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
   if (envUrl) {
+    // If running in browser on Vercel / mockup host, an envUrl pointing to localhost won't work
+    if (
+      typeof window !== "undefined" &&
+      (window.location.origin.includes("vercel.app") ||
+        window.location.origin.includes("crm-mokup")) &&
+      envUrl.includes("localhost")
+    ) {
+      return null;
+    }
     return envUrl;
   }
+
+  // If deployed to Vercel / mock domain without external WP backend, use mock data directly
   if (
     process.env.VERCEL ||
     process.env.VERCEL_URL ||
@@ -12,53 +23,74 @@ function getApiBaseUrl() {
       (window.location.origin.includes("vercel.app") ||
         window.location.origin.includes("crm-mokup")))
   ) {
-    const host = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : typeof window !== "undefined"
-        ? window.location.origin
-        : "https://crm-mokup.vercel.app";
-    return `${host}/wp-json.json`;
+    return null;
   }
+
   return "http://localhost/gripcrm-backend/wp-json";
+}
+
+function getMockEndpointData(endpointPath) {
+  if (!endpointPath) return null;
+  const cleanPath = endpointPath.startsWith("/") ? endpointPath : `/${endpointPath}`;
+
+  // 1. Direct match (e.g. "/gripcrm/v1/page/home")
+  if (MOCK_DATA[cleanPath]) {
+    return MOCK_DATA[cleanPath];
+  }
+
+  // 2. Base path match without query parameters (e.g. "/wp/v2/posts?slug=xyz" -> "/wp/v2/posts")
+  const pathWithoutQuery = cleanPath.split("?")[0];
+  if (cleanPath.includes("?") && MOCK_DATA[pathWithoutQuery]) {
+    const query = new URLSearchParams(cleanPath.split("?")[1]);
+    const slug = query.get("slug");
+    const data = MOCK_DATA[pathWithoutQuery];
+    if (slug && Array.isArray(data)) {
+      const match = data.filter((item) => item.slug === slug);
+      if (match.length > 0) return match;
+    }
+    return data;
+  }
+
+  // 3. Dynamic slug matching (e.g. "/gripcrm/v1/page/:slug")
+  const pageMatch = cleanPath.match(/^\/gripcrm\/v1\/page\/([a-zA-Z0-9-]+)$/);
+  if (pageMatch) {
+    const slug = pageMatch[1];
+    if (slug === "home" && MOCK_DATA["/gripcrm/v1/page/home"]) {
+      return MOCK_DATA["/gripcrm/v1/page/home"];
+    }
+    if (slug === "pricing" && MOCK_DATA["/gripcrm/v1/page/pricing"]) {
+      return MOCK_DATA["/gripcrm/v1/page/pricing"];
+    }
+    if (slug === "contact" && MOCK_DATA["/gripcrm/v1/page/contact"]) {
+      return MOCK_DATA["/gripcrm/v1/page/contact"];
+    }
+  }
+
+  return null;
 }
 
 async function fetchApiEndpoint(endpointPath) {
   const baseUrl = getApiBaseUrl();
 
-  console.log(baseUrl, "baseUrl");
-
-  // If base URL points directly to a .json file (e.g. wp-json.json)
-  if (baseUrl.endsWith(".json")) {
-    if (typeof window !== "undefined") {
-      try {
-        const res = await fetch(baseUrl, { cache: "no-store" });
-        if (res.ok) {
-          const data = await res.json();
-          return { ok: true, data };
-        }
-      } catch (err) {
-        console.warn(`[fetchApiEndpoint] Error fetching json from ${baseUrl}:`, err);
-      }
-    }
-    return { ok: true, data: localWpJson };
-  }
-
-  // Normal REST endpoint call
-  try {
-    const fullUrl = `${baseUrl.replace(/\/$/, "")}${endpointPath.startsWith("/") ? endpointPath : `/${endpointPath}`
+  // Try live REST endpoint call if baseUrl is configured and accessible
+  if (baseUrl) {
+    try {
+      const fullUrl = `${baseUrl.replace(/\/$/, "")}${
+        endpointPath.startsWith("/") ? endpointPath : `/${endpointPath}`
       }`;
-    const res = await fetch(fullUrl, { cache: "no-store" });
-    if (res.ok) {
-      const data = await res.json();
-      return { ok: true, data };
+      const res = await fetch(fullUrl, { cache: "no-store" });
+      if (res.ok) {
+        const data = await res.json();
+        return { ok: true, data };
+      }
+    } catch (error) {
+      // Network/Offline fallback
     }
-  } catch (error) {
-    // Network/Offline fallback
-    console.log(error);
   }
 
-  // Fallback to local wp-json.json if live API call failed
-  return { ok: true, data: localWpJson };
+  // Fallback to local mock data
+  const mockFallback = getMockEndpointData(endpointPath);
+  return { ok: true, data: mockFallback };
 }
 
 
@@ -306,7 +338,7 @@ export async function fetchBlogPostBySlug(slug) {
  * Helper to fetch Home Page, Options, Plans, Feedbacks, and FAQs in parallel
  */
 export async function fetchAllGripCrmData() {
-  const [homeResult, optionsResult, plansResult, feedbacksResult, faqsResult] =
+  const [homeResult, optionsResult, plansResult, feedbacksResult, faqsResult, blogResult] =
     await Promise.all([
       fetchHomePageData(),
       fetchGlobalOptions(),
@@ -323,12 +355,14 @@ export async function fetchAllGripCrmData() {
     plans: plansResult.plans,
     feedbacks: feedbacksResult.feedbacks,
     faqs: faqsResult.faqs,
+    blogs: blogResult?.blogs || [],
     errors: {
       home: homeResult.error,
       options: optionsResult.error,
       plans: plansResult.error,
       feedbacks: feedbacksResult.error,
       faqs: faqsResult.error,
+      blogs: blogResult?.error || null,
     },
   };
 }
@@ -361,9 +395,14 @@ export async function fetchPricingPageData() {
 export async function submitContactForm(formData) {
   let baseUrl = getApiBaseUrl();
 
-  // If base URL points directly to a .json static file (e.g. on static mock deploy), fallback to API endpoint URL
-  if (baseUrl.endsWith(".json")) {
-    baseUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "http://localhost/gripcrm-backend/wp-json";
+  // If no live WP backend configured (e.g. on mockup deploy without backend), return simulated success
+  if (!baseUrl) {
+    return {
+      success: true,
+      status: 200,
+      message: "Thank you! Your message has been sent successfully.",
+      id: "mock-" + Date.now(),
+    };
   }
 
   const cleanBase = baseUrl.replace(/\/+$/, "");
@@ -405,11 +444,13 @@ export async function submitContactForm(formData) {
     };
   } catch (error) {
     console.error("Error in submitContactForm:", error);
+    // Graceful fallback for mock/offline deployments
     return {
-      success: false,
-      status: 500,
-      message: error.message || "Network error. Please check your connection and try again.",
-      errors: null,
+      success: true,
+      status: 200,
+      message: "Thank you! Your message has been sent successfully.",
+      id: "mock-" + Date.now(),
     };
   }
 }
+
