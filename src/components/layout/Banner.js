@@ -1,18 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Button from "../ui/Button";
 import Grainient from "../ui/Grainient";
-
-const BRAND_LOGOS = [
-    "logo-1.svg",
-    "logo-2.svg",
-    "logo-3.svg",
-    "logo-4.svg",
-    "logo-5.svg",
-];
 
 export default function Banner({ fields }) {
     const containerRef = useRef(null);
@@ -140,8 +132,6 @@ export default function Banner({ fields }) {
                             />
                             Your browser does not support the video tag.
                         </video>
-
-                        {/* <Play className="absolute w-18 h-18 text-black top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] bg-white rounded-full p-5 md:block hidden" /> */}
 
                     </div>
                     <div className="flex items-center gap-8 justify-center mt-5 px-4">

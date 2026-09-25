@@ -3,14 +3,11 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import {
   ArrowLeft,
   Calendar,
-  Share2,
   Copy,
   Check,
-  ChevronRight,
   BookOpen,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -22,15 +19,6 @@ const getCleanTitle = (post) => {
   if (!post) return "";
   if (typeof post.title === "object") return post.title?.rendered || "";
   return post.title || "";
-};
-
-const getCleanExcerpt = (post) => {
-  if (!post) return "";
-  const raw = typeof post.excerpt === "object" ? post.excerpt?.rendered : post.excerpt;
-  if (typeof raw === "string") {
-    return raw.replace(/<[^>]+>/g, "").trim();
-  }
-  return raw || "";
 };
 
 export default function BlogDetailsPage() {

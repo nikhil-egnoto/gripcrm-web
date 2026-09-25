@@ -1,4 +1,4 @@
-﻿import { ArrowRight, Minus, Plus, LogOut, User } from "lucide-react";
+﻿import { ArrowRight, Minus, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
 import { useAuth } from "@/context/AuthContext";

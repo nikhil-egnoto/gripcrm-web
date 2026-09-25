@@ -52,6 +52,7 @@ async function fetchApiEndpoint(endpointPath) {
     }
   } catch (error) {
     // Network/Offline fallback
+    console.log(error);
   }
 
   // Fallback to local wp-json.json if live API call failed
@@ -276,10 +277,10 @@ export async function fetchBlogPostBySlug(slug) {
         content: typeof wpPost.content === "object" ? wpPost.content?.rendered : wpPost.content,
         date: wpPost.date
           ? new Date(wpPost.date).toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })
           : "",
         image:
           wpPost._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||

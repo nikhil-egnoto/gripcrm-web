@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Fragment } from "react";
-import { Check, Info } from "lucide-react";
+import { Check } from "lucide-react";
 import Button from "@/components/ui/Button";
 
 export default function ComparePlans() {

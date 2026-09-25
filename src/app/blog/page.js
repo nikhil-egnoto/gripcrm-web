@@ -9,7 +9,6 @@ import { fetchBlogData } from "@/lib/api";
 import {
     ArrowRight,
     ArrowLeft,
-    ChevronRight,
     Phone,
     BookOpen,
     RotateCcw
@@ -149,7 +148,7 @@ export default function BlogPage() {
 
     const pagination = {
         clickable: true,
-        renderBullet: function (index, className) {
+        renderBullet: function (className) {
             return '<span class="size-3.5! ' + className + '">' + '</span>';
         },
     };

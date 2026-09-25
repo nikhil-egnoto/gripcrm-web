@@ -633,52 +633,6 @@ body {
   opacity: 1;
 }
 
-/* Staggered Children Reveal Animations */
-.stagger-group .stagger-item {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.stagger-group.is-revealed .stagger-item,
-.reveal-on-scroll.is-revealed .stagger-item {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Sequential Stagger Delays */
-.stagger-group.is-revealed .stagger-item:nth-child(1),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(1) {
-  transition-delay: 0.06s;
-}
-
-.stagger-group.is-revealed .stagger-item:nth-child(2),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(2) {
-  transition-delay: 0.12s;
-}
-
-.stagger-group.is-revealed .stagger-item:nth-child(3),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(3) {
-  transition-delay: 0.18s;
-}
-
-.stagger-group.is-revealed .stagger-item:nth-child(4),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(4) {
-  transition-delay: 0.24s;
-}
-
-.stagger-group.is-revealed .stagger-item:nth-child(5),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(5) {
-  transition-delay: 0.30s;
-}
-
-.stagger-group.is-revealed .stagger-item:nth-child(6),
-.reveal-on-scroll.is-revealed .stagger-item:nth-child(6) {
-  transition-delay: 0.36s;
-}
-
 /* ==========================================================================
    Lenis Smooth Scrolling Styles
    ========================================================================== */
@@ -713,7 +667,6 @@ html.lenis body {
   .page-fade-wrapper,
   .reveal-on-scroll,
   .reveal-fade,
-  .stagger-group .stagger-item,
   .animate-marquee,
   .animate-marquee-reverse,
   .animate-marquee-vertical,

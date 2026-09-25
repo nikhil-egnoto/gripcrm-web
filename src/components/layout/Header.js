@@ -54,7 +54,7 @@ export default function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const logoUrl = options?.options?.logo_url || "/gripcrm-icon.svg";
+    const logoUrl = options?.options?.logo_url || "/gripcrm-web.svg";
 
     return (
         <header

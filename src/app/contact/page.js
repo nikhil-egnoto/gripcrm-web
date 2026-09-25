@@ -36,7 +36,7 @@ export default function Contact() {
     const [submitError, setSubmitError] = useState("");
 
     // Field-level validation logic
-    const validateField = (name, value, allData = formData) => {
+    const validateField = (name, value = formData) => {
         let error = "";
         const trimmed = typeof value === "string" ? value.trim() : value;
 
