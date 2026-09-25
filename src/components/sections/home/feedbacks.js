@@ -108,51 +108,57 @@ export default function FeedBacks({ fields, feedbacksData }) {
                 </div>
             </div>
 
-            <div className="feedback-section relative overflow-hidden py-2">
-                {/* Left and Right Gradient Overlay Masks */}
-                <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-36 bg-linear-to-r from-blue-50 to-transparent z-10" />
-                <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-36 bg-linear-to-l from-blue-50 to-transparent z-10" />
+            <div className="container mx-auto px-4 max-w-7xl relative">
+                <div className="feedback-section relative overflow-hidden h-[620px] sm:h-[660px] lg:h-[720px]">
+                    {/* Top and Bottom Gradient Overlay Masks */}
+                    <div className="pointer-events-none absolute top-0 left-0 right-0 h-24 sm:h-36 bg-linear-to-b from-blue-50 to-transparent z-20" />
+                    <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 sm:h-36 bg-linear-to-t from-blue-50 to-transparent z-20" />
 
-                <div className="flex flex-col gap-6 sm:gap-8">
-                    {feedbackColumns.map((column, colIdx) => (
-                        <div key={colIdx} className="overflow-hidden w-full">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 h-full">
+                        {feedbackColumns.map((column, colIdx) => (
                             <div
-                                className={`flex gap-6 ${colIdx % 2 === 1
-                                    ? "animate-marquee-reverse"
-                                    : "animate-marquee"
+                                key={colIdx}
+                                className={`overflow-hidden h-full ${colIdx === 1 ? "hidden md:block" : colIdx === 2 ? "hidden lg:block" : ""
                                     }`}
-                                style={{
-                                    animationDuration: colIdx === 1 ? "45s" : colIdx === 2 ? "38s" : "40s"
-                                }}
                             >
-                                {[...column, ...column, ...column].map((item, itemIdx) => (
-                                    <div
-                                        key={itemIdx}
-                                        className="w-80 sm:w-96 md:w-105 shrink-0 bg-white rounded-2xl p-6 lg:p-8 border border-black/25 flex flex-col justify-between hover:shadow-md transition-shadow duration-300"
-                                    >
-                                        <p className="text-black text-base md:text-lg leading-relaxed mb-6 font-normal">
-                                            "{item.quote}"
-                                        </p>
-                                        <div className="flex items-center gap-3.5 mt-auto">
-                                            <img
-                                                src={item.avatar}
-                                                alt={item.name}
-                                                className="size-14 rounded-xl object-cover shrink-0"
-                                            />
-                                            <div>
-                                                <h4 className="font-bold text-black text-base sm:text-lg leading-tight">
-                                                    {item.name}
-                                                </h4>
-                                                <p className="text-xs sm:text-sm text-black/75 font-medium mt-1">
-                                                    {item.role}
-                                                </p>
+                                <div
+                                    className={`flex flex-col gap-6 ${colIdx % 2 === 1
+                                        ? "animate-marquee-vertical-reverse"
+                                        : "animate-marquee-vertical"
+                                        }`}
+                                    style={{
+                                        animationDuration: colIdx === 1 ? "45s" : colIdx === 2 ? "38s" : "40s"
+                                    }}
+                                >
+                                    {[...column, ...column, ...column, ...column].map((item, itemIdx) => (
+                                        <div
+                                            key={itemIdx}
+                                            className="w-full shrink-0 bg-white rounded-2xl p-6 lg:p-8 border border-black/25 flex flex-col justify-between hover:shadow-md transition-shadow duration-300"
+                                        >
+                                            <p className="text-black text-base md:text-lg leading-relaxed mb-6 font-normal">
+                                                "{item.quote}"
+                                            </p>
+                                            <div className="flex items-center gap-3.5 mt-auto">
+                                                <img
+                                                    src={item.avatar}
+                                                    alt={item.name}
+                                                    className="size-14 rounded-xl object-cover shrink-0"
+                                                />
+                                                <div>
+                                                    <h4 className="font-bold text-black text-base sm:text-lg leading-tight">
+                                                        {item.name}
+                                                    </h4>
+                                                    <p className="text-xs sm:text-sm text-black/75 font-medium mt-1">
+                                                        {item.role}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

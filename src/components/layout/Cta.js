@@ -23,17 +23,17 @@ export default function Cta({ className, title, title2, description, btnText, bt
 
                 {/* Left Column: Heading, Subtitle & Action Buttons */}
                 <div className="col-span-12 lg:col-span-7 flex flex-col items-start text-center lg:text-left lg:px-0 px-4">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 font-spaceGrotesk tracking-tight leading-[1.18] w-full">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 font-spaceGrotesk tracking-tight leading-[1.18] w-full reveal-on-scroll">
                         {title}<br />
                         {title2}
                     </h2>
 
-                    <p className="max-w-xl text-neutral-700 text-base font-medium mt-4">
+                    <p className="max-w-xl text-neutral-700 text-base font-medium mt-4 reveal-on-scroll">
                         {description}
                     </p>
 
                     {/* CTA Buttons */}
-                    <div className="flex flex-wrap items-center gap-3 sm:gap-4 mx-auto lg:mx-0 mt-10">
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-4 mx-auto lg:mx-0 mt-10 reveal-on-scroll">
                         {/* Phone Button */}
                         <Button className="bg-neutral-900 border-2 text-neutral-100 hover:bg-neutral-50 hover:text-neutral-900" href="tel:+11550199999">
                             <Phone className="size-4 group-hover:scale-110 transition-transform" />

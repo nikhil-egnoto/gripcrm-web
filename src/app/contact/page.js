@@ -230,11 +230,11 @@ export default function Contact() {
             <div className="container mx-auto space-y-15">
                 {/* Top Header Section */}
                 <div className="text-center">
-                    <h1 className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
+                    <h1 className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900 reveal-on-scroll">
                         {fields?.contact_hero_title || "Contact"}
                         <svg width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mt-4 text-orange-500"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                     </h1>
-                    <p className="mt-10 m-auto text-neutral-700 text-base leading-[1.9] font-normal">
+                    <p className="mt-10 m-auto text-neutral-700 text-base leading-[1.9] font-normal reveal-on-scroll">
                         {fields?.contact_hero_subtitle || "Get help with GripCRM, report an issue, request a feature, or reach out to our team."}
                     </p>
                 </div>
@@ -244,7 +244,7 @@ export default function Contact() {
                     {/* Left Column - 3 Cards */}
                     <div className="lg:col-span-6 flex flex-col justify-between gap-5">
                         {/* Card 1: Bug Reports */}
-                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100">
+                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100 reveal-on-scroll">
                             <div className="w-46 h-32 flex items-center justify-center shrink-0 p-3">
                                 <Image src="/images/contact/bug-reports.svg" alt="Bug Reports" width={96} height={96} />
                             </div>
@@ -268,7 +268,7 @@ export default function Contact() {
                         </div>
 
                         {/* Card 2: Request a Feature */}
-                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100">
+                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100 reveal-on-scroll">
                             <div className="w-46 h-32 flex items-center justify-center shrink-0 p-3">
                                 <Image src="/images/contact/features-request.svg" alt="Request a Feature" width={96} height={96} />
                             </div>
@@ -292,7 +292,7 @@ export default function Contact() {
                         </div>
 
                         {/* Card 3: Account & Billing */}
-                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100">
+                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100 reveal-on-scroll">
                             <div className="w-46 h-32 flex items-center justify-center shrink-0 p-3">
                                 <Image src="/images/contact/account-billing.svg" alt="Account & Billing" width={96} height={96} />
                             </div>
@@ -319,7 +319,7 @@ export default function Contact() {
                     {/* Right Column - Send Us a Message Form Card */}
                     <div
                         id="contact-form-card"
-                        className="moving-gradient relative overflow-hidden lg:col-span-6 bg-[#302a46] rounded-2xl py-10 px-8 md:px-14 md:py-12 text-white flex flex-col justify-between shadow-xl"
+                        className="moving-gradient relative overflow-hidden lg:col-span-6 bg-[#302a46] rounded-2xl py-10 px-8 md:px-14 md:py-12 text-white flex flex-col justify-between shadow-xl reveal-on-scroll"
                     >
                         <div className="relative z-10 h-full flex flex-col justify-start">
                             <div>
@@ -542,7 +542,7 @@ export default function Contact() {
                 </div>
 
                 {/* Bottom Section - Headquarters Card */}
-                <div className="bg-white rounded-2xl p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+                <div className="reveal-on-scroll bg-white rounded-2xl p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
                     {/* Map Preview */}
                     <div className="md:col-span-6 w-full h-65 md:h-86 rounded-2xl overflow-hidden border border-neutral-100 relative">
                         <iframe

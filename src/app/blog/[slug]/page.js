@@ -231,7 +231,7 @@ export default function BlogDetailsPage() {
       <div className="blog-moving-gradient bg-neutral-900 text-white pt-20 py-10 sm:py-15 px-4 border-b border-gray-800 shadow-sm relative">
         <div className="container mx-auto flex items-center justify-between sm:flex-row flex-col relative gap-5">
           {/* Left: Blog Details Title + Back Button */}
-          <div className="flex sm:items-start items-center flex-col gap-4">
+          <div className="flex sm:items-start items-center flex-col gap-4 reveal-on-scroll">
             <h1 className="font-spaceGrotesk text-3xl md:text-4xl font-bold text-neutral-100">
               Blog Details
             </h1>
@@ -248,7 +248,7 @@ export default function BlogDetailsPage() {
           </div>
 
           {/* Right: Share Article Social Buttons */}
-          <div className="flex items-center gap-4 sm:gap-6 sm:mt-0 mt-3">
+          <div className="flex items-center gap-4 sm:gap-6 sm:mt-0 mt-3 reveal-on-scroll">
             <span className="text-base sm:text-lg text-neutral-200 font-medium hidden sm:inline-block">
               Share article:
             </span>
@@ -571,7 +571,7 @@ export default function BlogDetailsPage() {
                   ))}
 
                 {/* Footer Divider & Action Bar inside Article Card */}
-                <div className="border-t border-neutral-200 pt-8 mt-12 flex sm:flex-row flex-col sm:items-center items-start justify-between gap-6">
+                <div className="reveal-on-scroll border-t border-neutral-200 pt-8 mt-12 flex sm:flex-row flex-col sm:items-center items-start justify-between gap-6">
                   {/* Back to Blog Button */}
                   <Button
                     href="/blog"

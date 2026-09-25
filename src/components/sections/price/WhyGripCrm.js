@@ -18,7 +18,7 @@ export default function WhyGripCrm({ fields }) {
             <div className="container mx-auto">
 
                 {/* Header Section */}
-                <div className="text-center mb-12 sm:mb-16">
+                <div className="text-center mb-12 sm:mb-16 reveal-on-scroll">
                     <h2 className="font-spaceGrotesk text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 tracking-tight leading-tight">
                         {title}
                         <svg className="mt-3 mx-auto text-violet-500" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
@@ -34,7 +34,7 @@ export default function WhyGripCrm({ fields }) {
                     {statsList[0] && (
                         <div className="w-full">
                             <div
-                                className={`${statsList[0]?.bgColor || "bg-green-500"} text-white rounded-2xl p-9 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col items-start`}
+                                className={`${statsList[0]?.bgColor || "bg-green-500"} text-white reveal-on-scroll rounded-2xl p-9 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col items-start`}
                             >
                                 <div className="size-21 bg-white rounded-lg p-3 flex items-center justify-center mb-8">
                                     <Image
@@ -61,7 +61,7 @@ export default function WhyGripCrm({ fields }) {
                     )}
 
                     {/* Column 2 - Array [1] and [2] */}
-                    <div className="w-full flex flex-col gap-6 lg:gap-8">
+                    <div className="w-full flex flex-col gap-6 lg:gap-8 reveal-on-scroll">
                         {[statsList[1], statsList[2]].map((item, index) => (
                             item && (
                                 <div
@@ -95,7 +95,7 @@ export default function WhyGripCrm({ fields }) {
 
                     {/* Column 3 */}
                     {statsList[3] && (
-                        <div className="w-full">
+                        <div className="w-full reveal-on-scroll">
                             <div
                                 className={`${statsList[3]?.bgColor || "bg-green-500"} text-white rounded-2xl p-9 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col items-start`}
                             >

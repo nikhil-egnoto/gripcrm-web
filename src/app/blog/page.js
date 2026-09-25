@@ -159,7 +159,7 @@ export default function BlogPage() {
             <div className="container mx-auto space-y-8 sm:space-y-15">
 
                 {/* Top Header Section */}
-                <div className="text-center">
+                <div className="text-center reveal-on-scroll">
                     <h1 className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
                         Blog
                         <svg width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mt-4 text-violet-500"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
@@ -347,12 +347,12 @@ export default function BlogPage() {
                                                 />
 
                                                 <div className="relative z-10 text-center">
-                                                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-spaceGrotesk tracking-tight leading-10 sm:leading-14 w-full max-w-sm mx-auto mb-8">
+                                                    <h3 className="reveal-on-scroll text-3xl sm:text-4xl md:text-5xl font-bold text-white font-spaceGrotesk tracking-tight leading-10 sm:leading-14 w-full max-w-sm mx-auto mb-8">
                                                         Need help choosing a plan?
                                                     </h3>
 
                                                     {/* Action Buttons Row */}
-                                                    <div className="flex flex-wrap items-center justify-center gap-4">
+                                                    <div className="reveal-on-scroll flex flex-wrap items-center justify-center gap-4">
                                                         <Button className="bg-transparent border-2 border-neutral-50! text-neutral-50 hover:bg-neutral-50 hover:text-neutral-900" href={`tel:+11234567890`}>
                                                             <Phone className="size-4 group-hover:scale-110 transition-transform" />
                                                             <span className="hidden sm:flex relative z-1">+1 (123) 456-7890</span>
@@ -370,7 +370,7 @@ export default function BlogPage() {
                                                 </div>
 
                                                 {/* Support Representative Graphic */}
-                                                <div className="relative z-10 flex justify-center items-end mt-2 -mb-7">
+                                                <div className="reveal-on-scroll relative z-10 flex justify-center items-end mt-2 -mb-7">
                                                     <Image
                                                         src={post.image || "/images/blog/support-agent.png"}
                                                         alt="Customer Support Representative"
@@ -398,7 +398,7 @@ export default function BlogPage() {
                                                     <Image
                                                         src={image}
                                                         alt={title || "Blog Thumbnail"}
-                                                        className="aspect-video w-full object-cover mb-6 sm:mb-8 rounded-2xl"
+                                                        className="reveal-on-scroll aspect-video w-full object-cover mb-6 sm:mb-8 rounded-2xl"
                                                         width={600}
                                                         height={400}
                                                         unoptimized={typeof image === "string" && image.startsWith("http://")}
@@ -406,26 +406,26 @@ export default function BlogPage() {
                                                 </Link>
 
                                                 {post.date && (
-                                                    <div className="text-sm text-neutral-700 font-medium mb-4">
+                                                    <div className="reveal-on-scroll text-sm text-neutral-700 font-medium mb-4">
                                                         {post.date}
                                                     </div>
                                                 )}
 
                                                 <Link href={`/blog/${slug}`}>
-                                                    <h3 className="text-xl sm:text-2xl font-semibold text-neutral-900 mb-5 sm:mb-8 line-clamp-2 leading-snug hover:text-neutral-700 transition-colors cursor-pointer">
+                                                    <h3 className="reveal-on-scroll text-xl sm:text-2xl font-semibold text-neutral-900 mb-5 sm:mb-8 line-clamp-2 leading-snug hover:text-neutral-700 transition-colors cursor-pointer">
                                                         {title}
                                                     </h3>
                                                 </Link>
 
                                                 {excerpt && (
-                                                    <p className="text-neutral-700 text-sm sm:text-base leading-relaxed mb-5 sm:mb-8 line-clamp-2">
+                                                    <p className="reveal-on-scroll text-neutral-700 text-sm sm:text-base leading-relaxed mb-5 sm:mb-8 line-clamp-2">
                                                         {excerpt}
                                                     </p>
                                                 )}
                                             </div>
 
                                             <div>
-                                                <Button href={`/blog/${slug}`} className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 inline-flex py-2!" type="with-icon">
+                                                <Button href={`/blog/${slug}`} className="reveal-on-scroll bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 inline-flex py-2!" type="with-icon">
                                                     <span className="relative z-1">
                                                         Read Full Blog
                                                     </span>
@@ -442,7 +442,7 @@ export default function BlogPage() {
 
                         {/* Pagination Section */}
                         {totalPages > 1 && (
-                            <section className="flex items-center justify-center gap-2">
+                            <section className="reveal-on-scroll flex items-center justify-center gap-2">
                                 <button
                                     onClick={() => handlePageChange(currentPage - 1)}
                                     disabled={currentPage === 1}
