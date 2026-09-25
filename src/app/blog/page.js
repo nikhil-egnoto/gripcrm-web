@@ -148,8 +148,8 @@ export default function BlogPage() {
 
     const pagination = {
         clickable: true,
-        renderBullet: function (className) {
-            return '<span class="size-3.5! ' + className + '">' + '</span>';
+        renderBullet: function (index, className) {
+            return '<span class="' + className + ' size-3.5!"></span>';
         },
     };
 
