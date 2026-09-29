@@ -85,7 +85,7 @@ export default function Footer() {
         : defaultSections;
 
     return (
-        <footer className="w-full bg-white px-4px-4 sm:px-8 lg:px-12">
+        <footer className="w-full bg-white px-4 sm:px-8 lg:px-12">
             <div className="container mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-12">
                     {/* Left Column: Logo & Nav Sections */}
