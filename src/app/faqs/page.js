@@ -5,6 +5,8 @@ import { Plus, Minus, HelpCircle, RotateCcw } from "lucide-react";
 import Cta from "@/components/layout/Cta";
 import Grainient from "@/components/ui/Grainient";
 import { fetchFaqs } from "@/lib/api";
+import { motion } from "framer-motion";
+import { animationContent } from "@/components/providers/motionAnimation";
 
 export default function Faqs() {
     const [pageData, setPageData] = useState(null);
@@ -158,7 +160,7 @@ export default function Faqs() {
 
     return (
         <main className="bg-blue-50 relative min-h-screen">
-            <section className="py-16 md:py-24 px-4">
+            <section className="py-16 md:py-24 px-4 sm:px-8 lg:px-12">
                 <div className="container mx-auto space-y-10 md:space-y-15">
                     {/* Header Section */}
                     <div className="text-center">
@@ -170,7 +172,7 @@ export default function Faqs() {
                             </div>
                         ) : (
                             <>
-                                <h1 className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900 reveal-on-scroll">
+                                <motion.h1 {...animationContent} className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
                                     {heroTitle}
                                     <svg
                                         width="110"
@@ -185,11 +187,11 @@ export default function Faqs() {
                                             fill="currentColor"
                                         ></path>
                                     </svg>
-                                </h1>
+                                </motion.h1>
                                 {heroSubtitle && (
-                                    <p className="max-w-4xl mx-auto mt-8 sm:mt-10 text-neutral-700 text-base leading-[1.9] font-normal reveal-on-scroll">
+                                    <motion.p {...animationContent} className="max-w-4xl mx-auto mt-8 sm:mt-10 text-neutral-700 text-base leading-[1.9] font-normal">
                                         {heroSubtitle}
-                                    </p>
+                                    </motion.p>
                                 )}
                             </>
                         )}
@@ -199,7 +201,7 @@ export default function Faqs() {
                     {loading && (
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-pulse">
                             {/* Quick Nav Sidebar Skeleton */}
-                            <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-8 reveal-on-scroll">
+                            <motion.div {...animationContent} className="hidden lg:block lg:col-span-4 lg:sticky lg:top-8">
                                 <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                                     <div className="h-6 bg-neutral-200 rounded w-28 mb-8"></div>
                                     <div className="space-y-6">
@@ -214,11 +216,11 @@ export default function Faqs() {
                                         ))}
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
 
                             {/* FAQ Content Main Column Skeleton */}
-                            <div className="lg:col-span-8">
-                                <div className="reveal-on-scroll bg-transparent sm:bg-white rounded-2xl sm:p-8 md:p-12 space-y-10">
+                            <motion.div {...animationContent} className="lg:col-span-8">
+                                <div className="bg-transparent sm:bg-white rounded-2xl sm:p-8 md:p-12 space-y-10">
                                     {/* Category 1 */}
                                     <div className="space-y-5">
                                         <div className="h-7 sm:h-8 bg-neutral-200 rounded-lg w-52 mb-6"></div>
@@ -253,7 +255,7 @@ export default function Faqs() {
                                         ))}
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
                     )}
 
@@ -285,7 +287,7 @@ export default function Faqs() {
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                             {/* Quick Nav Sidebar (if navigation items available) */}
                             {navItems.length > 0 && (
-                                <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-8 reveal-on-scroll">
+                                <motion.div {...animationContent} className="hidden lg:block lg:col-span-4 lg:sticky lg:top-8">
                                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                                         <h2 className="font-spaceGrotesk text-xl font-semibold text-neutral-900 mb-8">
                                             Quick Nav
@@ -315,7 +317,7 @@ export default function Faqs() {
                                             })}
                                         </nav>
                                     </div>
-                                </div>
+                                </motion.div>
                             )}
 
                             {/* FAQ Content Main Column */}
@@ -327,16 +329,16 @@ export default function Faqs() {
                                             id={section.id}
                                             className="scroll-mt-10 mt-10 sm:mt-20 first:mt-0 space-y-5 sm:space-y-8"
                                         >
-                                            <h2 className="font-spaceGrotesk text-xl sm:text-3xl font-semibold text-neutral-900 reveal-on-scroll">
+                                            <motion.h2 {...animationContent} className="font-spaceGrotesk text-xl sm:text-3xl font-semibold text-neutral-900">
                                                 {section.title}
-                                            </h2>
-                                            <div className="space-y-5">
+                                            </motion.h2>
+                                            <motion.div {...animationContent} className="space-y-5">
                                                 {section.items.map((item) => {
                                                     const isOpen = openItemId === item.id;
                                                     return (
                                                         <div
                                                             key={item.id}
-                                                            className="reveal-on-scroll border border-neutral-300 rounded-lg overflow-hidden transition-all bg-white shadow-xs"
+                                                            className="border border-neutral-300 rounded-lg overflow-hidden transition-all bg-white shadow-xs"
                                                         >
                                                             <button
                                                                 type="button"
@@ -373,7 +375,7 @@ export default function Faqs() {
                                                         </div>
                                                     );
                                                 })}
-                                            </div>
+                                            </motion.div>
                                         </div>
                                     ))}
                                 </div>

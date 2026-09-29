@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { MoveLeft, MoveRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import gsap from "gsap";
@@ -11,6 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { animationContent } from "@/components/providers/motionAnimation";
 
 export default function Platform({ fields }) {
     const sectionRef = useRef(null);
@@ -132,8 +134,8 @@ export default function Platform({ fields }) {
             className="pt-16 md:pt-24 md:pb-9 pb-10 border-t border-neutral-300 relative bg-white overflow-hidden"
         >
             {/* Main Title Section */}
-            <div className="text-center max-w-4xl mx-auto px-4">
-                <h2 className="font-spaceGrotesk text-4xl sm:text-5xl md:text-6xl font-bold text-black reveal-on-scroll">
+            <motion.div {...animationContent} className="text-center max-w-4xl mx-auto px-4">
+                <h2 className="font-spaceGrotesk text-4xl sm:text-5xl md:text-6xl font-bold text-black">
                     {fields?.platform_title || "Everything Your Team Needs,"}
                     <span className="block text-blue-700">
                         {fields?.platform_highlight || "one platform."}
@@ -142,97 +144,99 @@ export default function Platform({ fields }) {
                 </h2>
 
                 {/* Subtitle Description */}
-                <p className="mt-5 text-neutral-700 text-base font-normal leading-relaxed font-sans reveal-on-scroll">
+                <p className="mt-5 text-neutral-700 text-base font-normal leading-relaxed font-sans">
                     {fields?.platform_desc || "Connect your sales, customer management, projects, and daily workflows in one platform."}
                 </p>
-            </div>
+            </motion.div>
 
             {/* Cards Carousel Container */}
-            <Swiper
-                className="platform-swiper md:py-10! py-8! xl:pl-50! lg:pl-25! md:pl-4! md:px-0! px-4! w-full"
-                modules={[Navigation, Pagination]}
-                slidesPerView={1}
-                spaceBetween={20}
-                watchSlidesProgress={true}
-                onSwiper={handleSwiperInit}
-                onSlideChange={(swiper) => {
-                    setIsBeginning(swiper.isBeginning);
-                    setIsEnd(swiper.isEnd);
-                }}
-                pagination={false}
-                breakpoints={{
-                    767: {
-                        slidesPerView: 2,
-                    },
-                    1024: {
-                        slidesPerView: 3,
-                    },
-                    1280: {
-                        slidesPerView: 3.5,
-                    },
-                }}
-            >
-                {cards.map((card, index) => {
-                    return (
-                        <SwiperSlide
-                            key={card.id || index}
-                            className={`${card.bgColor} rounded-2xl p-7 flex flex-col justify-between text-white select-none`}
-                        >
-                            {/* Card Header Row */}
-                            <div>
-                                <div className="flex items-end justify-between mb-5">
-                                    <h3 className="text-2xl sm:text-3xl font-semibold font-spaceGrotesk">
-                                        {card.title}
-                                    </h3>
-                                    <div className="size-14 absolute top-4 right-4 rounded-md bg-white flex items-center justify-center text-white shrink-0 shadow-sm">
-                                        <Image src={card.icon} alt={card.title} width={32} height={32} />
+            <motion.div {...animationContent}>
+                <Swiper
+                    className="platform-swiper md:py-10! py-8! xl:pl-50! lg:pl-25! md:pl-4! md:px-0! px-4! w-full"
+                    modules={[Navigation, Pagination]}
+                    slidesPerView={1}
+                    spaceBetween={20}
+                    watchSlidesProgress={true}
+                    onSwiper={handleSwiperInit}
+                    onSlideChange={(swiper) => {
+                        setIsBeginning(swiper.isBeginning);
+                        setIsEnd(swiper.isEnd);
+                    }}
+                    pagination={false}
+                    breakpoints={{
+                        767: {
+                            slidesPerView: 2,
+                        },
+                        1024: {
+                            slidesPerView: 3,
+                        },
+                        1280: {
+                            slidesPerView: 3.5,
+                        },
+                    }}
+                >
+                    {cards.map((card, index) => {
+                        return (
+                            <SwiperSlide
+                                key={card.id || index}
+                                className={`${card.bgColor} rounded-2xl md:p-7 p-5 flex flex-col justify-between text-white select-none`}
+                            >
+                                {/* Card Header Row */}
+                                <div>
+                                    <div className="flex items-end justify-between md:mb-5 mb-3">
+                                        <h3 className="text-2xl sm:text-3xl font-semibold font-spaceGrotesk">
+                                            {card.title}
+                                        </h3>
+                                        <div className="size-14 absolute top-4 right-4 rounded-md bg-white flex items-center justify-center text-white shrink-0 shadow-sm">
+                                            <Image src={card.icon} alt={card.title} width={32} height={32} />
+                                        </div>
                                     </div>
+
+                                    {/* Card Description */}
+                                    <p className="text-neutral-100 text-base leading-relaxed font-sans md:mb-8 mb-5">
+                                        {card.description}
+                                    </p>
                                 </div>
 
-                                {/* Card Description */}
-                                <p className="text-neutral-100 text-base leading-relaxed font-sans mb-8">
-                                    {card.description}
-                                </p>
-                            </div>
+                                {/* Card Mockup Graphic */}
+                                <div className="bg-white p-3 rounded-xl shadow-xs">
+                                    <Image
+                                        src={card.image}
+                                        alt={card.title}
+                                        className="aspect-3/2 w-full object-cover rounded-lg"
+                                        width={400}
+                                        height={287}
+                                    />
+                                </div>
+                            </SwiperSlide>
+                        );
+                    })}
 
-                            {/* Card Mockup Graphic */}
-                            <div className="bg-white p-3 rounded-xl shadow-xs">
-                                <Image
-                                    src={card.image}
-                                    alt={card.title}
-                                    className="aspect-3/2 w-full object-cover rounded-lg"
-                                    width={400}
-                                    height={287}
-                                />
-                            </div>
-                        </SwiperSlide>
-                    );
-                })}
-
-                {/* Navigation Buttons */}
-                <div className="md:flex items-center justify-center gap-5 mt-8 sm:mt-10 hidden">
-                    <button
-                        ref={prevRef}
-                        type="button"
-                        onClick={handlePrev}
-                        disabled={isBeginning}
-                        aria-label="Previous slide"
-                        className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
-                    >
-                        <MoveLeft className="size-5" />
-                    </button>
-                    <button
-                        ref={nextRef}
-                        type="button"
-                        onClick={handleNext}
-                        disabled={isEnd}
-                        aria-label="Next slide"
-                        className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
-                    >
-                        <MoveRight className="size-5" />
-                    </button>
-                </div>
-            </Swiper>
+                    {/* Navigation Buttons */}
+                    <div className="md:flex items-center justify-center gap-5 mt-8 sm:mt-10 hidden">
+                        <button
+                            ref={prevRef}
+                            type="button"
+                            onClick={handlePrev}
+                            disabled={isBeginning}
+                            aria-label="Previous slide"
+                            className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
+                        >
+                            <MoveLeft className="size-5" />
+                        </button>
+                        <button
+                            ref={nextRef}
+                            type="button"
+                            onClick={handleNext}
+                            disabled={isEnd}
+                            aria-label="Next slide"
+                            className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
+                        >
+                            <MoveRight className="size-5" />
+                        </button>
+                    </div>
+                </Swiper>
+            </motion.div>
         </section>
     );
 }

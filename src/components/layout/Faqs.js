@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { Minus, Plus, MessageSquareText } from "lucide-react";
 import Cta from "./Cta";
 import Grainient from "../ui/Grainient";
+import { motion } from "framer-motion";
+import { animationContent } from "../providers/motionAnimation";
 
 export default function Faqs({ fields, faqsDescription }) {
     const pathname = usePathname();
@@ -49,7 +51,7 @@ export default function Faqs({ fields, faqsDescription }) {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
 
                     {/* Left Column: Heading, Subtitle & Support Link */}
-                    <div className="lg:col-span-5 flex flex-col justify-between items-start reveal-on-scroll">
+                    <motion.div {...animationContent} className="lg:col-span-5 flex flex-col justify-between items-start">
                         <div>
                             {/* Main Heading */}
                             <h2 className="text-4xl md:text-5xl font-bold text-white font-spaceGrotesk tracking-tight leading-[1.18] ">
@@ -76,17 +78,17 @@ export default function Faqs({ fields, faqsDescription }) {
                                 </a>
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Right Column: Accordion Items */}
                     <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-4.5 w-full">
                         {faqsData?.map((faq, index) => {
                             const isOpen = openIndex === index;
                             return (
-                                <div
+                                <motion.div {...animationContent}
                                     key={index}
                                     onClick={() => toggleFaq(index)}
-                                    className={`bg-white cursor-pointer transition-all duration-300 rounded-md p-5 sm:p-6 reveal-on-scroll`}
+                                    className={`bg-white cursor-pointer transition-all duration-300 rounded-md p-5 sm:p-6`}
                                 >
                                     <div className="flex items-start gap-4">
                                         {/* Left Chevron Icon */}
@@ -123,7 +125,7 @@ export default function Faqs({ fields, faqsDescription }) {
                                             )}
                                         </button>
                                     </div>
-                                </div>
+                                </motion.div>
                             );
                         })}
                     </div>

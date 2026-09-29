@@ -14,7 +14,7 @@ const AuthContext = createContext({
 export const STATIC_CREDENTIALS = {
   username: process.env.NEXT_PUBLIC_LOGIN_USERNAME || "admin",
   email: process.env.NEXT_PUBLIC_LOGIN_EMAIL || "admin@gripcrm.com",
-  password: process.env.NEXT_PUBLIC_LOGIN_PASSWORD || "0123",
+  password: process.env.NEXT_PUBLIC_LOGIN_PASSWORD || "admin@123",
   name: "GripCRM Admin",
 };
 

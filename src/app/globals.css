@@ -212,7 +212,7 @@ body {
   }
 
   .platform-swiper .swiper-wrapper {
-    @apply flex-col gap-10;
+    @apply flex-col gap-5;
     transform: none !important;
   }
 
@@ -331,10 +331,6 @@ body {
 
 .blog-swiper .swiper-pagination span.swiper-pagination-bullet-active {
   @apply bg-neutral-700 scale-none;
-}
-
-.price-swiper .swiper-wrapper {
-  padding: 5px 0px;
 }
 
 
@@ -491,13 +487,6 @@ body {
   }
 }
 
-@media (min-width: 1280px) {
-  .price-swiper .swiper-wrapper {
-    justify-content: center;
-    padding: 5px 0px;
-  }
-}
-
 /* Blog Article Content Prose Styling */
 
 .blog-content h2,
@@ -606,34 +595,6 @@ body {
 }
 
 /* ==========================================================================
-   Scroll-Driven Reveal Effects
-   ========================================================================== */
-
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.reveal-on-scroll.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Fade-in with no vertical translation */
-.reveal-fade {
-  opacity: 0;
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity;
-}
-
-.reveal-fade.is-revealed {
-  opacity: 1;
-}
-
-/* ==========================================================================
    Lenis Smooth Scrolling Styles
    ========================================================================== */
 
@@ -665,8 +626,6 @@ html.lenis body {
 @media (prefers-reduced-motion: reduce) {
 
   .page-fade-wrapper,
-  .reveal-on-scroll,
-  .reveal-fade,
   .animate-marquee,
   .animate-marquee-reverse,
   .animate-marquee-vertical,
