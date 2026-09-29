@@ -664,7 +664,7 @@ export default function BlogDetailsPage() {
       </div>
 
       {/* Call to Action Section */}
-      <section className="bg-neutral-900 py-16 md:py-24 overflow-hidden relative select-none px-4">
+      <section className="bg-neutral-900 py-16 md:py-24 overflow-hidden relative select-none px-4 sm:px-8 lg:px-12">
         <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
           <Grainient
             color1="#9EFFB8"
