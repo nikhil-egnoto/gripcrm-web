@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { animationContent } from "@/components/providers/motionAnimation";
+
 const DEFAULT_FEEDBACK_COLUMNS = [
     // Column 1
     [
@@ -97,7 +100,7 @@ export default function FeedBacks({ fields, feedbacksData }) {
     return (
         <section className="bg-blue-50 py-16 md:py-24 px-4 sm:px-8 lg:px-12 relative overflow-hidden">
             <div className="container mx-auto relative z-10 px-4">
-                <div className="text-center mb-12 sm:mb-16">
+                <motion.div {...animationContent} className="text-center mb-12 sm:mb-16">
                     <h2 className="font-spaceGrotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-blue-500 leading-tight">
                         {fields?.feedback_title || "Trusted by Teams"}
                         <span className="block text-neutral-900">
@@ -105,7 +108,7 @@ export default function FeedBacks({ fields, feedbacksData }) {
                         </span>
                         <svg width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mt-4"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                     </h2>
-                </div>
+                </motion.div>
             </div>
 
             <div className="container mx-auto relative">
@@ -114,7 +117,7 @@ export default function FeedBacks({ fields, feedbacksData }) {
                     <div className="pointer-events-none absolute top-0 left-0 right-0 h-24 sm:h-36 bg-linear-to-b from-blue-50 to-transparent z-20" />
                     <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 sm:h-36 bg-linear-to-t from-blue-50 to-transparent z-20" />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 h-full">
+                    <motion.div {...animationContent} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 h-full">
                         {feedbackColumns.map((column, colIdx) => (
                             <div
                                 key={colIdx}
@@ -158,7 +161,7 @@ export default function FeedBacks({ fields, feedbacksData }) {
                                 </div>
                             </div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

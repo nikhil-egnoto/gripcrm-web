@@ -14,6 +14,9 @@ import Button from "@/components/ui/Button";
 import Cta from "@/components/layout/Cta";
 import Grainient from "@/components/ui/Grainient";
 import { fetchBlogPostBySlug, fetchBlogData } from "@/lib/api";
+import { motion } from "framer-motion";
+import { animationContent } from "@/components/providers/motionAnimation";
+import Link from "next/link";
 
 const getCleanTitle = (post) => {
   if (!post) return "";
@@ -216,10 +219,10 @@ export default function BlogDetailsPage() {
   return (
     <main className="bg-blue-50 relative min-h-screen">
       {/* Dark Sub-Header Navigation Bar */}
-      <div className="blog-moving-gradient bg-neutral-900 text-white pt-20 py-10 sm:py-15 px-4 border-b border-gray-800 shadow-sm relative">
+      <div className="blog-moving-gradient bg-neutral-900 text-white pt-20 py-10 sm:py-15 px-4 sm:px-8 lg:px-12 border-b border-gray-800 shadow-sm relative">
         <div className="container mx-auto flex items-center justify-between sm:flex-row flex-col relative gap-5">
           {/* Left: Blog Details Title + Back Button */}
-          <div className="flex sm:items-start items-center flex-col gap-4 reveal-on-scroll">
+          <motion.div {...animationContent} className="flex sm:items-start items-center flex-col gap-4">
             <h1 className="font-spaceGrotesk text-3xl md:text-4xl font-bold text-neutral-100">
               Blog Details
             </h1>
@@ -233,10 +236,10 @@ export default function BlogDetailsPage() {
               </span>
               <span className="relative z-1">Back to Blog Listing</span>
             </Button>
-          </div>
+          </motion.div>
 
           {/* Right: Share Article Social Buttons */}
-          <div className="flex items-center gap-4 sm:gap-6 sm:mt-0 mt-3 reveal-on-scroll">
+          <motion.div {...animationContent} className="flex items-center gap-4 sm:gap-6 sm:mt-0 mt-3">
             <span className="text-base sm:text-lg text-neutral-200 font-medium hidden sm:inline-block">
               Share article:
             </span>
@@ -320,12 +323,12 @@ export default function BlogDetailsPage() {
                 )}
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="py-12 md:py-20 px-4">
+      <div className="py-12 md:py-20 px-4 sm:px-8 lg:px-12">
         <div className="container mx-auto">
           {/* Loading Skeleton */}
           {loading && (
@@ -383,7 +386,7 @@ export default function BlogDetailsPage() {
               <aside className="lg:col-span-4 xl:col-span-3 w-full lg:sticky top-24 space-y-6">
                 {/* Table of Contents Card */}
                 {tableOfContents.length > 0 && (
-                  <div className="bg-white rounded-2xl p-5 sm:p-7 md:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.02)] border border-gray-100">
+                  <motion.div {...animationContent} className="bg-white rounded-2xl p-5 sm:p-7 md:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.02)] border border-gray-100">
                     <h2 className="text-lg sm:text-xl font-bold font-spaceGrotesk text-neutral-900 mb-6 flex items-center gap-2">
                       <span>Table of Content</span>
                     </h2>
@@ -409,11 +412,11 @@ export default function BlogDetailsPage() {
                         );
                       })}
                     </nav>
-                  </div>
+                  </motion.div>
                 )}
 
                 {/* Recommended / Recent Reads Card in Sidebar */}
-                {/* {recentPosts.length > 0 && (
+                {recentPosts.length > 0 && (
                   <div className="bg-white rounded-2xl p-5 sm:p-7 shadow-[0_4px_25px_rgba(0,0,0,0.02)] border border-gray-100">
                     <h3 className="text-base font-bold font-spaceGrotesk text-neutral-900 mb-5">
                       Recent Articles
@@ -441,13 +444,13 @@ export default function BlogDetailsPage() {
                       })}
                     </div>
                   </div>
-                )} */}
+                )}
               </aside>
 
               {/* Right Main Column: Blog Article Body */}
               <article className="xl:col-span-9 lg:col-span-8 w-full bg-white rounded-2xl p-6 sm:p-8 md:p-12 shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-gray-100">
                 {/* Meta Row: Date & Category */}
-                <div className="flex flex-wrap items-center gap-3 text-sm sm:text-base text-neutral-600 font-medium mb-4">
+                <motion.div {...animationContent} className="flex flex-wrap items-center gap-3 text-sm sm:text-base text-neutral-600 font-medium mb-4">
                   {post.date && (
                     <span className="flex items-center gap-1.5">
                       <Calendar className="size-4 text-neutral-400" />
@@ -459,16 +462,16 @@ export default function BlogDetailsPage() {
                       {post.category}
                     </span>
                   )} */}
-                </div>
+                </motion.div>
 
                 {/* Main Article Title */}
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-8 font-spaceGrotesk leading-tight tracking-tight">
+                <motion.h1 {...animationContent} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-8 font-spaceGrotesk leading-tight tracking-tight">
                   {postTitle}
-                </h1>
+                </motion.h1>
 
                 {/* Featured Image */}
                 {post.image && (
-                  <div className="mb-10 rounded-2xl overflow-hidden relative aspect-video w-full border border-gray-100 shadow-xs">
+                  <motion.div {...animationContent} className="mb-10 rounded-2xl overflow-hidden relative aspect-video w-full border border-gray-100 shadow-xs">
                     <Image
                       src={post.image}
                       alt={postTitle || "Featured Blog Image"}
@@ -477,19 +480,19 @@ export default function BlogDetailsPage() {
                       unoptimized={post.image.startsWith("http://")}
                       className="object-cover"
                     />
-                  </div>
+                  </motion.div>
                 )}
 
                 {/* Intro Paragraph */}
                 {post.intro && (
-                  <p className="text-neutral-700 text-base md:text-xl lg:leading-10 leading-relaxed mb-10">
+                  <motion.p {...animationContent} className="text-neutral-700 text-base md:text-xl lg:leading-10 leading-relaxed mb-10">
                     {post.intro}
-                  </p>
+                  </motion.p>
                 )}
 
                 {/* Dynamic Content (WordPress HTML) */}
                 {processedHtml && (
-                  <div
+                  <motion.div {...animationContent}
                     className="blog-content text-neutral-700 mb-12"
                     dangerouslySetInnerHTML={{ __html: processedHtml }}
                   />
@@ -499,7 +502,7 @@ export default function BlogDetailsPage() {
                 {Array.isArray(post.sections) &&
                   post.sections.length > 0 &&
                   post.sections.map((section) => (
-                    <section
+                    <motion.section {...animationContent}
                       key={section.id}
                       id={section.id}
                       className="scroll-mt-24 mb-10 sm:mb-14"
@@ -555,11 +558,11 @@ export default function BlogDetailsPage() {
                           {section.closing}
                         </p>
                       )}
-                    </section>
+                    </motion.section>
                   ))}
 
                 {/* Footer Divider & Action Bar inside Article Card */}
-                <div className="reveal-on-scroll border-t border-neutral-200 pt-8 mt-12 flex sm:flex-row flex-col sm:items-center items-start justify-between gap-6">
+                <motion.div {...animationContent} className="border-t border-neutral-200 pt-8 mt-12 flex sm:flex-row flex-col sm:items-center items-start justify-between gap-6">
                   {/* Back to Blog Button */}
                   <Button
                     href="/blog"
@@ -653,7 +656,7 @@ export default function BlogDetailsPage() {
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </article>
             </div>
           )}

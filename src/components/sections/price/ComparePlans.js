@@ -3,6 +3,8 @@
 import { useState, Fragment } from "react";
 import { Check } from "lucide-react";
 import Button from "@/components/ui/Button";
+import { motion } from "framer-motion";
+import { animationContent } from "@/components/providers/motionAnimation";
 
 export default function ComparePlans() {
     const [billingCycle, setBillingCycle] = useState("monthly");
@@ -82,10 +84,10 @@ export default function ComparePlans() {
     ];
 
     return (
-        <section className="bg-blue-50 py-16 md:py-24 relative overflow-hidden px-4 sm:px-6">
+        <section className="bg-blue-50 py-16 md:py-24 relative overflow-hidden px-4 sm:px-8 lg:px-12">
             <div className="container mx-auto relative z-10">
                 {/* Section Title */}
-                <div className="text-center max-w-4xl mx-auto px-4 mb-15 reveal-on-scroll">
+                <motion.div {...animationContent} className="text-center max-w-4xl mx-auto px-4 mb-15">
                     <h2 className="inline-block font-spaceGrotesk text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 leading-tight relative">
                         Compare Plans
                         <svg className="mx-auto mt-3 text-red-500" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -95,10 +97,10 @@ export default function ComparePlans() {
                     <p className="mt-6 text-neutral-600 text-base font-normal leading-relaxed">
                         Compare features across plans to find the right fit for your team.
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Compare Table Wrapper */}
-                <div className="reveal-on-scroll bg-white border border-blue-300 overflow-hidden shadow-xs">
+                <motion.div {...animationContent} className="bg-white border border-blue-300 overflow-hidden shadow-xs">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse min-w-3xl">
                             <thead>
@@ -210,7 +212,7 @@ export default function ComparePlans() {
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

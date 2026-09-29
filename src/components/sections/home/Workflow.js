@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { animationContent } from "@/components/providers/motionAnimation";
 import React, { useState, useEffect, useRef } from "react";
 
 export default function Workflow() {
@@ -32,7 +34,7 @@ export default function Workflow() {
             id: "cloud-upload",
             bgColor: "bg-[#8fc8f4]",
             shadowColor: "shadow-blue-300/40",
-            position: "top-[6%] left-[12%] md:top-[8%] md:left-[7%] lg:left-[8%]",
+            position: "top-[0%] left-[12%] md:top-[8%] md:left-[7%] lg:left-[8%]",
             animation: "animate-float-1",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +46,7 @@ export default function Workflow() {
             id: "dollar-circle",
             bgColor: "bg-[#43291a]",
             shadowColor: "shadow-stone-900/30",
-            position: "top-[6%] left-[50%] md:top-[28%] md:left-[14%] lg:left-[15%]",
+            position: "top-[0%] left-[50%] md:top-[28%] md:left-[14%] lg:left-[15%]",
             animation: "animate-float-2",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,7 +58,7 @@ export default function Workflow() {
             id: "layout-grid",
             bgColor: "bg-[#ff9182]",
             shadowColor: "shadow-rose-300/40",
-            position: "top-[6%] left-[88%] md:top-[56%] md:left-[14%] lg:left-[15%]",
+            position: "top-[0%] left-[88%] md:top-[56%] md:left-[14%] lg:left-[15%]",
             animation: "animate-float-3",
             svg: (
                 <svg width="62" height="62" viewBox="0 0 56 56" strokeWidth="1.2" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +70,7 @@ export default function Workflow() {
             id: "book-open",
             bgColor: "bg-[#20ad64]",
             shadowColor: "shadow-emerald-300/40",
-            position: "top-[28%] left-[10%] md:top-[84%] md:left-[6%] lg:left-[7%]",
+            position: "top-[35%] left-[10%] md:top-[84%] md:left-[6%] lg:left-[7%]",
             animation: "animate-float-4",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +94,7 @@ export default function Workflow() {
             id: "window-expand",
             bgColor: "bg-[#5f53dc]",
             shadowColor: "shadow-indigo-300/40",
-            position: "top-[72%] left-[10%] md:top-[8%] md:left-[66%] lg:left-[65%]",
+            position: "top-[105%] left-[10%] md:top-[8%] md:left-[66%] lg:left-[65%]",
             animation: "animate-float-3",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +106,7 @@ export default function Workflow() {
             id: "file-lock",
             bgColor: "bg-[#895d43]",
             shadowColor: "shadow-stone-600/30",
-            position: "top-[72%] left-[90%] md:top-[20%] md:left-[88%] lg:left-[85%]",
+            position: "top-[105%] left-[90%] md:top-[20%] md:left-[88%] lg:left-[85%]",
             animation: "animate-float-1",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -116,7 +118,7 @@ export default function Workflow() {
             id: "clipboard-user",
             bgColor: "bg-[#ffd039]",
             shadowColor: "shadow-yellow-300/40",
-            position: "top-[28%] left-[90%] md:top-[50%] md:left-[88%] lg:left-[84%]",
+            position: "top-[35%] left-[90%] md:top-[50%] md:left-[88%] lg:left-[84%]",
             animation: "animate-float-4",
             svg: (
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -202,7 +204,7 @@ export default function Workflow() {
                 </div>
 
                 {/* Center Main Content */}
-                <div className="relative z-20 text-center max-w-2xl mx-auto px-2 reveal-on-scroll">
+                <motion.div {...animationContent} className="relative z-20 text-center max-w-2xl mx-auto px-2">
                     {/* Main Title */}
                     <h2 className="max-w-xl mx-auto text-4xl lg:text-5xl leading-[1.2] font-spaceGrotesk font-bold text-neutral-900">
                         Everything You Need to
@@ -216,7 +218,7 @@ export default function Workflow() {
                     <div className="m-auto text-neutral-700 text-base leading-[1.9] font-normal mt-10">
                         <strong className="font-semibold">GripCRM transforms the way you manage projects. It streamlines every step from start to finish.</strong> Contractors and builders can make faster decisions with all data in one platform. You can unlock smoother and more efficient workflows with CRM for metal building companies.
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

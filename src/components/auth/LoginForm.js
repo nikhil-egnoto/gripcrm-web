@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { User, Lock, Eye, EyeOff, CheckCircle, AlertCircle, ArrowRight } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -19,12 +20,18 @@ export default function LoginForm() {
     setError("");
 
     if (!username.trim()) {
-      setError("Please enter your username or email.");
+      const msg = "Please enter your username or email.";
+      setError(msg);
+      toast.dismiss();
+      toast.error(msg);
       return;
     }
 
     if (!password) {
-      setError("Please enter your password.");
+      const msg = "Please enter your password.";
+      setError(msg);
+      toast.dismiss();
+      toast.error(msg);
       return;
     }
 
@@ -37,8 +44,13 @@ export default function LoginForm() {
 
       if (result.success) {
         setLoginSuccess(true);
+        toast.dismiss();
+        toast.success("Login successful! Redirecting...");
       } else {
-        setError(result.error);
+        const errorMsg = result.error || "Login failed. Please check your credentials.";
+        setError(errorMsg);
+        toast.dismiss();
+        toast.error(errorMsg);
       }
     }, 400);
   };

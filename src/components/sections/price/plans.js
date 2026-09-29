@@ -5,6 +5,8 @@ import { Check, ArrowRight } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Grainient from "@/components/ui/Grainient";
 import { useGripData } from "@/context/GripDataContext";
+import { motion } from "framer-motion";
+import { animationContent } from "@/components/providers/motionAnimation";
 
 export default function Plan({ customPlans }) {
     const { plans: apiPlans } = useGripData();
@@ -90,8 +92,8 @@ export default function Plan({ customPlans }) {
     const plans = customPlans || (apiPlans && apiPlans.length > 0 ? apiPlans : defaultPlans);
 
     return (
-        <section className="bg-neutral-950 text-white py-16 md:py-24 relative overflow-hidden px-4">
-            <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
+        <section className="bg-linear-[25deg,#20141e_5%,#0a292f_60%,#1c101a_90%,#211520] text-white py-16 md:py-24 relative overflow-hidden px-4 sm:px-8 lg:px-12">
+            <div className="bg-neutral-950 absolute top-0 w-full h-full left-0 md:block hidden">
                 <Grainient
                     color1="#33BDDB"
                     color2="#8A5285"
@@ -119,18 +121,18 @@ export default function Plan({ customPlans }) {
             </div>
 
             <div className="container mx-auto relative z-10">
-                <div className="text-center max-w-4xl mx-auto px-4 mb-10 reveal-on-scroll">
+                <motion.div {...animationContent} className="text-center max-w-4xl mx-auto px-4 mb-10">
                     <h2 className="inline-block font-spaceGrotesk text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight relative">
                         Pricing Plans
                         <svg className="mx-auto mt-3 text-violet-500" width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
                     </h2>
-                    <p className="mt-10 text-neutral-300 text-base font-normal leading-8 reveal-on-scroll">
+                    <p className="mt-10 text-neutral-300 text-base font-normal leading-8">
                         At GripCRM, we offer flexible pricing plans to meet the diverse needs of metal building companies of all sizes, helping you streamline operations and boost productivity.
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Billing Cycle Toggle */}
-                <div className="mb-20 flex flex-col items-center justify-center relative reveal-on-scroll">
+                <motion.div {...animationContent} className="mb-20 flex flex-col items-center justify-center relative">
                     <div className="bg-white p-1.5 rounded-full inline-flex items-center shadow-lg">
                         <button
                             type="button"
@@ -163,7 +165,7 @@ export default function Plan({ customPlans }) {
                             SAVE UPTO 30%
                         </span>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Pricing Cards Grid inside pricing-container */}
                 <div className="price-swiper flex flex-col sm:grid grid-cols-1 lg:grid-cols-12 items-stretch gap-10 max-w-7xl mx-auto">
@@ -172,9 +174,9 @@ export default function Plan({ customPlans }) {
                         const price = billingCycle === "yearly" ? plan.yearlyPrice : plan.monthlyPrice;
 
                         return (
-                            <div
+                            <motion.div {...animationContent}
                                 key={index}
-                                className={`reveal-on-scroll col-span-12 lg:col-span-6 flex flex-col rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300 hover:-translate-y-1 ${plan.isPopular ? "bg-blue-300 gradient-card relative p-3" : "bg-white"}`}
+                                className={`col-span-12 lg:col-span-6 flex flex-col rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300 hover:-translate-y-1 ${plan.isPopular ? "bg-blue-300 gradient-card relative p-3" : "bg-white"}`}
                             >
                                 {/* Top Header Section */}
                                 <div className={`p-8 sm:p-12 ${plan.isPopular ? "bg-linear-to-b from-white to-blue-100" : "bg-white"}  rounded-2xl flex flex-col justify-between min-h-77 relative`}>
@@ -249,7 +251,7 @@ export default function Plan({ customPlans }) {
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         );
                     })}
                 </div>

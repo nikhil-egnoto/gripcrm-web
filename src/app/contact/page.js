@@ -5,6 +5,9 @@ import { ArrowRight, Phone, Mail, Check, AlertCircle, Loader2, CheckCircle2 } fr
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import { fetchContactData, submitContactForm } from "@/lib/api";
+import { motion } from "framer-motion";
+import { animationContent } from "@/components/providers/motionAnimation";
+import toast from "react-hot-toast";
 
 export default function Contact() {
     const [fields, setFields] = useState(null);
@@ -170,6 +173,8 @@ export default function Contact() {
         setErrors(validationErrors);
 
         if (Object.keys(validationErrors).length > 0) {
+            toast.dismiss();
+            toast.error("Please fill in all required fields correctly.");
             // Scroll to the first error
             const firstErrorField = Object.keys(validationErrors)[0];
             const el = document.querySelector(`[name="${firstErrorField}"]`);
@@ -185,8 +190,11 @@ export default function Contact() {
         try {
             const result = await submitContactForm(formData);
 
-            if (result.success) {
-                setSubmitted(true);
+            if (result && result.success) {
+                toast.dismiss();
+                toast.success(result.message || "Quote request submitted successfully!");
+                setSubmitted(false);
+
                 setFormData({
                     fullName: "",
                     email: "",
@@ -198,31 +206,22 @@ export default function Contact() {
                 setErrors({});
                 setTouched({});
             } else {
-                setSubmitError(result.message || "Failed to submit form. Please check your entries.");
-                if (result.errors) {
+                const errorMessage = result?.message || "Failed to submit form. Please check your entries.";
+                setSubmitError(errorMessage);
+                toast.dismiss();
+                toast.error(errorMessage);
+                if (result?.errors) {
                     setErrors((prev) => ({ ...prev, ...result.errors }));
                 }
             }
         } catch (err) {
-            setSubmitError(err.message || "An unexpected error occurred. Please try again.");
+            const errorMessage = err?.message || "An unexpected error occurred. Please try again.";
+            setSubmitError(errorMessage);
+            toast.dismiss();
+            toast.error(errorMessage);
         } finally {
             setIsSubmitting(false);
         }
-    };
-
-    const handleResetForm = () => {
-        setSubmitted(false);
-        setSubmitError("");
-        setFormData({
-            fullName: "",
-            email: "",
-            phone: "",
-            subject: "",
-            message: "",
-            agreeTerms: false,
-        });
-        setErrors({});
-        setTouched({});
     };
 
     return (
@@ -230,13 +229,13 @@ export default function Contact() {
             <div className="container mx-auto space-y-15">
                 {/* Top Header Section */}
                 <div className="text-center">
-                    <h1 className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900 reveal-on-scroll">
+                    <motion.h1 {...animationContent} className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
                         {fields?.contact_hero_title || "Contact"}
                         <svg width="110" height="10" viewBox="0 0 110 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto mt-4 text-orange-500"><path d="M55.4214 3.042C56.6044 2.94 79.4965 0.883309 91.9777 0.247303C97.256 -0.0306999 102.543 -0.0107027 107.775 0.0119642C108.546 0.0399645 109.831 0.643972 109.957 1.17664C110.146 2.00532 109.687 3.22 109.099 3.842C107.496 5.52202 105.364 6.02869 103.164 6.12003C95.0808 6.51403 86.9996 6.96804 78.9141 7.30271C58.3441 8.15405 37.7152 8.88805 17.1435 9.67939C13.1835 9.8434 9.16523 9.89006 5.20303 9.99406C3.22303 10.0761 1.54828 9.30873 0.399327 7.68204C-0.0599231 7.04337 -0.0967732 5.79002 0.155127 5.00201C0.359177 4.45534 1.39208 3.99467 2.05208 3.96734C19.5421 3.244 53.2131 1.89332 54.0695 1.81065C55.3169 1.69065 54.2378 3.14266 55.4208 3.04133L55.4214 3.042Z" fill="currentColor"></path></svg>
-                    </h1>
-                    <p className="mt-10 m-auto text-neutral-700 text-base leading-[1.9] font-normal reveal-on-scroll">
+                    </motion.h1>
+                    <motion.p {...animationContent} className="mt-10 m-auto text-neutral-700 text-base leading-[1.9] font-normal">
                         {fields?.contact_hero_subtitle || "Get help with GripCRM, report an issue, request a feature, or reach out to our team."}
-                    </p>
+                    </motion.p>
                 </div>
 
                 {/* Main Grid: Left Support Cards & Right Form Card */}
@@ -244,8 +243,8 @@ export default function Contact() {
                     {/* Left Column - 3 Cards */}
                     <div className="lg:col-span-6 flex flex-col justify-between gap-5">
                         {/* Card 1: Bug Reports */}
-                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100 reveal-on-scroll">
-                            <div className="w-46 h-32 flex items-center justify-center shrink-0 p-3">
+                        <motion.div {...animationContent} className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100">
+                            <div className="w-46 h-32 flex items-center justify-center shrink-0">
                                 <Image src="/images/contact/bug-reports.svg" alt="Bug Reports" width={96} height={96} />
                             </div>
                             <div className="flex-1">
@@ -265,11 +264,11 @@ export default function Contact() {
                                     </span>
                                 </Button>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Card 2: Request a Feature */}
-                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100 reveal-on-scroll">
-                            <div className="w-46 h-32 flex items-center justify-center shrink-0 p-3">
+                        <motion.div {...animationContent} className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100">
+                            <div className="w-46 h-32 flex items-center justify-center shrink-0">
                                 <Image src="/images/contact/features-request.svg" alt="Request a Feature" width={96} height={96} />
                             </div>
                             <div className="flex-1">
@@ -289,11 +288,11 @@ export default function Contact() {
                                     </span>
                                 </Button>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Card 3: Account & Billing */}
-                        <div className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100 reveal-on-scroll">
-                            <div className="w-46 h-32 flex items-center justify-center shrink-0 p-3">
+                        <motion.div {...animationContent} className="bg-white rounded-2xl p-4 sm:p-8 flex sm:flex-row flex-col sm:items-start items-center sm:text-start text-center gap-5 shadow-sm border border-neutral-100">
+                            <div className="w-46 h-32 flex items-center justify-center shrink-0">
                                 <Image src="/images/contact/account-billing.svg" alt="Account & Billing" width={96} height={96} />
                             </div>
                             <div className="flex-1">
@@ -313,16 +312,16 @@ export default function Contact() {
                                     </span>
                                 </Button>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
 
                     {/* Right Column - Send Us a Message Form Card */}
-                    <div
+                    <motion.div {...animationContent}
                         id="contact-form-card"
-                        className="moving-gradient relative overflow-hidden lg:col-span-6 bg-[#302a46] rounded-2xl py-10 px-8 md:px-14 md:py-12 text-white flex flex-col justify-between shadow-xl reveal-on-scroll"
+                        className="moving-gradient relative overflow-hidden lg:col-span-6 bg-[#302a46] rounded-2xl py-10 px-8 md:px-14 md:py-12 text-white flex flex-col justify-between shadow-xl"
                     >
-                        <div className="relative z-10 h-full flex flex-col justify-start">
-                            <div>
+                        <div className="relative z-10 h-full flex flex-col justify-center">
+                            <div className="mb-4">
                                 <h2 className="text-2xl md:text-3xl font-semibold text-white mb-2 tracking-tight">
                                     Send Us a Message
                                 </h2>
@@ -340,24 +339,7 @@ export default function Contact() {
                             )}
 
                             {submitted ? (
-                                <div className="py-12 flex flex-col justify-center items-center text-center space-y-4 h-full">
-                                    <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-400/40 flex items-center justify-center mb-2">
-                                        <CheckCircle2 className="w-10 h-10" />
-                                    </div>
-                                    <h3 className="text-2xl font-bold text-white">Message Sent Successfully!</h3>
-                                    <p className="text-sm text-neutral-300 max-w-sm leading-relaxed">
-                                        Thank you for contacting GripCRM. Your inquiry has been saved and our support team will reach out to you promptly.
-                                    </p>
-                                    <div className="pt-4">
-                                        <Button
-                                            onClick={handleResetForm}
-                                            className="bg-neutral-100 border-2 border-white text-neutral-900 hover:bg-transparent hover:text-white transition-colors px-6 py-2.5"
-                                            type="button"
-                                        >
-                                            Send Another Message
-                                        </Button>
-                                    </div>
-                                </div>
+                                null
                             ) : (
                                 <form onSubmit={handleSubmit} noValidate className="space-y-4">
                                     {/* Full Name */}
@@ -538,11 +520,11 @@ export default function Contact() {
                                 </form>
                             )}
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Bottom Section - Headquarters Card */}
-                <div className="reveal-on-scroll bg-white rounded-2xl p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+                <motion.div {...animationContent} className="bg-white rounded-2xl p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
                     {/* Map Preview */}
                     <div className="md:col-span-6 w-full h-65 md:h-86 rounded-2xl overflow-hidden border border-neutral-100 relative">
                         <iframe
@@ -610,8 +592,8 @@ export default function Contact() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
-        </main>
+        </main >
     );
 }

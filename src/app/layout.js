@@ -25,6 +25,7 @@ import { GripDataProvider } from "@/context/GripDataContext";
 import { fetchAllGripCrmData } from "@/lib/api";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import PageFadeTransition from "@/components/providers/PageFadeTransition";
+import ToastProvider from "@/components/providers/ToastProvider";
 
 export default async function RootLayout({ children }) {
   const initialData = await fetchAllGripCrmData();
@@ -34,6 +35,7 @@ export default async function RootLayout({ children }) {
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} antialiased`}
       >
+        <ToastProvider />
         <AuthProvider>
           <GripDataProvider initialData={initialData}>
             <AuthGuard>
