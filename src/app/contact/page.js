@@ -226,7 +226,7 @@ export default function Contact() {
 
     return (
         <main className="bg-blue-50 py-16 md:py-24 px-4 sm:px-8 lg:px-12 relative overflow-hidden">
-            <div className="container mx-auto space-y-15">
+            <div className="container mx-auto space-y-10 md:space-y-15">
                 {/* Top Header Section */}
                 <div className="text-center">
                     <motion.h1 {...animationContent} className="font-spaceGrotesk text-4xl lg:text-5xl leading-[1.2] font-bold text-neutral-900">
@@ -318,7 +318,7 @@ export default function Contact() {
                     {/* Right Column - Send Us a Message Form Card */}
                     <motion.div {...animationContent}
                         id="contact-form-card"
-                        className="moving-gradient relative overflow-hidden lg:col-span-6 bg-[#302a46] rounded-2xl py-10 px-8 md:px-14 md:py-12 text-white flex flex-col justify-between shadow-xl"
+                        className="moving-gradient relative overflow-hidden lg:col-span-6 bg-[#302a46] rounded-2xl py-5 sm:py-10 px-4 sm:px-8 md:px-14 md:py-12 text-white flex flex-col justify-between shadow-xl"
                     >
                         <div className="relative z-10 h-full flex flex-col justify-center">
                             <div className="mb-4">

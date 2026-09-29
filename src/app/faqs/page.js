@@ -322,7 +322,7 @@ export default function Faqs() {
 
                             {/* FAQ Content Main Column */}
                             <div className={navItems.length > 0 ? "lg:col-span-8" : "lg:col-span-12 max-w-4xl mx-auto w-full"}>
-                                <div className="bg-transparent sm:bg-white rounded-2xl sm:p-4 sm:p-8 md:p-12 space-y-5">
+                                <motion.div {...animationContent} className="bg-transparent sm:bg-white rounded-2xl sm:p-4 sm:p-8 md:p-12 space-y-5">
                                     {faqData.map((section) => (
                                         <div
                                             key={section.id}
@@ -378,7 +378,7 @@ export default function Faqs() {
                                             </motion.div>
                                         </div>
                                     ))}
-                                </div>
+                                </motion.div>
                             </div>
                         </div>
                     )}
@@ -387,7 +387,7 @@ export default function Faqs() {
 
             {/* Bottom CTA Section */}
             {ctaContent?.title && (
-                <section className="bg-neutral-950 py-16 md:py-24 overflow-hidden relative select-none px-4">
+                <section className="bg-neutral-950 py-16 md:py-24 overflow-hidden relative select-none px-4 sm:px-8 lg:px-12">
                     <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
                         <Grainient
                             color1="#33BDDB"
