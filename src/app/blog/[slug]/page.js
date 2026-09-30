@@ -41,6 +41,8 @@ export default function BlogDetailsPage() {
     title: "Not Sure",
     title2: "Where to Start?",
     description: "Let us know what you need - we're happy to help!",
+    btnText: "Talk to an Expert",
+    btnLink: "/contact",
   };
 
   useEffect(() => {
@@ -566,9 +568,9 @@ export default function BlogDetailsPage() {
                   {/* Back to Blog Button */}
                   <Button
                     href="/blog"
-                    className="bg-neutral-900 border-2 text-neutral-50 hover:text-neutral-900 hover:bg-neutral-50"
+                    className="bg-neutral-900 border-2 text-neutral-50 hover:bg-neutral-950"
                   >
-                    <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:-translate-x-0.5 transition-transform">
+                    <span className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center text-xs shrink-0 group-hover:-translate-x-0.5 transition-transform">
                       <ArrowLeft className="size-4" />
                     </span>
                     <span className="relative z-1">Back to Blog Listing</span>
@@ -586,7 +588,7 @@ export default function BlogDetailsPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Share on Facebook"
-                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!"
+                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:bg-black/20 rounded-full!"
                       >
                         <svg
                           width={20}
@@ -607,7 +609,7 @@ export default function BlogDetailsPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Share on X"
-                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!"
+                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:bg-black/20 rounded-full!"
                       >
                         <svg
                           width={20}
@@ -627,7 +629,7 @@ export default function BlogDetailsPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Share on LinkedIn"
-                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!"
+                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:bg-black/20 rounded-full!"
                       >
                         <svg
                           width={20}
@@ -646,7 +648,7 @@ export default function BlogDetailsPage() {
                         onClick={handleCopyLink}
                         aria-label="Copy link to article"
                         title={copied ? "Link copied!" : "Copy link"}
-                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:text-neutral-50 hover:bg-neutral-900 rounded-full!"
+                        className="group lg:px-4 px-3 py-3 border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer bg-black/10 border-none text-neutral-900 hover:bg-black/20 rounded-full!"
                       >
                         {copied ? (
                           <Check className="size-5 text-emerald-600" />
@@ -695,6 +697,9 @@ export default function BlogDetailsPage() {
           title={ctaData.title}
           title2={ctaData.title2}
           description={ctaData.description}
+          btnText={ctaData.btnText}
+          btnLink={ctaData.btnLink}
+          showTestimonials={false}
         />
       </section>
     </main>

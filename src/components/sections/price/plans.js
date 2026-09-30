@@ -213,16 +213,16 @@ export default function Plan({ customPlans }) {
                                     {/* Action Button */}
                                     <div className="mt-10">
                                         {plan.name !== "Let's Talk" ? (
-                                            <Button className={`bg-neutral-50 border-2 border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-50 w-full justify-center ${plan.buttonStyle}`} type="with-icon">
+                                            <Button className={`bg-neutral-50 border-2 border-neutral-900 text-neutral-900 hover:bg-black/10 hover:border-neutral-700 w-full justify-center ${plan.buttonStyle}`} type="with-icon">
                                                 <span className="relative z-1">
                                                     {plan.buttonText}
                                                 </span>
-                                                <span className="w-5 h-5 rounded-full bg-neutral-900 text-neutral-50 flex items-center justify-center text-xs shrink-0 group-hover:bg-neutral-50 group-hover:text-neutral-900 transition-transform">
+                                                <span className="w-5 h-5 rounded-full bg-neutral-900 text-neutral-50 flex items-center justify-center text-xs shrink-0 transition-transform">
                                                     <ArrowRight className="size-4" />
                                                 </span>
                                             </Button>
                                         ) : (
-                                            <Button className={`bg-neutral-50 border-2 border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-50 w-full justify-center ${plan.buttonStyle}`} type="with-icon">
+                                            <Button className={`bg-neutral-50 border-2 border-neutral-900 text-neutral-900 hover:bg-neutral-900/10 w-full justify-center ${plan.buttonStyle}`} type="with-icon">
                                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M10 1.25C8.3424 1.25 6.75269 1.90848 5.58058 3.08058C4.40848 4.25269 3.75 5.8424 3.75 7.5V8.75H5C5.33152 8.75 5.64946 8.8817 5.88388 9.11612C6.1183 9.35054 6.25 9.66848 6.25 10V13.75C6.25 14.0815 6.1183 14.3995 5.88388 14.6339C5.64946 14.8683 5.33152 15 5 15H3.75C3.41848 15 3.10054 14.8683 2.86612 14.6339C2.6317 14.3995 2.5 14.0815 2.5 13.75V7.5C2.5 6.51509 2.69399 5.53982 3.0709 4.62987C3.44781 3.71993 4.00026 2.89314 4.6967 2.1967C5.39314 1.50026 6.21993 0.947814 7.12987 0.570904C8.03982 0.193993 9.01509 0 10 0C10.9849 0 11.9602 0.193993 12.8701 0.570904C13.7801 0.947814 14.6069 1.50026 15.3033 2.1967C15.9997 2.89314 16.5522 3.71993 16.9291 4.62987C17.306 5.53982 17.5 6.51509 17.5 7.5V15C17.5 15.8288 17.1708 16.6237 16.5847 17.2097C15.9987 17.7958 15.2038 18.125 14.375 18.125H11.7075C11.5978 18.315 11.44 18.4728 11.25 18.5825C11.06 18.6922 10.8444 18.75 10.625 18.75H9.375C9.04348 18.75 8.72554 18.6183 8.49112 18.3839C8.2567 18.1495 8.125 17.8315 8.125 17.5C8.125 17.1685 8.2567 16.8505 8.49112 16.6161C8.72554 16.3817 9.04348 16.25 9.375 16.25H10.625C10.8444 16.25 11.06 16.3078 11.25 16.4175C11.44 16.5272 11.5978 16.685 11.7075 16.875H14.375C14.8723 16.875 15.3492 16.6775 15.7008 16.3258C16.0525 15.9742 16.25 15.4973 16.25 15H15C14.6685 15 14.3505 14.8683 14.1161 14.6339C13.8817 14.3995 13.75 14.0815 13.75 13.75V10C13.75 9.66848 13.8817 9.35054 14.1161 9.11612C14.3505 8.8817 14.6685 8.75 15 8.75H16.25V7.5C16.25 6.67924 16.0883 5.86651 15.7742 5.10823C15.4602 4.34994 14.9998 3.66095 14.4194 3.08058C13.8391 2.50022 13.1501 2.03984 12.3918 1.72575C11.6335 1.41166 10.8208 1.25 10 1.25Z" fill="currentColor" />
                                                 </svg>

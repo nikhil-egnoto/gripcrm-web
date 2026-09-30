@@ -149,11 +149,11 @@ export default function BenefitBusiness({ fields }) {
                         </div>
 
                         {/* Request a Demo Button */}
-                        <Button href={btnUrl} className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 justify-center" type="with-icon">
+                        <Button href={btnUrl} className="bg-neutral-900 border-2 text-neutral-100 hover:bg-neutral-950 justify-center" type="with-icon">
                             <span className="relative z-1">
                                 {btnText}
                             </span>
-                            <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                            <span className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                 <ArrowRight className="size-4" />
                             </span>
                         </Button>

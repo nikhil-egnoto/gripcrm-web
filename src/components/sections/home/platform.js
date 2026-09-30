@@ -220,7 +220,7 @@ export default function Platform({ fields }) {
                             onClick={handlePrev}
                             disabled={isBeginning}
                             aria-label="Previous slide"
-                            className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
+                            className="group bg-white border border-neutral-900 text-neutral-900 hover:border-neutral-700 hover:bg-black/10 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
                         >
                             <MoveLeft className="size-5" />
                         </button>
@@ -230,7 +230,7 @@ export default function Platform({ fields }) {
                             onClick={handleNext}
                             disabled={isEnd}
                             aria-label="Next slide"
-                            className="group bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
+                            className="group bg-white border border-neutral-900 text-neutral-900 hover:border-neutral-700 hover:bg-black/10 px-6 py-3 rounded-4xl transition-all duration-200 cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-neutral-900"
                         >
                             <MoveRight className="size-5" />
                         </button>

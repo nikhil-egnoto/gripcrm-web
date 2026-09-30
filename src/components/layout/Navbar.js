@@ -98,11 +98,20 @@ export default function Navbar({ navLinks, options }) {
     useEffect(() => {
         if (isMobileMenuOpen) {
             document.body.style.overflow = "hidden";
+            document.body.style.height = "100%";
+            document.documentElement.style.overflow = "hidden";
+            document.documentElement.style.height = "100%";
         } else {
             document.body.style.overflow = "";
+            document.body.style.height = "";
+            document.documentElement.style.overflow = "";
+            document.documentElement.style.height = "";
         }
         return () => {
             document.body.style.overflow = "";
+            document.body.style.height = "";
+            document.documentElement.style.overflow = "";
+            document.documentElement.style.height = "";
         };
     }, [isMobileMenuOpen]);
 
@@ -221,7 +230,7 @@ export default function Navbar({ navLinks, options }) {
             {/* --- DESKTOP RIGHT BUTTONS --- */}
             <div className="hidden md:flex items-center gap-3">
                 {isAuthenticated ? (
-                    <Button onClick={logout} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100">
+                    <Button onClick={logout} className="bg-white border-2 text-neutral-900 hover:bg-black/10 hover:border-neutral-700">
                         <span>Logout ({user?.username || "Admin"})</span>
                     </Button>
                 ) : (
@@ -235,11 +244,11 @@ export default function Navbar({ navLinks, options }) {
 
 
                 {/* Request a Demo Button */}
-                <Button href={ctaUrl} className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100" type="with-icon">
+                <Button href={ctaUrl} className="bg-neutral-900 border-2 text-neutral-100 hover:bg-neutral-950" type="with-icon">
                     <span className="relative z-1">
                         {ctaText}
                     </span>
-                    <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                    <span className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                         <ArrowRight className="size-4" />
                     </span>
                 </Button>
