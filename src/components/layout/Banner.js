@@ -96,25 +96,17 @@ export default function Banner({ fields }) {
 
                     {/* CTA Button */}
                     <motion.div {...animationContent} className="mt-8 sm:mt-10">
-                        <Button className="inline-flex border-2 border-neutral-900 bg-neutral-900 hover:bg-transparent hover:text-neutral-900 text-neutral-100 font-semibold text-sm" type="reverse-icon" href={fields?.hero_btn_url || fields?.home_btn_url || "#login"}>
+                        <Button className="inline-flex border-2 border-neutral-900 bg-neutral-900 hover:bg-neutral-950 text-neutral-100 font-semibold text-sm" type="reverse-icon" href={fields?.hero_btn_url || fields?.home_btn_url || "#login"}>
                             <span>
                                 {fields?.hero_btn_text || fields?.home_btn_text || "Watch Demo"}
                             </span>
-                            <span className="w-5 h-5 rounded-full bg-neutral-100 text-neutral-900 group-hover:bg-neutral-900 group-hover:text-neutral-100 flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                            <span className="w-5 h-5 rounded-full bg-neutral-100 text-neutral-900 flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                 <ArrowRight className="size-4" />
                             </span>
                         </Button>
                     </motion.div>
 
                     <motion.div {...animationContent} className="relative mt-10 sm:mt-15 sm:rounded-3xl overflow-hidden">
-                        {/* <Image
-                            src={fields?.hero_image || "/images/home/screen-cover.png"}
-                            alt="Screen"
-                            width={888}
-                            height={500}
-                            className="h-auto w-full"
-                        /> */}
-
                         <video
                             width="888"
                             height="500"

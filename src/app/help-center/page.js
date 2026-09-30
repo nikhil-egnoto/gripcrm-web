@@ -118,7 +118,7 @@ export default function HelpCenter() {
                         <button
                             type="submit"
                             aria-label="Search"
-                            className="w-9 h-9 rounded-full bg-neutral-900 text-white flex items-center justify-center hover:bg-neutral-800 shrink-0 transition-transform active:scale-95 shadow cursor-pointer"
+                            className="w-9 h-9 rounded-full bg-neutral-900 text-white flex items-center justify-center hover:bg-neutral-950 shrink-0 transition-transform active:scale-95 shadow cursor-pointer"
                         >
                             <MoveRight className="w-4 h-4" />
                         </button>

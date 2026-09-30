@@ -255,11 +255,11 @@ export default function Contact() {
                                     Something not working as expected? Let our engineering team know.
                                 </p>
 
-                                <Button onClick={() => selectTopic(fields?.contact_topics?.[0] || "Bug Reports")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
+                                <Button onClick={() => selectTopic(fields?.contact_topics?.[0] || "Bug Reports")} className="bg-white border-2 text-neutral-900 hover:bg-black/10 hover:border-neutral-700 py-2! sm:ml-0 mx-auto" type="with-icon">
                                     <span className="relative z-1">
                                         {fields?.contact_topics?.[0] || "Bug Reports"}
                                     </span>
-                                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:bg-white group-hover:text-neutral-900 transition-transform">
+                                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                         <ArrowRight className="size-4" />
                                     </span>
                                 </Button>
@@ -279,11 +279,11 @@ export default function Contact() {
                                     Have an idea? Share your suggestion with our product designers.
                                 </p>
 
-                                <Button onClick={() => selectTopic(fields?.contact_topics?.[1] || "Request a Feature")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
+                                <Button onClick={() => selectTopic(fields?.contact_topics?.[1] || "Request a Feature")} className="bg-white border-2 text-neutral-900 hover:bg-black/10 hover:border-neutral-700 py-2! sm:ml-0 mx-auto" type="with-icon">
                                     <span className="relative z-1">
                                         {fields?.contact_topics?.[1] || "Request a Feature"}
                                     </span>
-                                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:bg-white group-hover:text-neutral-900 transition-transform">
+                                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                         <ArrowRight className="size-4" />
                                     </span>
                                 </Button>
@@ -303,11 +303,11 @@ export default function Contact() {
                                     Need help with your account, subscription, invoices, or payments?
                                 </p>
 
-                                <Button onClick={() => selectTopic(fields?.contact_topics?.[2] || "Account & Billing")} className="bg-white border-2 text-neutral-900 hover:bg-neutral-900 hover:text-neutral-100 py-2! sm:ml-0 mx-auto" type="with-icon">
+                                <Button onClick={() => selectTopic(fields?.contact_topics?.[2] || "Account & Billing")} className="bg-white border-2 text-neutral-900 hover:bg-black/10 hover:border-neutral-700 py-2! sm:ml-0 mx-auto" type="with-icon">
                                     <span className="relative z-1">
                                         {fields?.contact_topics?.[2] || "Account & Billing"}
                                     </span>
-                                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:bg-white group-hover:text-neutral-900 transition-transform">
+                                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                         <ArrowRight className="size-4" />
                                     </span>
                                 </Button>
@@ -352,9 +352,9 @@ export default function Contact() {
                                             onBlur={handleBlur}
                                             disabled={isSubmitting}
                                             placeholder="Full Name *"
-                                            className={`w-full bg-neutral-900/90 rounded-md px-3.5 py-3.5 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none border ${touched.fullName && errors.fullName
+                                            className={`w-full bg-black/70 rounded-md px-3.5 py-3.5 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none border ${touched.fullName && errors.fullName
                                                 ? "border-red-500 focus:border-red-400"
-                                                : "border-neutral-500/70 focus:border-neutral-200"
+                                                : "border-neutral-300"
                                                 }`}
                                         />
                                         {touched.fullName && errors.fullName && (
@@ -375,9 +375,9 @@ export default function Contact() {
                                             onBlur={handleBlur}
                                             disabled={isSubmitting}
                                             placeholder="Email Address *"
-                                            className={`w-full bg-neutral-900/90 rounded-md px-3.5 py-3.5 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none border ${touched.email && errors.email
+                                            className={`w-full bg-black/70 rounded-md px-3.5 py-3.5 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none border ${touched.email && errors.email
                                                 ? "border-red-500 focus:border-red-400"
-                                                : "border-neutral-500/70 focus:border-neutral-200"
+                                                : "border-neutral-300"
                                                 }`}
                                         />
                                         {touched.email && errors.email && (
@@ -398,9 +398,9 @@ export default function Contact() {
                                             onBlur={handleBlur}
                                             disabled={isSubmitting}
                                             placeholder="Phone Number (Optional)"
-                                            className={`w-full bg-neutral-900/90 rounded-md px-3.5 py-3.5 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none border ${touched.phone && errors.phone
+                                            className={`w-full bg-black/70 rounded-md px-3.5 py-3.5 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none border ${touched.phone && errors.phone
                                                 ? "border-red-500 focus:border-red-400"
-                                                : "border-neutral-500/70 focus:border-neutral-200"
+                                                : "border-neutral-300"
                                                 }`}
                                         />
                                         {touched.phone && errors.phone && (
@@ -421,9 +421,9 @@ export default function Contact() {
                                             onBlur={handleBlur}
                                             disabled={isSubmitting}
                                             placeholder="Subject / Topic *"
-                                            className={`w-full bg-neutral-900/90 rounded-md px-3.5 py-3.5 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none border ${touched.subject && errors.subject
+                                            className={`w-full bg-black/70 rounded-md px-3.5 py-3.5 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none border ${touched.subject && errors.subject
                                                 ? "border-red-500 focus:border-red-400"
-                                                : "border-neutral-500/70 focus:border-neutral-200"
+                                                : "border-neutral-300"
                                                 }`}
                                         />
                                         {touched.subject && errors.subject && (
@@ -444,9 +444,9 @@ export default function Contact() {
                                             onBlur={handleBlur}
                                             disabled={isSubmitting}
                                             placeholder="How Can We Help? (Minimum 10 characters) *"
-                                            className={`w-full bg-neutral-900/90 rounded-md px-3.5 py-3 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none resize-none border ${touched.message && errors.message
+                                            className={`w-full bg-black/70 rounded-md px-3.5 py-3 text-sm text-white placeholder-neutral-400 transition-colors focus:outline-none resize-none border ${touched.message && errors.message
                                                 ? "border-red-500 focus:border-red-400"
-                                                : "border-neutral-500/70 focus:border-neutral-200"
+                                                : "border-neutral-300"
                                                 }`}
                                         ></textarea>
                                         {touched.message && errors.message && (
@@ -500,7 +500,7 @@ export default function Contact() {
                                         <button
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="w-full bg-white hover:bg-neutral-100 disabled:opacity-60 disabled:cursor-not-allowed text-neutral-900 font-semibold py-3.5 px-6 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
+                                            className="group w-full bg-white hover:bg-white/85 text-neutral-900 font-semibold py-3.5 px-6 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
                                         >
                                             {isSubmitting ? (
                                                 <>
@@ -510,7 +510,7 @@ export default function Contact() {
                                             ) : (
                                                 <>
                                                     <span>Send Message</span>
-                                                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0">
+                                                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                                         <ArrowRight className="size-3.5" />
                                                     </span>
                                                 </>

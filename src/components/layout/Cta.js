@@ -37,14 +37,14 @@ export default function Cta({ className, title, title2, description, btnText, bt
                     {/* CTA Buttons */}
                     <motion.div {...animationContent} className="flex flex-wrap items-center gap-3 sm:gap-4 mx-auto lg:mx-0 mt-10 ">
                         {/* Phone Button */}
-                        <Button className="bg-neutral-900 border-2 text-neutral-100 hover:bg-neutral-50 hover:text-neutral-900" href="tel:+11550199999">
+                        <Button className="bg-neutral-900 border-2 text-neutral-100 hover:bg-neutral-950" href="tel:+11550199999">
                             <Phone className="size-4 group-hover:scale-110 transition-transform" />
                             <span className="hidden sm:flex relative z-1">+1 (155) 019-9999</span>
                         </Button>
 
 
                         {/* Tour Button */}
-                        <Button href={btnLink} className="bg-black/10 border-2 border-transparent text-neutral-900 hover:bg-neutral-50 hover:border-neutral-900" type="with-icon">
+                        <Button href={btnLink} className="bg-black/10 border-2 border-transparent text-neutral-900 hover:bg-black/20" type="with-icon">
                             <span className="relative z-1">
                                 {btnText}
                             </span>

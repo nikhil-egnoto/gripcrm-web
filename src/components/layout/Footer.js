@@ -170,7 +170,7 @@ export default function Footer() {
                                     <button
                                         type="submit"
                                         aria-label="Subscribe"
-                                        className="size-9 sm:size-10 rounded-full bg-neutral-900 text-white flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                                        className="size-9 sm:size-10 rounded-full bg-neutral-900 hover:bg-neutral-950 text-white flex items-center justify-center transition-colors shrink-0 cursor-pointer"
                                     >
                                         <ArrowRight />
                                     </button>

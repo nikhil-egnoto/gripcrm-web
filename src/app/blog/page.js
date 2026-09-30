@@ -308,11 +308,11 @@ export default function BlogPage() {
                                                     )}
 
                                                     <div>
-                                                        <Button href={`/blog/${slug}`} className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 inline-flex py-2!" type="with-icon">
+                                                        <Button href={`/blog/${slug}`} className="bg-neutral-900 border-2 text-neutral-100 hover:bg-neutral-950 inline-flex py-2!" type="with-icon">
                                                             <span className="relative z-1">
                                                                 Read Full Blog
                                                             </span>
-                                                            <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                                                            <span className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                                                 <ArrowRight className="size-4" />
                                                             </span>
                                                         </Button>
@@ -392,7 +392,7 @@ export default function BlogPage() {
                                     return (
                                         <div
                                             key={post.id || slug || idx}
-                                            className="bg-white rounded-2xl p-5 sm:p-8 flex flex-col justify-between hover:shadow-md transition-all duration-200"
+                                            className="bg-white rounded-2xl p-5 sm:p-8 flex flex-col justify-between hover:shadow-md transition-all duration-200 overflow-hidden"
                                         >
                                             <motion.div {...animationContent}>
                                                 <Link href={`/blog/${slug}`}>
@@ -426,11 +426,11 @@ export default function BlogPage() {
                                             </motion.div>
 
                                             <motion.div {...animationContent}>
-                                                <Button href={`/blog/${slug}`} className="bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 inline-flex py-2!" type="with-icon">
+                                                <Button href={`/blog/${slug}`} className="bg-neutral-900 border-2 text-neutral-100 hover:bg-neutral-950 inline-flex py-2!" type="with-icon">
                                                     <span className="relative z-1">
                                                         Read Full Blog
                                                     </span>
-                                                    <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                                                    <span className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
                                                         <ArrowRight className="size-4" />
                                                     </span>
                                                 </Button>
@@ -447,10 +447,10 @@ export default function BlogPage() {
                                 <button
                                     onClick={() => handlePageChange(currentPage - 1)}
                                     disabled={currentPage === 1}
-                                    className="group lg:px-4 px-3 rounded-lg border-neutral-900 text-sm font-semibold items-center gap-2.5 transition-all cursor-pointer bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 inline-flex py-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="group lg:px-4 px-3 rounded-lg border-neutral-900 text-sm font-semibold items-center gap-2.5 transition-all cursor-pointer bg-neutral-900 border-2 text-neutral-50 hover:bg-neutral-950 inline-flex py-2 disabled:cursor-not-allowed disabled:bg-neutral-900/10 disabled:border-transparent disabled:text-neutral-900"
                                     aria-label="Previous page"
                                 >
-                                    <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                                    <span className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform group-disabled:bg-neutral-900 group-disabled:text-neutral-50 group-disabled:translate-x-0 ">
                                         <ArrowLeft className="size-4" />
                                     </span>
                                     <span>Prev</span>
@@ -461,7 +461,7 @@ export default function BlogPage() {
                                         return (
                                             <span
                                                 key={`ellipsis-${index}`}
-                                                className="w-8 h-8 rounded-lg bg-white border border-gray-200 text-gray-500 text-xs flex items-center justify-center select-none"
+                                                className="lg:px-4 px-3 rounded-lg border-neutral-900 text-sm font-semibold items-center transition-all cursor-pointer border-2 inline-flex py-2 select-none"
                                             >
                                                 ...
                                             </span>
@@ -477,7 +477,7 @@ export default function BlogPage() {
                                             onClick={() => handlePageChange(pageNum)}
                                             className={`lg:px-4 px-3 rounded-lg border-neutral-900 text-sm font-semibold items-center transition-all cursor-pointer border-2 inline-flex py-2 ${isActive
                                                 ? "bg-gray-900 text-white shadow-xs"
-                                                : "bg-white border-2 border-black text-black hover:text-neutral-100 hover:bg-neutral-900"
+                                                : "bg-transparent hover:bg-black/10"
                                                 }`}
                                             aria-label={`Page ${pageNum}`}
                                             aria-current={isActive ? "page" : undefined}
@@ -490,11 +490,11 @@ export default function BlogPage() {
                                 <button
                                     onClick={() => handlePageChange(currentPage + 1)}
                                     disabled={currentPage === totalPages}
-                                    className="group lg:px-4 px-3 rounded-lg border-neutral-900 text-sm font-semibold items-center gap-2.5 transition-all cursor-pointer bg-neutral-900 border-2 text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100 inline-flex py-2"
+                                    className="group lg:px-4 px-3 rounded-lg border-neutral-900 text-sm font-semibold items-center gap-2.5 transition-all cursor-pointer bg-neutral-900 border-2 text-neutral-50 hover:bg-neutral-950 inline-flex py-2 disabled:cursor-not-allowed disabled:bg-neutral-900/10 disabled:border-transparent disabled:text-neutral-900"
                                     aria-label="Next page"
                                 >
                                     <span>Next</span>
-                                    <span className="w-5 h-5 rounded-full bg-white group-hover:bg-black text-black group-hover:text-white flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                                    <span className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center text-xs shrink-0 group-hover:translate-x-0.5 transition-transform group-disabled:bg-neutral-900 group-disabled:text-neutral-50 group-disabled:translate-x-0">
                                         <ArrowRight className="size-4" />
                                     </span>
                                 </button>
