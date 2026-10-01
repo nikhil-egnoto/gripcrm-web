@@ -46,16 +46,16 @@ export default function Banner({ fields }) {
     return (
         <section className="bg-white hero-section md:py-20 py-15 relative px-4 sm:px-8 lg:px-12">
 
-            <div className="absolute top-0 w-full h-full left-0 opacity-[0.15]">
+            <div className="absolute top-0 w-full h-full left-0">
                 <Grainient
                     color1="#F0BF69"
                     color2="#6D86E7"
                     color3="#79DCBA"
-                    timeSpeed={1.5}
+                    timeSpeed={0.5}
                     colorBalance={-0.21}
                     warpStrength={1}
                     warpFrequency={5}
-                    warpSpeed={2}
+                    warpSpeed={1}
                     warpAmplitude={50}
                     blendAngle={0}
                     blendSoftness={0.05}
