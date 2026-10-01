@@ -239,7 +239,7 @@ export default function Contact() {
                 </div>
 
                 {/* Main Grid: Left Support Cards & Right Form Card */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
                     {/* Left Column - 3 Cards */}
                     <div className="lg:col-span-6 flex flex-col justify-between gap-5">
                         {/* Card 1: Bug Reports */}
