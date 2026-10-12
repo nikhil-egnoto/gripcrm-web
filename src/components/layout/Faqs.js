@@ -25,9 +25,9 @@ export default function Faqs({ fields, faqsDescription }) {
                     color1="#FFE99E"
                     color2="#09090b"
                     color3="#B497CF"
-                    timeSpeed={1.5}
-                    colorBalance={-0.21}
-                    warpStrength={1}
+                    timeSpeed={4}
+                    colorBalance={0.01}
+                    warpStrength={4}
                     warpFrequency={5}
                     warpSpeed={2}
                     warpAmplitude={50}
@@ -38,13 +38,14 @@ export default function Faqs({ fields, faqsDescription }) {
                     grainAmount={0.1}
                     grainScale={2}
                     grainAnimated={false}
-                    contrast={1.5}
+                    contrast={1.25}
                     gamma={1}
                     saturation={1}
                     centerX={0}
                     centerY={0}
-                    zoom={0.9}
+                    zoom={0.65}
                 />
+
             </div>
 
             <div className="container mx-auto relative z-10">

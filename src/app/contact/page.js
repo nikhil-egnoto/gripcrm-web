@@ -8,6 +8,7 @@ import { fetchContactData, submitContactForm } from "@/lib/api";
 import { motion } from "framer-motion";
 import { animationContent } from "@/components/providers/motionAnimation";
 import toast from "react-hot-toast";
+import Grainient from "@/components/ui/Grainient";
 
 export default function Contact() {
     const [fields, setFields] = useState(null);
@@ -318,8 +319,35 @@ export default function Contact() {
                     {/* Right Column - Send Us a Message Form Card */}
                     <motion.div {...animationContent}
                         id="contact-form-card"
-                        className="moving-gradient relative overflow-hidden lg:col-span-6 bg-[#302a46] rounded-2xl py-5 sm:py-10 px-4 sm:px-8 md:px-14 md:py-12 text-white flex flex-col justify-between shadow-xl"
+                        className="relative overflow-hidden lg:col-span-6 bg-[#302a46] rounded-2xl py-5 sm:py-10 px-4 sm:px-8 md:px-14 md:py-12 text-white flex flex-col justify-between shadow-xl"
                     >
+                        <div className="bg-neutral-950 absolute top-0 opacity-20 w-full h-full left-0 md:block hidden">
+                            <Grainient
+                                color1="#33BDDB"
+                                color2="#8A5285"
+                                color3="#FF7300"
+                                timeSpeed={3}
+                                colorBalance={0.01}
+                                warpStrength={4}
+                                warpFrequency={5}
+                                warpSpeed={2}
+                                warpAmplitude={50}
+                                blendAngle={0}
+                                blendSoftness={0.05}
+                                rotationAmount={500}
+                                noiseScale={2}
+                                grainAmount={0.1}
+                                grainScale={2}
+                                grainAnimated={false}
+                                contrast={1.25}
+                                gamma={1}
+                                saturation={1}
+                                centerX={0}
+                                centerY={0}
+                                zoom={0.65}
+                            />
+                        </div>
+
                         <div className="relative z-10 h-full flex flex-col justify-center">
                             <div className="mb-4">
                                 <h2 className="text-2xl md:text-3xl font-semibold text-white mb-2 tracking-tight">

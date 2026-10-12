@@ -46,12 +46,12 @@ export default function Banner({ fields }) {
     return (
         <section className="bg-white hero-section md:py-20 py-15 relative px-4 sm:px-8 lg:px-12">
 
-            <div className="absolute top-0 w-full h-full left-0">
+            <div className="absolute opacity-[0.25] top-0 w-full h-full left-0">
                 <Grainient
                     color1="#F0BF69"
                     color2="#6D86E7"
                     color3="#79DCBA"
-                    timeSpeed={0.5}
+                    timeSpeed={1.2}
                     colorBalance={-0.21}
                     warpStrength={1}
                     warpFrequency={5}
@@ -111,13 +111,13 @@ export default function Banner({ fields }) {
                             width="888"
                             height="500"
                             className="h-auto w-full"
-                            poster={fields?.hero_image || "/images/home/screen-cover.png"}
+                            poster={fields?.hero_image || "/images/home/hero-section@2x.png"}
                             autoPlay
                             muted
                             loop
                             preload="none"
                         >
-                            <source src={fields?.hero_video || "/images/home/hero-section.mp4"} type="video/mp4" />
+                            <source src={fields?.hero_video || "/images/home/hero-section@2x.mp4"} type="video/mp4" />
                             <track
                                 src="/path/to/captions.vtt"
                                 kind="subtitles"

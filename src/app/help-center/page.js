@@ -6,6 +6,7 @@ import Image from "next/image";
 import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import { animationContent } from "@/components/providers/motionAnimation";
+import Grainient from "@/components/ui/Grainient";
 
 export default function HelpCenter() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -207,6 +208,32 @@ export default function HelpCenter() {
 
                     <div className="lg:col-span-6 flex justify-center lg:justify-end z-10">
                         <div className="relative overflow-hidden p-2 rounded-2xl cta-moving-gradient w-full">
+                            <div className="bg-neutral-950 opacity-80 absolute top-0 w-full h-full left-0 md:block hidden">
+                                <Grainient
+                                    color1="#E78E28"
+                                    color2="#864FFE"
+                                    color3="#F24287"
+                                    timeSpeed={3}
+                                    colorBalance={0.01}
+                                    warpStrength={4}
+                                    warpFrequency={5}
+                                    warpSpeed={2}
+                                    warpAmplitude={50}
+                                    blendAngle={0}
+                                    blendSoftness={0.05}
+                                    rotationAmount={500}
+                                    noiseScale={2}
+                                    grainAmount={0.1}
+                                    grainScale={2}
+                                    grainAnimated={false}
+                                    contrast={1.25}
+                                    gamma={1}
+                                    saturation={1}
+                                    centerX={0}
+                                    centerY={0}
+                                    zoom={0.65}
+                                />
+                            </div>
                             <div className="relative z-10 w-full rounded-2xl overflow-hidden bg-slate-900">
                                 <Image
                                     src="/images/help-center/promo-new.png"
