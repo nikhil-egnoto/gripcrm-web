@@ -1,7 +1,8 @@
-﻿import { ArrowRight, Minus, Plus } from "lucide-react";
+﻿import { ArrowRight, Image, Minus, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
 import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
 
 const defaultNavigation = [
     {
@@ -124,6 +125,17 @@ export default function Navbar({ navLinks, options }) {
         <div className="flex grow md:justify-between justify-end">
             {/* --- DESKTOP / MOBILE NAVIGATION --- */}
             <nav className={`mobile-menu flex items-center gap-2 relative ${isMobileMenuOpen ? "open" : ""}`} ref={dropdownRef}>
+
+                <div className="relative flex gap-5 items-center hidden">
+                    <Link className="text-sm font-semibold bg-white border border-[#4652bb] text-[#4652bb] px-4 py-2 rounded-3xl gap-2 items-center hover:bg-[#4652bb] hover:text-white transition-colors duration-300 ease-in-out flex" href={ctaUrl}>
+                        <Image />
+                        Grip Crm
+                    </Link>
+                    <Link className="text-sm font-semibold bg-white border border-[#4652bb] text-[#4652bb] px-4 py-2 rounded-3xl gap-2 items-center hover:bg-[#4652bb] hover:text-white transition-colors duration-300 ease-in-out flex" href={ctaUrl}>
+                        <Image />
+                        Grip Estimator
+                    </Link>
+                </div>
 
                 {navigation.map((item) => {
                     const isOpen = openDropdown === item.label;

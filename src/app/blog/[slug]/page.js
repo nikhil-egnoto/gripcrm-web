@@ -672,7 +672,7 @@ export default function BlogDetailsPage() {
             color1="#9EFFB8"
             color2="#FF78B0"
             color3="#FFF600"
-            timeSpeed={1.5}
+            timeSpeed={1.2}
             colorBalance={-0.21}
             warpStrength={1}
             warpFrequency={5}

@@ -97,10 +97,10 @@ export default function Plan({ customPlans }) {
                 <Grainient
                     color1="#33BDDB"
                     color2="#8A5285"
-                    color3="#FF7300 "
-                    timeSpeed={1.5}
-                    colorBalance={-0.21}
-                    warpStrength={1}
+                    color3="#FF7300"
+                    timeSpeed={3}
+                    colorBalance={0.01}
+                    warpStrength={4}
                     warpFrequency={5}
                     warpSpeed={2}
                     warpAmplitude={50}
@@ -111,12 +111,12 @@ export default function Plan({ customPlans }) {
                     grainAmount={0.1}
                     grainScale={2}
                     grainAnimated={false}
-                    contrast={1.5}
+                    contrast={1.25}
                     gamma={1}
                     saturation={1}
                     centerX={0}
                     centerY={0}
-                    zoom={0.9}
+                    zoom={0.65}
                 />
             </div>
 

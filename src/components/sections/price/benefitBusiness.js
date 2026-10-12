@@ -37,7 +37,8 @@ export default function BenefitBusiness({ fields }) {
     const title = fields?.benefit_title || "How does GripCRM benefit your business?";
     const tagline = fields?.benefit_tagline || "Work Smarter, Stay Organized";
     const quote = fields?.benefit_quote || "GripCRM brings your customer information, projects, communication, and workflows together in one place—so your team can spend less time managing information and more time getting work done.";
-    const imageSrc = fields?.benefit_image || "/images/home/screen-cover.png";
+    const imageSrc = fields?.benefit_image || null;
+    const imageVideo = fields?.benefit_video || null;
     const btnText = fields?.benefit_btn_text || "Request a Demo";
     const btnUrl = fields?.benefit_btn_url || "/contact";
 
@@ -107,45 +108,35 @@ export default function BenefitBusiness({ fields }) {
                         <div className="relative rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-800 shadow-2xl group">
                             {/* Decorative top bar */}
                             <motion.div {...animationContent} className="relative sm:rounded-3xl overflow-hidden">
-                                {/* <Image
-                            src={fields?.hero_image || "/images/home/screen-cover.png"}
-                            alt="Screen"
-                            width={888}
-                            height={500}
-                            className="h-auto w-full"
-                        /> */}
-
-                                <video
-                                    width="600"
-                                    height="337"
-                                    className="h-auto w-full"
-                                    poster={fields?.hero_image || "/images/home/screen-cover.png"}
-                                    autoPlay
-                                    muted
-                                    loop
-                                    preload="none"
-                                >
-                                    <source src={fields?.hero_video || "/images/home/hero-section.mp4"} type="video/mp4" />
-                                    <track
-                                        src="/path/to/captions.vtt"
-                                        kind="subtitles"
-                                        srcLang="en"
-                                        label="English"
+                                {imageVideo ? (
+                                    <video
+                                        width="600"
+                                        height="337"
+                                        className="h-auto w-full"
+                                        poster={imageSrc}
+                                        autoPlay
+                                        muted
+                                        loop
+                                        preload="none"
+                                    >
+                                        <source src={imageVideo} type="video/mp4" />
+                                        <track
+                                            src="/path/to/captions.vtt"
+                                            kind="subtitles"
+                                            srcLang="en"
+                                            label="English"
+                                        />
+                                    </video>
+                                ) : (
+                                    <Image
+                                        src={imageSrc}
+                                        alt="Screen"
+                                        width={888}
+                                        height={500}
+                                        className="h-auto w-full"
                                     />
-                                    Your browser does not support the video tag.
-                                </video>
-
+                                )}
                             </motion.div>
-                            {/* <div className="relative aspect-4/3 w-full bg-neutral-900 overflow-hidden flex items-center justify-center">
-                                <Image
-                                    src={imageSrc}
-                                    alt="GripCRM Workflow Interface"
-                                    width={600}
-                                    height={450}
-                                    className="w-full h-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
-                                />
-                                <div className="absolute inset-0 bg-linear-to-t from-neutral-950/80 via-transparent to-transparent pointer-events-none" />
-                            </div>*/}
                         </div>
 
                         {/* Request a Demo Button */}
