@@ -93,7 +93,7 @@ export default function Plan({ customPlans }) {
 
     return (
         <section className="bg-linear-[25deg,#20141e_5%,#0a292f_60%,#1c101a_90%,#211520] text-white py-16 md:py-24 relative overflow-hidden px-4 sm:px-8 lg:px-12">
-            <div className="bg-neutral-950 absolute top-0 w-full h-full left-0 md:block hidden">
+            <div className="bg-neutral-950 absolute top-0 opacity-20 w-full h-full left-0 md:block hidden">
                 <Grainient
                     color1="#33BDDB"
                     color2="#8A5285"
