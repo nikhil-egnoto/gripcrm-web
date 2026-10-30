@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Button from "../ui/Button";
-import Grainient from "../ui/Grainient";
+import Grainient from "../providers/Grainient";
 import { motion } from "framer-motion";
 import { animationContent } from "../providers/motionAnimation";
 

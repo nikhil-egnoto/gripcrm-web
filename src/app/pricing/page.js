@@ -1,8 +1,9 @@
-import Faqs from "@/components/layout/Faqs";
-import BenefitBusiness from "@/components/sections/price/benefitBusiness";
+import GriptechCta from "@/components/sections/home/GriptechCta";
+import GriptechFaqs from "@/components/sections/home/GriptechFaqs";
 import ComparePlans from "@/components/sections/price/ComparePlans";
-import Plan from "@/components/sections/price/plans";
-import WhyGripCrm from "@/components/sections/price/WhyGripCrm";
+import Plans from "@/components/sections/price/plans";
+import PriceBanner from "@/components/sections/price/PriceBanner";
+import TrustedDealers from "@/components/sections/price/TrustedDealers";
 import { fetchPricingPageData } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
@@ -14,11 +15,12 @@ export default async function Pricing() {
 
     return (
         <main>
-            <Plan />
+            <PriceBanner />
+            <Plans />
+            <TrustedDealers />
             <ComparePlans />
-            <BenefitBusiness fields={fields} />
-            <WhyGripCrm fields={fields} />
-            <Faqs fields={fields} faqsDescription={faqDescription} />
+            <GriptechFaqs fields={fields} faqsDescription={faqDescription} />
+            <GriptechCta />
         </main>
     );
 }

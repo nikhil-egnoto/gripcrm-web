@@ -8,7 +8,7 @@ import { fetchContactData, submitContactForm } from "@/lib/api";
 import { motion } from "framer-motion";
 import { animationContent } from "@/components/providers/motionAnimation";
 import toast from "react-hot-toast";
-import Grainient from "@/components/ui/Grainient";
+import Grainient from "@/components/providers/Grainient";
 
 export default function Contact() {
     const [fields, setFields] = useState(null);

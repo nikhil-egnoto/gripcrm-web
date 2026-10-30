@@ -10,11 +10,11 @@ export default function PageFadeTransition({ children }) {
   const pathname = usePathname();
 
   return (
-    <div
+    <main
       key={pathname}
-      className="page-fade-wrapper min-h-screen"
+      className="page-fade-wrapper min-h-screen bg-white"
     >
       {children}
-    </div>
+    </main>
   );
 }
