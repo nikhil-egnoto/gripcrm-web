@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Minus, Plus, MessageSquareText } from "lucide-react";
 import Cta from "./Cta";
-import Grainient from "../ui/Grainient";
+import Grainient from "../providers/Grainient";
 import { motion } from "framer-motion";
 import { animationContent } from "../providers/motionAnimation";
 

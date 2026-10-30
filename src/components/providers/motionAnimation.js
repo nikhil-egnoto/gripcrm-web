@@ -1,20 +1,60 @@
+export const containerVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.05,
+        },
+    },
+};
+
 export const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0 },
+    transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1],
+    },
+};
+
+// Make `hidden` and `visible` non-enumerable so they work with `variants={fadeInUp}`
+// without leaking into DOM props when spread `{...fadeInUp}` (which causes HTML `hidden=""` / `display: none`)
+Object.defineProperty(fadeInUp, "hidden", {
+    value: {
+        opacity: 0,
+        y: 30,
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+});
+
+Object.defineProperty(fadeInUp, "visible", {
+    value: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1],
+        },
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+});
+
+export const fadeInUpVariants = {
+    hidden: {
+        opacity: 0,
+        y: 30,
+    },
     visible: {
         opacity: 1,
         y: 0,
         transition: {
             duration: 0.6,
-            ease: "easeOut",
-        },
-    },
-};
-
-export const containerVariants = {
-    hidden: {},
-    visible: {
-        transition: {
-            staggerChildren: 0.2,
+            ease: [0.22, 1, 0.36, 1],
         },
     },
 };
@@ -25,16 +65,17 @@ export const hoverEffect = {
 };
 
 export const fadeZoomIn = {
-    hidden: { opacity: 0, scale: 0.95, y: 30 },
-    visible: {
+    initial: { opacity: 0, scale: 0.70, y: 30 },
+    whileInView: {
         opacity: 1,
         scale: 1,
         y: 0,
-        transition: {
-            duration: 0.7,
-            ease: "easeOut",
-        },
     },
+    transition: {
+        duration: 0.7,
+        ease: "easeOut",
+    },
+    viewport: { once: true, amount: 0 },
 };
 
 export const buttonHover = {
@@ -43,21 +84,23 @@ export const buttonHover = {
 };
 
 export const slideInLeft = {
-    hidden: { opacity: 0, x: -60 },
-    visible: {
+    initial: { opacity: 0, x: -60 },
+    whileInView: {
         opacity: 1,
         x: 0,
-        transition: { duration: 0.6, ease: "easeOut" },
     },
+    transition: { duration: 0.6, ease: "easeOut" },
+    viewport: { once: true, amount: 0 },
 };
 
 export const zoomIn = {
-    hidden: { scale: 0.9, opacity: 0 },
-    visible: {
+    initial: { scale: 0.9, opacity: 0 },
+    whileInView: {
         scale: 1,
         opacity: 1,
-        transition: { duration: 0.6, ease: "easeOut" },
     },
+    transition: { duration: 0.6, ease: "easeOut" },
+    viewport: { once: true, amount: 0 },
 };
 
 // Added in All Pages ---- Load Animation

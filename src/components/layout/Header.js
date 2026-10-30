@@ -52,14 +52,16 @@ export default function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const logoUrl = options?.options?.logo_url || "/gripcrm-web.svg";
+    const logoUrl = "/griptech-web.svg";
+
+    //const logoUrl = options?.options?.logo_url || "/gripcrm-web.svg";
 
     return (
         <header
-            className={`sticky top-0 z-50 bg-white transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
-                } ${isScrolled ? "shadow-md" : ""}`}
+            className={`sticky top-0 z-50 px-4 py-3.5 bg-white transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
+                }`}
         >
-            <div className="max-w-[1920px] w-full border-b border-neutral-300 mx-auto px-4 sm:px-8 lg:px-12 py-3.5 flex items-center justify-between lg:gap-10 gap-6">
+            <div className="lg:container w-full mx-auto flex items-center justify-between lg:gap-10 gap-6">
 
                 {/* --- LOGO --- */}
                 <div className="flex items-center">

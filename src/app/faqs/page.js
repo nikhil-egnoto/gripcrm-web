@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { Plus, Minus, HelpCircle, RotateCcw } from "lucide-react";
 import Cta from "@/components/layout/Cta";
-import Grainient from "@/components/ui/Grainient";
+import Grainient from "@/components/providers/Grainient";
 import { fetchFaqs } from "@/lib/api";
 import { motion } from "framer-motion";
 import { animationContent } from "@/components/providers/motionAnimation";

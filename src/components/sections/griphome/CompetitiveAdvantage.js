@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Check } from "lucide-react";
-import Grainient from "@/components/ui/Grainient";
+import Grainient from "@/components/providers/Grainient";
 import { motion } from "framer-motion";
 import { animationContent } from "@/components/providers/motionAnimation";
 

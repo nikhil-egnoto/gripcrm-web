@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Cta from "@/components/layout/Cta";
-import Grainient from "@/components/ui/Grainient";
+import Grainient from "@/components/providers/Grainient";
 import { fetchBlogPostBySlug, fetchBlogData } from "@/lib/api";
 import { motion } from "framer-motion";
 import { animationContent } from "@/components/providers/motionAnimation";

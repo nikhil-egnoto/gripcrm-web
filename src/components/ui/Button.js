@@ -1,5 +1,5 @@
 function Button({ children, href, onClick, className = "", type = "button", ...props }) {
-    const baseClass = "group lg:px-4 px-3 py-3 rounded-lg border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer";
+    const baseClass = "group lg:px-4 px-3 py-2 rounded-lg border border-neutral-900 text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer";
 
     const combinedClassName = `${baseClass} ${className}`.trim();
 

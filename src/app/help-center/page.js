@@ -6,7 +6,7 @@ import Image from "next/image";
 import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import { animationContent } from "@/components/providers/motionAnimation";
-import Grainient from "@/components/ui/Grainient";
+import Grainient from "@/components/providers/Grainient";
 
 export default function HelpCenter() {
     const [searchQuery, setSearchQuery] = useState("");
